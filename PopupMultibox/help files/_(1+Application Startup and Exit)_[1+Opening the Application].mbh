@@ -1,0 +1,1 @@
+When you install the application, it will add entries to your Start Menu.  It will create a folder (titled "<i>Popup Multibox</i>") that contains the application shortcut.  It will also add the application shortcut to the "<i>Startup</i>" folder, so that the application will automatically launch when you start up Windows.

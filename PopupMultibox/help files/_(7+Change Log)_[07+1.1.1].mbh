@@ -1,0 +1,1 @@
+In this version, I added the capability to make bookmarks for the filesystem navigation feature.  You can create a bookmark to allow easy access to a specific file path.  When you open the bookmark, it will switch to filesystem navigation mode with the path of the bookmark filled in.  For more information on filesystem bookmarks, see [a#3.3]this page[/a].

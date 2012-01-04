@@ -1,0 +1,1 @@
+In this version, I made it so that you can tab complete a filesystem search result, which will switch back to regular filesystem navigation with the new path.  I also added the capability to get the size of a file (<u>not</u> a directory) when the current path is a file.  More on this can be found [a#3.3]here[/a].

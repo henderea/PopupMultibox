@@ -1,0 +1,24 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PopupMultibox", "PopupMultibox\PopupMultibox.csproj", "{1A3EFD49-4B16-42A2-82D8-8BA71A47C3E2}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "MultiboxInstaller", "MultiboxInstaller\MultiboxInstaller.vdproj", "{FABE9C25-EA3C-41A6-A461-4151A54CF19E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1A3EFD49-4B16-42A2-82D8-8BA71A47C3E2}.Debug|x86.ActiveCfg = Release|x86
+		{1A3EFD49-4B16-42A2-82D8-8BA71A47C3E2}.Debug|x86.Build.0 = Release|x86
+		{1A3EFD49-4B16-42A2-82D8-8BA71A47C3E2}.Release|x86.ActiveCfg = Release|x86
+		{1A3EFD49-4B16-42A2-82D8-8BA71A47C3E2}.Release|x86.Build.0 = Release|x86
+		{FABE9C25-EA3C-41A6-A461-4151A54CF19E}.Debug|x86.ActiveCfg = Release
+		{FABE9C25-EA3C-41A6-A461-4151A54CF19E}.Release|x86.ActiveCfg = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
