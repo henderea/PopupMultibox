@@ -158,18 +158,25 @@ namespace PopupMultibox
         [DllImport("user32.dll", EntryPoint = "LockWorkStation")]
         private static extern IntPtr LockWorkStation();
 
+        [DllImport("user32.dll", EntryPoint = "SystemParametersInfo")]
+        private static extern bool SystemParametersInfo(uint uiAction, uint uiParam, ref uint pvParam, uint fWinIni);
+
         private const int SC_SCREENSAVE = 0xF140;
         private const int WM_SYSCOMMAND = 0x0112;
+        private const int SPI_GETSCREENSAVESECURE = 0x76;
 
         public static void SetScreenSaverRunning()
         {
-            LockWorkStation();
+            if (ScreensaverLocks())
+                LockWorkStation();
             SendMessage(GetDesktopWindow(), WM_SYSCOMMAND, SC_SCREENSAVE, 0);
         }
 
-        public static void Main()
+        public static bool ScreensaverLocks()
         {
-            LockDesktop.SetScreenSaverRunning();
+            uint result = 0;
+            SystemParametersInfo(SPI_GETSCREENSAVESECURE, 0, ref result, 0);
+            return (result == 1);
         }
     }
 }

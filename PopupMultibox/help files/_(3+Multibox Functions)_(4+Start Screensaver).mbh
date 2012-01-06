@@ -1,1 +1,1 @@
-To lock the computer and start the screensaver, type <b>scr</b> into the Multibox and press <b>Enter</b>.
+To start the screensaver, type <b>scr</b> into the Multibox and press <b>Enter</b>.  It will only lock the computer if the "On resume, display logon screen" setting is checked in the screensaver settings.  If that setting is off, the screensaver will be started without locking the computer.

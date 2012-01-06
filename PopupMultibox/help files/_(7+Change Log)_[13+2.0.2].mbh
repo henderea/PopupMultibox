@@ -1,0 +1,1 @@
+In this version, I made it so that the start screensaver function will only lock the computer if the "On resume, display logon screen" setting is checked in the screensaver settings.  If that setting is off, the screensaver will be started without locking the computer.

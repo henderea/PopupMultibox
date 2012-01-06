@@ -68,3 +68,4 @@ C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMulti
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\bin\Release\help files\_(7+Change Log)_[09+1.1.3].mbh
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\bin\Release\help files\_(7+Change Log)_[11+2.0.0].mbh
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\bin\Release\help files\_(7+Change Log)_[12+2.0.1].mbh
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\bin\Release\help files\_(7+Change Log)_[13+2.0.2].mbh

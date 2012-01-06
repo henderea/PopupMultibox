@@ -93,36 +93,6 @@
     </Compile>
     <Compile Include="WebSearchFunction.cs" />
     <Content Include="popupMultiboxIcon3.ico" />
-    <Content Include="help files\_%287+Change Log%29_[11+2.0.0].mbh">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="help files\_%287+Change Log%29_[12+2.0.1].mbh">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <None Include="Resources\popupMultiboxIcon3_small.png" />
-    <EmbeddedResource Include="Help.resx">
-      <DependentUpon>Help.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MainClass.resx">
-      <DependentUpon>MainClass.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Prefs.resx">
-      <DependentUpon>Prefs.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <EmbeddedResource Include="VersionCheck.resx">
-      <DependentUpon>VersionCheck.cs</DependentUpon>
-    </EmbeddedResource>
-    <None Include="app.config" />
     <Content Include="help files\_%281+Application Startup and Exit%29.mbh">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -246,9 +216,6 @@
     <Content Include="help files\_%287+Change Log%29.mbh">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="help files\{How to Use the Popup Multibox}.mbh">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="help files\_%287+Change Log%29_[01+1.0.0-1.0.4].mbh">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -279,6 +246,42 @@
     <Content Include="help files\_%287+Change Log%29_[10+1.1.4].mbh">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="help files\_%287+Change Log%29_[11+2.0.0].mbh">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="help files\_%287+Change Log%29_[12+2.0.1].mbh">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="help files\_%287+Change Log%29_[13+2.0.2].mbh">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="help files\{How to Use the Popup Multibox}.mbh">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="Resources\popupMultiboxIcon3_small.png" />
+    <EmbeddedResource Include="Help.resx">
+      <DependentUpon>Help.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainClass.resx">
+      <DependentUpon>MainClass.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Prefs.resx">
+      <DependentUpon>Prefs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="VersionCheck.resx">
+      <DependentUpon>VersionCheck.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
