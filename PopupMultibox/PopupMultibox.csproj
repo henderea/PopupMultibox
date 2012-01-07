@@ -258,6 +258,9 @@
     <Content Include="help files\{How to Use the Popup Multibox}.mbh">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="help files\_%287+Change Log%29_[14+2.0.3].mbh">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Resources\popupMultiboxIcon3_small.png" />
     <EmbeddedResource Include="Help.resx">
       <DependentUpon>Help.cs</DependentUpon>

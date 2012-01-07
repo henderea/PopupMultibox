@@ -376,7 +376,14 @@ namespace PopupMultibox
             }
             else
                 typ = "Folder";
-            return "Name: "+args.MC.LabelManager.CurrentSelection.DisplayText+"\nType: "+typ+"\nSize: "+sizestr;
+            string lmd = "";
+            try
+            {
+                DateTime lmddt = File.GetLastWriteTime(pth);
+                lmd = lmddt.ToShortDateString() + " " + lmddt.ToLongTimeString();
+            }
+            catch { }
+            return "Name: " + args.MC.LabelManager.CurrentSelection.DisplayText + "\nType: " + typ + "\nSize: " + sizestr + "\nLast Modified: " + lmd;
         }
 
         public void GetBackgroundDetailsStream(MultiboxFunctionParam args)
