@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PopupMultibox", "PopupMulti
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "MultiboxInstaller", "MultiboxInstaller\MultiboxInstaller.vdproj", "{FABE9C25-EA3C-41A6-A461-4151A54CF19E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Startup", "Startup\Startup.csproj", "{0F06CC8B-A0C5-47FC-8061-9B888C186212}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -17,6 +19,10 @@ Global
 		{1A3EFD49-4B16-42A2-82D8-8BA71A47C3E2}.Release|x86.Build.0 = Release|x86
 		{FABE9C25-EA3C-41A6-A461-4151A54CF19E}.Debug|x86.ActiveCfg = Release
 		{FABE9C25-EA3C-41A6-A461-4151A54CF19E}.Release|x86.ActiveCfg = Release
+		{0F06CC8B-A0C5-47FC-8061-9B888C186212}.Debug|x86.ActiveCfg = Debug|x86
+		{0F06CC8B-A0C5-47FC-8061-9B888C186212}.Debug|x86.Build.0 = Debug|x86
+		{0F06CC8B-A0C5-47FC-8061-9B888C186212}.Release|x86.ActiveCfg = Release|x86
+		{0F06CC8B-A0C5-47FC-8061-9B888C186212}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

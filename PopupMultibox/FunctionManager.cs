@@ -15,6 +15,7 @@ namespace PopupMultibox
         {
             functions = new List<MultiboxFunction>(0);
             functions.Add(new ScreensaverFunction());
+            functions.Add(new UpdateFunction());
             functions.Add(new WebSearchFunction());
             functions.Add(new FilesystemFunction());
             functions.Add(new HelpLaunchFuncion());

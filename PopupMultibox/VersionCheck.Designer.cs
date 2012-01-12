@@ -35,6 +35,10 @@
             this.linkLabel = new System.Windows.Forms.LinkLabel();
             this.okButton = new System.Windows.Forms.Button();
             this.checkTimer = new System.Windows.Forms.Timer(this.components);
+            this.downloadButton = new System.Windows.Forms.Button();
+            this.fileChooserS = new System.Windows.Forms.SaveFileDialog();
+            this.progressBar = new System.Windows.Forms.ProgressBar();
+            this.installButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // displayLabel
@@ -71,7 +75,7 @@
             // 
             // okButton
             // 
-            this.okButton.Location = new System.Drawing.Point(125, 200);
+            this.okButton.Location = new System.Drawing.Point(25, 200);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(50, 25);
             this.okButton.TabIndex = 3;
@@ -84,6 +88,43 @@
             this.checkTimer.Interval = 3600000;
             this.checkTimer.Tick += new System.EventHandler(this.checkTimer_Tick);
             // 
+            // downloadButton
+            // 
+            this.downloadButton.Location = new System.Drawing.Point(125, 200);
+            this.downloadButton.Name = "downloadButton";
+            this.downloadButton.Size = new System.Drawing.Size(150, 25);
+            this.downloadButton.TabIndex = 4;
+            this.downloadButton.Text = "Download and Install";
+            this.downloadButton.UseVisualStyleBackColor = true;
+            this.downloadButton.Click += new System.EventHandler(this.downloadButton_Click);
+            // 
+            // fileChooserS
+            // 
+            this.fileChooserS.FileName = "MultiboxInstaller.msi";
+            this.fileChooserS.Filter = "MSI Installer|*.msi";
+            this.fileChooserS.FileOk += new System.ComponentModel.CancelEventHandler(this.fileChooserS_FileOk);
+            // 
+            // progressBar
+            // 
+            this.progressBar.Location = new System.Drawing.Point(0, 200);
+            this.progressBar.Name = "progressBar";
+            this.progressBar.Size = new System.Drawing.Size(225, 25);
+            this.progressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+            this.progressBar.TabIndex = 5;
+            this.progressBar.Visible = false;
+            // 
+            // installButton
+            // 
+            this.installButton.Enabled = false;
+            this.installButton.Location = new System.Drawing.Point(225, 200);
+            this.installButton.Name = "installButton";
+            this.installButton.Size = new System.Drawing.Size(75, 25);
+            this.installButton.TabIndex = 6;
+            this.installButton.Text = "Install";
+            this.installButton.UseVisualStyleBackColor = true;
+            this.installButton.Visible = false;
+            this.installButton.Click += new System.EventHandler(this.installButton_Click);
+            // 
             // VersionCheck
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -91,6 +132,9 @@
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(383, 305);
+            this.Controls.Add(this.installButton);
+            this.Controls.Add(this.progressBar);
+            this.Controls.Add(this.downloadButton);
             this.Controls.Add(this.okButton);
             this.Controls.Add(this.linkLabel);
             this.Controls.Add(this.versionLabel);
@@ -114,5 +158,9 @@
         private System.Windows.Forms.LinkLabel linkLabel;
         private System.Windows.Forms.Button okButton;
         private System.Windows.Forms.Timer checkTimer;
+        private System.Windows.Forms.Button downloadButton;
+        private System.Windows.Forms.SaveFileDialog fileChooserS;
+        private System.Windows.Forms.ProgressBar progressBar;
+        private System.Windows.Forms.Button installButton;
     }
 }

@@ -1,0 +1,1 @@
+In this version, I added the capability to download and start the installer from the application update notification dialog.  I also made it so that the installer will start the program after the install finishes.  In addition, you can type the command <b>update</b> and press <b>Tab</b> to do an immediate update check.

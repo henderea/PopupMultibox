@@ -1,0 +1,5 @@
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\Startup\bin\Release\Startup.exe
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\Startup\bin\Release\Startup.pdb
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\Startup\obj\x86\Release\ResolveAssemblyReference.cache
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\Startup\obj\x86\Release\Startup.exe
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\Startup\obj\x86\Release\Startup.pdb

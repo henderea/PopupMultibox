@@ -20,6 +20,7 @@ namespace PopupMultibox
         public MainClass()
         {
             InitializeComponent();
+            //Application.ApplicationExit += new EventHandler(AppClosing);
             PrefsManager.Load();
             lm = new LabelManager(this, PrefsManager.ResultHeight);
             lm.sc = new SelectionChanged(LMSelectionChanged);
@@ -44,6 +45,7 @@ namespace PopupMultibox
         //private LabelManager lm2 = null;
         private string hd;
         private Bitmap bgImage = null;
+        //private static string installerPath = null;
 
         public Prefs PreferencesDialog
         {
@@ -66,6 +68,14 @@ namespace PopupMultibox
             get
             {
                 return lm;
+            }
+        }
+
+        public VersionCheck VChk
+        {
+            get
+            {
+                return vchk;
             }
         }
 
@@ -423,6 +433,22 @@ namespace PopupMultibox
         private void restartItem_Click(object sender, EventArgs e)
         {
             Application.Restart();
+        }
+
+        public static void CloseAndInstall(string path)
+        {
+            //installerPath = path;
+            Process.Start(path);
+            Application.Exit();
+        }
+
+        private void AppClosing(object sender, EventArgs e)
+        {
+            try
+            {
+                
+            }
+            catch { }
         }
     }
 

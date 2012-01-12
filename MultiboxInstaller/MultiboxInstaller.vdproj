@@ -21,6 +21,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_4AEDD386990E4AE19F23CBF22F6FCA9E"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_77C6E048DEE6495EB9621B99A06940A8"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -35,6 +41,12 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_0E1600DEE94A4859A3F75B8791E4D610"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_4AEDD386990E4AE19F23CBF22F6FCA9E"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -125,6 +137,20 @@
     {
         "CustomAction"
         {
+            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_61F07EA7072941B59B48AD41D3523BC9"
+            {
+            "Name" = "8:StartApp"
+            "Condition" = "8:"
+            "Object" = "8:_4AEDD386990E4AE19F23CBF22F6FCA9E"
+            "FileType" = "3:2"
+            "InstallAction" = "3:2"
+            "Arguments" = "8:[ProgramFilesFolder][Manufacturer]\\[ProductName]\\PopupMultibox.exe"
+            "EntryPoint" = "8:"
+            "Sequence" = "3:1"
+            "Identifier" = "8:_38490C2E_BDD1_4AC0_8513_BE2D3A5F9A4C"
+            "InstallerClass" = "11:FALSE"
+            "CustomActionData" = "8:"
+            }
         }
         "DefaultFeature"
         {
@@ -277,15 +303,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Popup Multibox"
-        "ProductCode" = "8:{4BCC83C5-72C4-4313-B3EB-AACB9ECF70E6}"
-        "PackageCode" = "8:{21BC6410-91AD-4F78-8470-8D49DDE534FE}"
+        "ProductCode" = "8:{4186DD4D-A517-443D-84C4-A5A3CC389DF8}"
+        "PackageCode" = "8:{B76F5D8D-04C2-4DC2-9638-FD584659521A}"
         "UpgradeCode" = "8:{721C179E-6E2B-4AE4-AE4B-B9A8B48F21E1}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:2.0.3"
+        "ProductVersion" = "8:2.1.0"
         "Manufacturer" = "8:Eric Henderson"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -876,6 +902,34 @@
             "OutputConfiguration" = "8:"
             "OutputGroupCanonicalName" = "8:ContentFiles"
             "OutputProjectGuid" = "8:{1A3EFD49-4B16-42A2-82D8-8BA71A47C3E2}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_4AEDD386990E4AE19F23CBF22F6FCA9E"
+            {
+            "SourcePath" = "8:..\\Startup\\obj\\x86\\Release\\Startup.exe"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_91BB0024C8244E38AB40767882D26694"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:TRUE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:Built"
+            "OutputProjectGuid" = "8:{0F06CC8B-A0C5-47FC-8061-9B888C186212}"
             "ShowKeyOutput" = "11:TRUE"
                 "ExcludeFilters"
                 {

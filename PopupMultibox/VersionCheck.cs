@@ -53,12 +53,23 @@ namespace PopupMultibox
                     return;
             }
             catch { }
+            checkForUpdateForce();
+        }
+
+        public void checkForUpdateForce()
+        {
             string cv = Application.ProductVersion;
             cv = cv.Remove(cv.LastIndexOf("."));
             string nv = getData().Trim();
             if (!nv.Equals(cv))
             {
                 versionLabel.Text = "Current version: " + cv + "\n\nNew version: " + nv;
+                installButton.Enabled = false;
+                progressBar.Value = 0;
+                okButton.Visible = true;
+                downloadButton.Visible = true;
+                progressBar.Visible = false;
+                installButton.Visible = false;
                 this.Show();
             }
             Properties.Settings.Default.LastVersionCheck = DateTime.Now;
@@ -83,6 +94,40 @@ namespace PopupMultibox
             }
             catch { }
             return null;
+        }
+
+        private void fileChooserS_FileOk(object sender, CancelEventArgs e)
+        {
+            installButton.Enabled = false;
+            progressBar.Value = 0;
+            okButton.Visible = false;
+            downloadButton.Visible = false;
+            progressBar.Visible = true;
+            installButton.Visible = true;
+            WebClient webClient = new WebClient();
+            webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(Completed);
+            webClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(ProgressChanged);
+            webClient.DownloadFileAsync(new Uri("http://multibox.everydayprogramminggenius.com/MultiboxInstaller.msi"), fileChooserS.FileName);
+        }
+
+        private void ProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+        {
+            progressBar.Value = e.ProgressPercentage;
+        }
+
+        private void Completed(object sender, AsyncCompletedEventArgs e)
+        {
+            installButton.Enabled = true;
+        }
+
+        private void downloadButton_Click(object sender, EventArgs e)
+        {
+            fileChooserS.ShowDialog();
+        }
+
+        private void installButton_Click(object sender, EventArgs e)
+        {
+            MainClass.CloseAndInstall(fileChooserS.FileName);
         }
     }
 }

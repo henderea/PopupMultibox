@@ -85,6 +85,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScreensaverFunction.cs" />
+    <Compile Include="UpdateFunction.cs" />
     <Compile Include="VersionCheck.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -259,6 +260,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="help files\_%287+Change Log%29_[14+2.0.3].mbh">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="help files\_%283+Multibox Functions%29_%286+Check for Updates%29.mbh">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="help files\_%287+Change Log%29_[15+2.1.0].mbh">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Resources\popupMultiboxIcon3_small.png" />
