@@ -75,14 +75,11 @@ namespace PopupMultibox
             try
             {
                 FileAttributes fa = File.GetAttributes(path);
-                if ((fa & FileAttributes.Directory) == FileAttributes.Directory)
-                    return -1;
-                return new FileInfo(path).Length;
+                if (!((fa & FileAttributes.Directory) == FileAttributes.Directory))
+                    return new FileInfo(path).Length;
             }
-            catch
-            {
-                return -1;
-            }
+            catch { }
+            return -1;
         }
 
         private long GetFileSize2(string path)
@@ -236,7 +233,6 @@ namespace PopupMultibox
                         }
                         return tmp;
                     }
-                    return null;
                 }
                 else
                 {
@@ -260,7 +256,6 @@ namespace PopupMultibox
                         }
                         return tmp;
                     }
-                    return null;
                 }
             }
             return null;
@@ -308,21 +303,12 @@ namespace PopupMultibox
                         return;
                     lastSizeTime = DateTime.Now;
                 }
-                double size = (double)lastSizeValue;
-                if (size <= 0)
+                if (lastSizeValue <= 0)
                 {
                     args.MC.OutputLabelText = "Invalid selection";
                     return;
                 }
-                int i = 0;
-                while (size >= 1024 && i < sizeEndings.Length - 1)
-                {
-                    if (sizeEndings[i].ToLower().Equals(currentEnding))
-                        break;
-                    i++;
-                    size = size / 1024.0;
-                }
-                args.MC.OutputLabelText = lastSizeFiles + " file(s); " + lastSizeFolders + " folder(s); " + size.ToString("#.###") + sizeEndings[i];
+                SetMCOutputLabelText(args.MC, lastSizeValue, lastSizeFiles, lastSizeFolders, ending);
                 args.MC.UpdateSize();
             }
         }

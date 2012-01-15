@@ -55,19 +55,16 @@ namespace PopupMultibox
                     args.MC.InputFieldText = "";
                     return null;
                 }
+                int ind = args.MultiboxText.LastIndexOf(">", args.MultiboxText.Length - 2);
+                if (ind > 1)
+                {
+                    args.MC.InputFieldText = args.MultiboxText.Remove(ind + 1);
+                    return args.MC.HelpDialog.GetAutocompleteOptions(args.MultiboxText.Substring(1));
+                }
                 else
                 {
-                    int ind = args.MultiboxText.LastIndexOf(">", args.MultiboxText.Length - 2);
-                    if (ind > 1)
-                    {
-                        args.MC.InputFieldText = args.MultiboxText.Remove(ind + 1);
-                        return args.MC.HelpDialog.GetAutocompleteOptions(args.MultiboxText.Substring(1));
-                    }
-                    else
-                    {
-                        args.MC.InputFieldText = "?";
-                        return args.MC.HelpDialog.GetAutocompleteOptions("");
-                    }
+                    args.MC.InputFieldText = "?";
+                    return args.MC.HelpDialog.GetAutocompleteOptions("");
                 }
             }
             return null;

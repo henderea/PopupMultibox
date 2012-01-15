@@ -20,11 +20,9 @@ namespace PopupMultibox
         public MainClass()
         {
             InitializeComponent();
-            //Application.ApplicationExit += new EventHandler(AppClosing);
             PrefsManager.Load();
             lm = new LabelManager(this, PrefsManager.ResultHeight);
             lm.sc = new SelectionChanged(LMSelectionChanged);
-            //lm2 = new LabelManager(this, PrefsManager.ResultHeight);
             detailsLabel.BringToFront();
             hd = Environment.GetEnvironmentVariable("USERPROFILE");
             outputLabel.BringToFront();
@@ -42,10 +40,9 @@ namespace PopupMultibox
         private Help hlp;
         private VersionCheck vchk;
         private LabelManager lm = null;
-        //private LabelManager lm2 = null;
         private string hd;
         private Bitmap bgImage = null;
-        //private static string installerPath = null;
+        private bool dtltxtChanged = false;
 
         public Prefs PreferencesDialog
         {
@@ -78,14 +75,6 @@ namespace PopupMultibox
                 return vchk;
             }
         }
-
-        /*public LabelManager ActionLabelManager
-        {
-            get
-            {
-                return lm2;
-            }
-        }*/
 
         public string HomeDirectory
         {
@@ -169,7 +158,11 @@ namespace PopupMultibox
             }
             else
             {
-                this.detailsLabel.Text = text;
+                if (!this.detailsLabel.Text.Equals(text))
+                {
+                    this.dtltxtChanged = true;
+                    this.detailsLabel.Text = text;
+                }
             }
         }
 
@@ -200,19 +193,21 @@ namespace PopupMultibox
             }
             if (e.KeyCode == Keys.P && e.Control)
             {
+                e.Handled = true;
                 prefs.Show();
                 return;
             }
             else if (e.KeyCode == Keys.F1)
             {
+                e.Handled = true;
                 hlp.Show();
                 return;
             }
             bool im = FunctionManager.KeyUp(this, e);
             if (e.KeyCode == Keys.Escape || e.KeyCode == Keys.Enter)
             {
-                this.Hide();
                 e.Handled = true;
+                this.Hide();
             }
             if (im)
                 outputLabel.Hide();
@@ -234,25 +229,36 @@ namespace PopupMultibox
             {
                 if (this.lm != null && this.lm.ResultHeight > 0)
                 {
-                    this.detailsLabel.AutoSize = true;
-                    int detailsLabelHeight = this.detailsLabel.Height;
-                    this.detailsLabel.AutoSize = false;
-                    detailsLabel.Width = (this.Width - 200) / 2;
+                    int detailsLabelHeight = -1;
+                    if (this.dtltxtChanged)
+                    {
+                        this.detailsLabel.AutoSize = true;
+                        detailsLabelHeight = this.detailsLabel.Height;
+                        this.detailsLabel.AutoSize = false;
+                        detailsLabel.Width = (this.Width - 200) / 2;
+                    }
+                    int nh = -1;
                     if (detailsLabelHeight <= this.lm.WindowHeight - 120)
-                        this.Height = this.lm.WindowHeight;
+                        nh = this.lm.WindowHeight;
                     else
-                        this.Height = detailsLabelHeight + 120;
-                    this.detailsLabel.Height = this.Height - 120;
-                    this.detailsLabel.Show();
+                        nh = detailsLabelHeight + 120;
+                    if (this.Height != nh)
+                    {
+                        this.Height = nh;
+                        this.detailsLabel.Height = this.Height - 120;
+                        this.detailsLabel.Show();
+                    }
                 }
                 else if (outputLabel.Text.Trim().Length <= 0)
                 {
-                    this.Height = 100;
+                    if (this.Height != 100)
+                        this.Height = 100;
                     this.detailsLabel.Hide();
                 }
                 else
                 {
-                    this.Height = 200;
+                    if (this.Height != 200)
+                        this.Height = 200;
                     this.detailsLabel.Hide();
                 }
                 this.CenterToScreen();
@@ -321,8 +327,6 @@ namespace PopupMultibox
                 if (outputLabel.Width != this.Width - 200)
                     outputLabel.Width = this.Width - 200;
                 lm.UpdateWidth(this.Width);
-                //lm2.UpdateWidth(this.Width);
-                //lm2.UpdatePosition(this.Width);
             }
         }
 
@@ -378,6 +382,7 @@ namespace PopupMultibox
             e.Graphics.CompositingQuality = CompositingQuality.HighSpeed;
             e.Graphics.PixelOffsetMode = PixelOffsetMode.HighSpeed;
             e.Graphics.SmoothingMode = SmoothingMode.HighSpeed;
+            e.Graphics.InterpolationMode = InterpolationMode.Low;
             e.Graphics.DrawImage(this.bgImage, new Rectangle(0, 0, this.Width, this.Height));
         }
 
@@ -398,6 +403,7 @@ namespace PopupMultibox
             g.CompositingQuality = CompositingQuality.HighSpeed;
             g.PixelOffsetMode = PixelOffsetMode.HighSpeed;
             g.SmoothingMode = SmoothingMode.HighSpeed;
+            g.InterpolationMode = InterpolationMode.Low;
             g.Clear(this.BackColor);
             Brush b = new SolidBrush(Color.FromArgb(230, 230, 230));
             if (h > 100.0 * scale)
@@ -437,18 +443,8 @@ namespace PopupMultibox
 
         public static void CloseAndInstall(string path)
         {
-            //installerPath = path;
             Process.Start(path);
             Application.Exit();
-        }
-
-        private void AppClosing(object sender, EventArgs e)
-        {
-            try
-            {
-                
-            }
-            catch { }
         }
     }
 

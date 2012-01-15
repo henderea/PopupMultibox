@@ -27,19 +27,9 @@ namespace PopupMultibox
             set;
         }
 
-        public ResultItem()
-        {
-            DisplayText = "";
-            FullText = "";
-            EvalText = "";
-        }
+        public ResultItem() : this("", "") { }
 
-        public ResultItem(string d, string f)
-        {
-            DisplayText = d;
-            FullText = f;
-            EvalText = "";
-        }
+        public ResultItem(string d, string f) : this(d, f, "") { }
 
         public ResultItem(string d, string f, string e)
         {
@@ -72,9 +62,8 @@ namespace PopupMultibox
             {
                 try
                 {
-                    if (CurrentSelectionIndex < 0 || items == null || items.Count <= 0 || CurrentSelectionIndex >= items.Count)
-                        return null;
-                    return items[CurrentSelectionIndex];
+                    if (!(CurrentSelectionIndex < 0 || items == null || items.Count <= 0 || CurrentSelectionIndex >= items.Count))
+                        return items[CurrentSelectionIndex];
                 }
                 catch { }
                 return null;
@@ -93,9 +82,7 @@ namespace PopupMultibox
         {
             get
             {
-                //if (items == null || items.Count <= 0)
-                //    return -50;
-                return (displayCount * 50);// -50;
+                return (displayCount * 50);
             }
         }
 
@@ -116,10 +103,7 @@ namespace PopupMultibox
             set
             {
                 items = value;
-                if (items == null || items.Count <= 0)
-                    resultIndex = -1;
-                else
-                    resultIndex = 0;
+                resultIndex = (items == null || items.Count <= 0) ? -1 : 0;
                 indexOffset = 0;
                 UpdateDisplay(true);
                 if (sc != null)
@@ -210,15 +194,6 @@ namespace PopupMultibox
             {
                 if (l.Width != (windowWidth - 200) / 2)
                     l.Width = (windowWidth - 200) / 2;
-            }
-        }
-
-        public void UpdatePosition(int windowWidth)
-        {
-            foreach (Label l in this.labels)
-            {
-                if (l.Left != windowWidth / 2)
-                    l.Left = windowWidth / 2;
             }
         }
     }
