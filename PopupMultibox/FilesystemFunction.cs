@@ -277,12 +277,12 @@ namespace PopupMultibox
                 catch { }
                 ending = ending.ToLower();
                 currentEnding = ending;
-                if (lastSizePath != null && lastSizePath.Equals(pth) && isCalculating)
+                if (args.Key != Keys.Tab && lastSizePath != null && lastSizePath.Equals(pth) && isCalculating)
                     return;
                 cancelCalc = true;
                 Thread.Sleep(10);
                 cancelCalc = false;
-                if (lastSizeValue <= 0 || lastSizePath == null || lastSizeTime == null || !lastSizePath.Equals(pth) || (DateTime.Now - lastSizeTime).TotalMinutes >= 5)
+                if (args.Key == Keys.Tab || lastSizeValue <= 0 || lastSizePath == null || lastSizeTime == null || !lastSizePath.Equals(pth) || (DateTime.Now - lastSizeTime).TotalMinutes >= 5)
                 {
                     lastSizePath = pth;
                     args.MC.OutputLabelText = "Calculating size, please wait...";

@@ -94,7 +94,6 @@
       <DependentUpon>VersionCheck.cs</DependentUpon>
     </Compile>
     <Compile Include="WebSearchFunction.cs" />
-    <None Include="popupMultiboxIcon3.ico" />
     <Content Include="help files\_%281+Application Startup and Exit%29.mbh">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -165,6 +164,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="help files\_%283+Multibox Functions%29_%285+Open Help Page%29.mbh">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="help files\_%283+Multibox Functions%29_%286+Check for Updates%29.mbh">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="help files\_%284+Preferences Dialog%29.mbh">
@@ -257,14 +259,8 @@
     <Content Include="help files\_%287+Change Log%29_[13+2.0.2].mbh">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="help files\{How to Use the Popup Multibox}.mbh">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="help files\_%287+Change Log%29_[14+2.0.3].mbh">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="help files\_%283+Multibox Functions%29_%286+Check for Updates%29.mbh">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="help files\_%287+Change Log%29_[15+2.1.0].mbh">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -272,6 +268,13 @@
     <Content Include="help files\_%287+Change Log%29_[16+2.1.1].mbh">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="help files\_%287+Change Log%29_[17+2.1.2].mbh">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="help files\{How to Use the Popup Multibox}.mbh">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="popupMultiboxIcon3.ico" />
     <None Include="Resources\popupMultiboxIcon3_small.png" />
     <EmbeddedResource Include="Help.resx">
       <DependentUpon>Help.cs</DependentUpon>
