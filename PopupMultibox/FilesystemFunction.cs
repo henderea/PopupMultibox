@@ -308,7 +308,7 @@ namespace PopupMultibox
                     args.MC.OutputLabelText = "Invalid selection";
                     return;
                 }
-                SetMCOutputLabelText(args.MC, lastSizeValue, lastSizeFiles, lastSizeFolders, ending);
+                SetMCOutputLabelText(args.MC, lastSizeValue, lastSizeFiles, lastSizeFolders, currentEnding);
                 args.MC.UpdateSize();
             }
         }

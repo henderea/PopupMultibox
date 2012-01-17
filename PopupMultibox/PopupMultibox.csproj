@@ -274,6 +274,9 @@
     <Content Include="help files\{How to Use the Popup Multibox}.mbh">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="help files\_%287+Change Log%29_[18+2.1.3].mbh">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="popupMultiboxIcon3.ico" />
     <None Include="Resources\popupMultiboxIcon3_small.png" />
     <EmbeddedResource Include="Help.resx">
