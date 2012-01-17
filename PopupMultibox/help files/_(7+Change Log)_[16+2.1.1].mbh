@@ -1,0 +1,1 @@
+In this version, I did some refactoring of the code.  I also fixed a bug I found that would sometimes cause the results area not to hide when a multi-result type function is cleared from the input field and its results were not properly cleared by the process of clearing the text from the input field.

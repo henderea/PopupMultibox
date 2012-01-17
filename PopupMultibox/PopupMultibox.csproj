@@ -55,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AbstractFunction.cs" />
     <Compile Include="CalculatorFunction.cs" />
     <Compile Include="FilesystemBookmarkFunction.cs" />
     <Compile Include="FilesystemFunction.cs" />
@@ -93,7 +94,7 @@
       <DependentUpon>VersionCheck.cs</DependentUpon>
     </Compile>
     <Compile Include="WebSearchFunction.cs" />
-    <Content Include="popupMultiboxIcon3.ico" />
+    <None Include="popupMultiboxIcon3.ico" />
     <Content Include="help files\_%281+Application Startup and Exit%29.mbh">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -266,6 +267,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="help files\_%287+Change Log%29_[15+2.1.0].mbh">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="help files\_%287+Change Log%29_[16+2.1.1].mbh">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Resources\popupMultiboxIcon3_small.png" />

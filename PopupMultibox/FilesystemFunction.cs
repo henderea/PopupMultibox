@@ -10,7 +10,7 @@ using System.Threading;
 
 namespace PopupMultibox
 {
-    public class FilesystemFunction : MultiboxFunction
+    public class FilesystemFunction : AbstractFunction
     {
         private void DirSearch(string sDir, string fnd, List<string> itms)
         {
@@ -161,27 +161,27 @@ namespace PopupMultibox
 
         #region MultiboxFunction Members
 
-        public bool Triggers(MultiboxFunctionParam args)
+        public override bool Triggers(MultiboxFunctionParam args)
         {
             return (args.MultiboxText != null && args.MultiboxText.Length > 0 && args.MultiboxText[0] == ':');
         }
 
-        public bool IsMulti(MultiboxFunctionParam args)
+        public override bool IsMulti(MultiboxFunctionParam args)
         {
             return ((args.MultiboxText.IndexOf(">>>") <= 1) && (args.MultiboxText.IndexOf("<<") <= 1));
         }
 
-        public bool IsBackgroundStream(MultiboxFunctionParam args)
+        public override bool IsBackgroundStream(MultiboxFunctionParam args)
         {
             return (args.MultiboxText.IndexOf(">>>") > 1);
         }
 
-        public bool ShouldRun(MultiboxFunctionParam args)
+        public override bool ShouldRun(MultiboxFunctionParam args)
         {
             return !(args.Key == Keys.Up || args.Key == Keys.Down);
         }
 
-        public string RunSingle(MultiboxFunctionParam args)
+        public override string RunSingle(MultiboxFunctionParam args)
         {
             int ind = args.MultiboxText.IndexOf(">>>");
             int ind2 = args.MultiboxText.IndexOf("<<");
@@ -200,7 +200,7 @@ namespace PopupMultibox
             throw new InvalidOperationException();
         }
 
-        public List<ResultItem> RunMulti(MultiboxFunctionParam args)
+        public override List<ResultItem> RunMulti(MultiboxFunctionParam args)
         {
             if ((args.MultiboxText.IndexOf(">>>") > 1) || (args.MultiboxText.IndexOf("<<") > 1))
                 throw new InvalidOperationException();
@@ -261,7 +261,7 @@ namespace PopupMultibox
             return null;
         }
 
-        public void RunSingleBackgroundStream(MultiboxFunctionParam args)
+        public override void RunSingleBackgroundStream(MultiboxFunctionParam args)
         {
             int ind = args.MultiboxText.IndexOf(">>>");
             if (ind > 1)
@@ -313,22 +313,12 @@ namespace PopupMultibox
             }
         }
 
-        public void RunMultiBackgroundStream(MultiboxFunctionParam args)
-        {
-            throw new InvalidOperationException();
-        }
-
-        public bool HasDetails(MultiboxFunctionParam args)
+        public override bool HasDetails(MultiboxFunctionParam args)
         {
             return true;
         }
 
-        public bool IsBackgroundDetailsStream(MultiboxFunctionParam args)
-        {
-            return false;
-        }
-
-        public string GetDetails(MultiboxFunctionParam args)
+        public override string GetDetails(MultiboxFunctionParam args)
         {
             string pth = args.MC.LabelManager.CurrentSelection.FullText;
             if (pth.Length > 0 && pth[0] == '~')
@@ -372,52 +362,17 @@ namespace PopupMultibox
             return "Name: " + args.MC.LabelManager.CurrentSelection.DisplayText + "\nType: " + typ + "\nSize: " + sizestr + "\nLast Modified: " + lmd;
         }
 
-        public void GetBackgroundDetailsStream(MultiboxFunctionParam args)
-        {
-            throw new InvalidOperationException();
-        }
-
-        public bool HasActions(MultiboxFunctionParam args)
-        {
-            return false;
-        }
-
-        public bool IsBackgroundActionsStream(MultiboxFunctionParam args)
-        {
-            return false;
-        }
-
-        public List<ResultItem> GetActions(MultiboxFunctionParam args)
-        {
-            throw new InvalidOperationException();
-        }
-
-        public void GetBackgroundActionsStream(MultiboxFunctionParam args)
-        {
-            throw new InvalidOperationException();
-        }
-
-        public bool HasAction(MultiboxFunctionParam args)
-        {
-            return false;
-        }
-
-        public void RunAction(MultiboxFunctionParam args)
-        {
-            throw new InvalidOperationException();
-        }
-
-        public bool SupressKeyPress(MultiboxFunctionParam args)
+        public override bool SupressKeyPress(MultiboxFunctionParam args)
         {
             return (args.Key == Keys.Up || args.Key == Keys.Down || args.Key == Keys.Tab);
         }
 
-        public bool HasKeyDownAction(MultiboxFunctionParam args)
+        public override bool HasKeyDownAction(MultiboxFunctionParam args)
         {
             return (args.Key == Keys.Up || args.Key == Keys.Down);
         }
 
-        public void RunKeyDownAction(MultiboxFunctionParam args)
+        public override void RunKeyDownAction(MultiboxFunctionParam args)
         {
             if (args.Key == Keys.Up)
                 args.MC.LabelManager.SelectPrev();
@@ -425,12 +380,12 @@ namespace PopupMultibox
                 args.MC.LabelManager.SelectNext();
         }
 
-        public bool HasActionKeyEvent(MultiboxFunctionParam args)
+        public override bool HasActionKeyEvent(MultiboxFunctionParam args)
         {
             return (args.MultiboxText.IndexOf(">>>") <= 1);
         }
 
-        public void RunActionKeyEvent(MultiboxFunctionParam args)
+        public override void RunActionKeyEvent(MultiboxFunctionParam args)
         {
             if (args.MultiboxText.IndexOf(">>>") > 1)
                 throw new InvalidOperationException();
@@ -460,12 +415,12 @@ namespace PopupMultibox
             }
         }
 
-        public bool HasSpecialDisplayCopyHandling(MultiboxFunctionParam args)
+        public override bool HasSpecialDisplayCopyHandling(MultiboxFunctionParam args)
         {
             return IsMulti(args);
         }
 
-        public string RunSpecialDisplayCopyHandling(MultiboxFunctionParam args)
+        public override string RunSpecialDisplayCopyHandling(MultiboxFunctionParam args)
         {
             ResultItem tmp2 = args.MC.LabelManager.CurrentSelection;
             if (tmp2 != null)
@@ -476,16 +431,6 @@ namespace PopupMultibox
                 return tmpt;
             }
             return null;
-        }
-
-        public bool HasSpecialInputCopyHandling(MultiboxFunctionParam args)
-        {
-            return false;
-        }
-
-        public string RunSpecialInputCopyHandling(MultiboxFunctionParam args)
-        {
-            throw new InvalidOperationException();
         }
 
         #endregion

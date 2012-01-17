@@ -64,6 +64,7 @@ namespace PopupMultibox
                 if (af == null)
                 {
                     mc.OutputLabelText = "";
+                    mc.LabelManager.ResultItems = null;
                     return false;
                 }
                 if (p.Key == Keys.Enter && !p.Control && !p.Shift && !p.Alt && p.MultiboxText.Trim().Length > 0)

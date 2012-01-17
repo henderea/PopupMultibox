@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace PopupMultibox
 {
-    public class CalculatorFunction : MultiboxFunction
+    public class CalculatorFunction : AbstractFunction
     {
         private Regex intToDec;
 
@@ -24,27 +24,12 @@ namespace PopupMultibox
 
         #region MultiboxFunction Members
 
-        public bool Triggers(MultiboxFunctionParam args)
+        public override bool Triggers(MultiboxFunctionParam args)
         {
             return (args.MultiboxText != null && args.MultiboxText.Length > 0);
         }
 
-        public bool IsMulti(MultiboxFunctionParam args)
-        {
-            return false;
-        }
-
-        public bool IsBackgroundStream(MultiboxFunctionParam args)
-        {
-            return false;
-        }
-
-        public bool ShouldRun(MultiboxFunctionParam args)
-        {
-            return true;
-        }
-
-        public string RunSingle(MultiboxFunctionParam args)
+        public override string RunSingle(MultiboxFunctionParam args)
         {
             try
             {
@@ -83,114 +68,14 @@ namespace PopupMultibox
             return "";
         }
 
-        public List<ResultItem> RunMulti(MultiboxFunctionParam args)
-        {
-            throw new InvalidOperationException();
-        }
-
-        public void RunSingleBackgroundStream(MultiboxFunctionParam args)
-        {
-            throw new InvalidOperationException();
-        }
-
-        public void RunMultiBackgroundStream(MultiboxFunctionParam args)
-        {
-            throw new InvalidOperationException();
-        }
-
-        public bool HasDetails(MultiboxFunctionParam args)
-        {
-            return false;
-        }
-
-        public bool IsBackgroundDetailsStream(MultiboxFunctionParam args)
-        {
-            return false;
-        }
-
-        public string GetDetails(MultiboxFunctionParam args)
-        {
-            throw new InvalidOperationException();
-        }
-
-        public void GetBackgroundDetailsStream(MultiboxFunctionParam args)
-        {
-            throw new InvalidOperationException();
-        }
-
-        public bool HasActions(MultiboxFunctionParam args)
-        {
-            return false;
-        }
-
-        public bool IsBackgroundActionsStream(MultiboxFunctionParam args)
-        {
-            return false;
-        }
-
-        public List<ResultItem> GetActions(MultiboxFunctionParam args)
-        {
-            throw new InvalidOperationException();
-        }
-
-        public void GetBackgroundActionsStream(MultiboxFunctionParam args)
-        {
-            throw new InvalidOperationException();
-        }
-
-        public bool HasAction(MultiboxFunctionParam args)
-        {
-            return false;
-        }
-
-        public void RunAction(MultiboxFunctionParam args)
-        {
-            throw new InvalidOperationException();
-        }
-
-        public bool SupressKeyPress(MultiboxFunctionParam args)
-        {
-            return false;
-        }
-
-        public bool HasKeyDownAction(MultiboxFunctionParam args)
-        {
-            return false;
-        }
-
-        public void RunKeyDownAction(MultiboxFunctionParam args)
-        {
-            throw new InvalidOperationException();
-        }
-
-        public bool HasActionKeyEvent(MultiboxFunctionParam args)
-        {
-            return false;
-        }
-
-        public void RunActionKeyEvent(MultiboxFunctionParam args)
-        {
-            throw new InvalidOperationException();
-        }
-
-        public bool HasSpecialDisplayCopyHandling(MultiboxFunctionParam args)
+        public override bool HasSpecialDisplayCopyHandling(MultiboxFunctionParam args)
         {
             return true;
         }
 
-        public string RunSpecialDisplayCopyHandling(MultiboxFunctionParam args)
+        public override string RunSpecialDisplayCopyHandling(MultiboxFunctionParam args)
         {
             return args.DisplayText.Replace(",", "");
-        }
-
-        public bool HasSpecialInputCopyHandling(MultiboxFunctionParam args)
-        {
-            return false;
-        }
-
-        public string RunSpecialInputCopyHandling(MultiboxFunctionParam args)
-        {
-            throw new InvalidOperationException();
         }
 
         #endregion
