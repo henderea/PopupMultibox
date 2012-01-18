@@ -20,6 +20,7 @@ namespace PopupMultibox
             functions.Add(new FilesystemFunction());
             functions.Add(new HelpLaunchFuncion());
             functions.Add(new FilesystemBookmarkFunction());
+            functions.Add(new AppLaunchFunction());
             functions.Add(new CalculatorFunction());
         }
 
