@@ -121,11 +121,11 @@ namespace PopupMultibox
             {
                 this.labels[i] = new Label();
                 this.labels[i].AutoEllipsis = true;
-                this.labels[i].BackColor = System.Drawing.Color.Transparent;
-                this.labels[i].Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-                this.labels[i].Location = new System.Drawing.Point(100, 110 + (i * 50));
-                this.labels[i].Size = new System.Drawing.Size(1050, 30);
-                this.labels[i].TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+                this.labels[i].BackColor = Color.White;
+                this.labels[i].Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+                this.labels[i].Location = new Point(100, 110 + (i * 50));
+                this.labels[i].Size = new Size(1050, 30);
+                this.labels[i].TextAlign = ContentAlignment.MiddleCenter;
                 p.Controls.Add(this.labels[i]);
             }
             p.ResumeLayout();
@@ -136,6 +136,7 @@ namespace PopupMultibox
 
         public void UpdateDisplay(bool updateText)
         {
+            UpdateVisibility(resultIndex >= 0);
             if (labels[0].InvokeRequired)
             {
                 UpdateDisplayDel d = new UpdateDisplayDel(UpdateDisplay);
@@ -145,9 +146,25 @@ namespace PopupMultibox
             {
                 for (int i = 0; i < MAX_NUM_ITEMS; i++)
                 {
-                    labels[i].BackColor = ((i == indexOffset && i < displayCount) ? Color.Gold : Color.Transparent);
+                    labels[i].BackColor = ((i == indexOffset && i < displayCount) ? Color.Gold : Color.White);
                     if (updateText)
                         labels[i].Text = ((i < displayCount) ? items[resultIndex + i].DisplayText : "");
+                }
+            }
+        }
+
+        public void UpdateVisibility(bool visible)
+        {
+            if (labels[0].InvokeRequired)
+            {
+                UpdateDisplayDel d = new UpdateDisplayDel(UpdateDisplay);
+                labels[0].Invoke(d, new object[] { visible });
+            }
+            else
+            {
+                for (int i = 0; i < MAX_NUM_ITEMS; i++)
+                {
+                    labels[i].Visible = visible;
                 }
             }
         }

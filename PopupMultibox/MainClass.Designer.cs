@@ -40,6 +40,7 @@
             this.restartItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitItem = new System.Windows.Forms.ToolStripMenuItem();
             this.detailsLabel = new System.Windows.Forms.Label();
+            this.updateTimer = new System.Windows.Forms.Timer(this.components);
             this.trayMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -60,7 +61,7 @@
             // outputLabel
             // 
             this.outputLabel.AutoEllipsis = true;
-            this.outputLabel.BackColor = System.Drawing.Color.Transparent;
+            this.outputLabel.BackColor = System.Drawing.Color.White;
             this.outputLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.outputLabel.Location = new System.Drawing.Point(100, 110);
             this.outputLabel.Name = "outputLabel";
@@ -138,13 +139,18 @@
             // detailsLabel
             // 
             this.detailsLabel.AutoEllipsis = true;
-            this.detailsLabel.BackColor = System.Drawing.Color.Transparent;
+            this.detailsLabel.BackColor = System.Drawing.Color.White;
             this.detailsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.detailsLabel.Location = new System.Drawing.Point(625, 110);
             this.detailsLabel.Name = "detailsLabel";
             this.detailsLabel.Size = new System.Drawing.Size(525, 30);
             this.detailsLabel.TabIndex = 2;
             this.detailsLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // updateTimer
+            // 
+            this.updateTimer.Interval = 10;
+            this.updateTimer.Tick += new System.EventHandler(this.updateTimer_Tick);
             // 
             // MainClass
             // 
@@ -163,14 +169,12 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "MainClass";
-            this.Opacity = 0.9D;
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Popup Multibox";
             this.TopMost = true;
-            this.TransparencyKey = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(225)))), ((int)(((byte)(225)))));
             this.Deactivate += new System.EventHandler(this.MainClass_Deactivate);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainClass_FormClosing);
             this.Load += new System.EventHandler(this.MainClass_Load);
@@ -196,6 +200,7 @@
         private System.Windows.Forms.ToolStripMenuItem helpItem;
         private System.Windows.Forms.ToolStripMenuItem restartItem;
         private System.Windows.Forms.Label detailsLabel;
+        private System.Windows.Forms.Timer updateTimer;
     }
 }
 

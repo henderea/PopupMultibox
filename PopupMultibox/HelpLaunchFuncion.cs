@@ -22,7 +22,7 @@ namespace PopupMultibox
 
         public override bool ShouldRun(MultiboxFunctionParam args)
         {
-            return !(args.Key == Keys.Up || args.Key == Keys.Down);
+            return (args.Key == Keys.Tab || args.Key == Keys.Back || args.MC.LabelManager.ResultItems == null || args.MC.LabelManager.ResultItems.Count <= 0);
         }
 
         public override List<ResultItem> RunMulti(MultiboxFunctionParam args)

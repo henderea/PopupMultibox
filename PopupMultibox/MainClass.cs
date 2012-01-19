@@ -132,6 +132,7 @@ namespace PopupMultibox
             else
             {
                 this.outputLabel.Text = text;
+                //UpdateImage();
             }
         }
 
@@ -146,6 +147,7 @@ namespace PopupMultibox
             {
                 this.inputField.Text = text;
                 inputField.Select(inputField.Text.Length, 0);
+                //UpdateImage();
             }
         }
 
@@ -162,6 +164,7 @@ namespace PopupMultibox
                 {
                     this.dtltxtChanged = true;
                     this.detailsLabel.Text = text;
+                    //UpdateImage();
                 }
             }
         }
@@ -169,6 +172,7 @@ namespace PopupMultibox
         private void LMSelectionChanged(int resultIndex)
         {
             FunctionManager.SelectionChanged(this);
+            //UpdateImage();
         }
 
         private void MainClass_SizeChanged(object sender, EventArgs e)
@@ -214,6 +218,7 @@ namespace PopupMultibox
             else
                 outputLabel.Show();
             UpdateSize();
+            //UpdateImage();
         }
 
         delegate void USDel();
@@ -268,6 +273,7 @@ namespace PopupMultibox
         private void inputField_KeyDown(object sender, KeyEventArgs e)
         {
             FunctionManager.KeyDown(this, e);
+            //UpdateImage();
         }
 
         private void MainClass_Load(object sender, EventArgs e)
@@ -373,17 +379,18 @@ namespace PopupMultibox
                 Properties.Settings.Default.LastVersion = cv;
                 Properties.Settings.Default.Save();
             }
+            updateTimer.Start();
         }
 
         protected override void OnPaintBackground(PaintEventArgs e)
         {
-            base.OnPaintBackground(e);
-            GenerateBGImage();
-            e.Graphics.CompositingQuality = CompositingQuality.HighSpeed;
-            e.Graphics.PixelOffsetMode = PixelOffsetMode.HighSpeed;
-            e.Graphics.SmoothingMode = SmoothingMode.HighSpeed;
-            e.Graphics.InterpolationMode = InterpolationMode.Low;
-            e.Graphics.DrawImage(this.bgImage, new Rectangle(0, 0, this.Width, this.Height));
+            //base.OnPaintBackground(e);
+            //GenerateBGImage();
+            //e.Graphics.CompositingQuality = CompositingQuality.HighSpeed;
+            //e.Graphics.PixelOffsetMode = PixelOffsetMode.HighSpeed;
+            //e.Graphics.SmoothingMode = SmoothingMode.HighSpeed;
+            //e.Graphics.InterpolationMode = InterpolationMode.Low;
+            //e.Graphics.DrawImage(this.bgImage, new Rectangle(0, 0, this.Width, this.Height));
         }
 
         private void GenerateBGImage()
@@ -397,38 +404,73 @@ namespace PopupMultibox
             int h = (int)(this.Height * scale);
             if (this.bgImage != null && this.bgImage.Width == w && this.bgImage.Height == h)
                 return;
-            this.bgImage = new Bitmap(w, h);
+            this.bgImage = new Bitmap(w, h, PixelFormat.Format32bppArgb);
             GC.Collect();
             Graphics g = Graphics.FromImage(this.bgImage);
             g.CompositingQuality = CompositingQuality.HighSpeed;
             g.PixelOffsetMode = PixelOffsetMode.HighSpeed;
             g.SmoothingMode = SmoothingMode.HighSpeed;
             g.InterpolationMode = InterpolationMode.Low;
-            g.Clear(this.BackColor);
-            Brush b = new SolidBrush(Color.FromArgb(230, 230, 230));
+            g.Clear(Color.FromArgb(0, Color.White));
+            Brush b = new SolidBrush(Color.FromArgb(127, 230, 230, 230));
             if (h > 100.0 * scale)
             {
                 g.FillRectangle(b, new Rectangle((int)(50.0 * scale), (int)(100.0 * scale), w - (int)(100.0 * scale), h - (int)(150.0 * scale)));
                 g.FillRectangle(b, new Rectangle((int)(100.0 * scale), h - (int)(50.0 * scale), w - (int)(200.0 * scale), (int)(50.0 * scale)));
-                g.FillEllipse(b, new Rectangle((int)(50.0 * scale), h - (int)(100.0 * scale), (int)(100.0 * scale), (int)(100.0 * scale)));
-                g.FillEllipse(b, new Rectangle(w - (int)(150.0 * scale), h - (int)(100.0 * scale), (int)(100.0 * scale), (int)(100.0 * scale)));
+                //g.FillEllipse(b, new Rectangle((int)(50.0 * scale), h - (int)(100.0 * scale), (int)(100.0 * scale), (int)(100.0 * scale)));
+                //g.FillEllipse(b, new Rectangle(w - (int)(150.0 * scale), h - (int)(100.0 * scale), (int)(100.0 * scale), (int)(100.0 * scale)));
+                g.FillPie(b, (int)(50.0 * scale), h - (int)(100.0 * scale), (int)(100.0 * scale), (int)(100.0 * scale), 180, -90);
+                g.FillPie(b, w - (int)(150.0 * scale), h - (int)(100.0 * scale), (int)(100.0 * scale), (int)(100.0 * scale), 0, 90);
                 g.FillRectangle(Brushes.White, new Rectangle((int)(60.0 * scale), (int)(100.0 * scale), w - (int)(120.0 * scale), h - (int)(150.0 * scale)));
                 g.FillRectangle(Brushes.White, new Rectangle((int)(100.0 * scale), h - (int)(50.0 * scale), w - (int)(200.0 * scale), (int)(40.0 * scale)));
                 g.FillEllipse(Brushes.White, new Rectangle((int)(60.0 * scale), h - (int)(90.0 * scale), (int)(80.0 * scale), (int)(80.0 * scale)));
                 g.FillEllipse(Brushes.White, new Rectangle(w - (int)(140.0 * scale), h - (int)(90.0 * scale), (int)(80.0 * scale), (int)(80.0 * scale)));
             }
             g.FillRectangle(b, new Rectangle((int)(50.0 * scale), 0, w - (int)(100.0 * scale), (int)(100.0 * scale)));
-            g.FillEllipse(b, new Rectangle(0, 0, (int)(100.0 * scale), (int)(100.0 * scale)));
-            g.FillEllipse(b, new Rectangle(w - (int)(100.0 * scale), 0, (int)(100.0 * scale), (int)(100.0 * scale)));
+            //g.FillEllipse(b, new Rectangle(0, 0, (int)(100.0 * scale), (int)(100.0 * scale)));
+            //g.FillEllipse(b, new Rectangle(w - (int)(100.0 * scale), 0, (int)(100.0 * scale), (int)(100.0 * scale)));
+            g.FillPie(b, 0, 0, (int)(100.0 * scale), (int)(100.0 * scale), 90, 180);
+            g.FillPie(b, w - (int)(100.0 * scale), 0, (int)(100.0 * scale), (int)(100.0 * scale), 90, -180);
             g.FillRectangle(Brushes.White, new Rectangle((int)(50.0 * scale), (int)(10.0 * scale), w - (int)(100.0 * scale), (int)(80.0 * scale)));
             g.FillEllipse(Brushes.White, new Rectangle((int)(10.0 * scale), (int)(10.0 * scale), (int)(80.0 * scale), (int)(80.0 * scale)));
             g.FillEllipse(Brushes.White, new Rectangle(w - (int)(90.0 * scale), (int)(10.0 * scale), (int)(80.0 * scale), (int)(80.0 * scale)));
             g.DrawImage(Properties.Resources.popupMultiboxIcon3_small, new Rectangle(w - (int)(130.0 * scale), (int)(10.0 * scale), (int)(80.0 * scale), (int)(80.0 * scale)));
         }
 
+        private delegate void UpdateImageDel();
+
+        private void UpdateImage()
+        {
+            if (this.InvokeRequired)
+            {
+                UpdateImageDel d = new UpdateImageDel(UpdateImage);
+                this.Invoke(d, null);
+            }
+            else
+            {
+                try
+                {
+                    GenerateBGImage();
+                    Bitmap temp_bmp = new Bitmap(this.bgImage);
+                    Rectangle b = new Rectangle(0, 0, this.Width, this.Height);
+                    foreach (Control ctrl in this.Controls)
+                    {
+                        if (this.Visible && ctrl.Visible && b.Contains(ctrl.Bounds))
+                            ctrl.DrawToBitmap(temp_bmp, ctrl.Bounds);
+                    }
+                    SetBitmap(temp_bmp);
+                    this.Invalidate(new Rectangle(new Point(0, 0), this.Size), false);
+                }
+                catch { }
+            }
+        }
+
         private void MainClass_Resize(object sender, EventArgs e)
         {
-            this.Invalidate(new Rectangle(new Point(0, 0), this.Size), false);
+            //GenerateBGImage();
+            //SetBitmap(this.bgImage);
+            //this.Invalidate(new Rectangle(new Point(0, 0), this.Size), false);
+            //UpdateImage();
         }
 
         private void helpItem_Click(object sender, EventArgs e)
@@ -445,6 +487,75 @@ namespace PopupMultibox
         {
             Process.Start(path);
             Application.Exit();
+        }
+
+        /// <para>Changes the current bitmap.</para>
+        public void SetBitmap(Bitmap bitmap)
+        {
+            SetBitmap(bitmap, 255);
+        }
+
+
+        /// <para>Changes the current bitmap with a custom opacity level.  Here is where all happens!</para>
+        public void SetBitmap(Bitmap bitmap, byte opacity)
+        {
+            if (bitmap.PixelFormat != PixelFormat.Format32bppArgb)
+                throw new ApplicationException("The bitmap must be 32ppp with alpha-channel.");
+
+            // The ideia of this is very simple,
+            // 1. Create a compatible DC with screen;
+            // 2. Select the bitmap with 32bpp with alpha-channel in the compatible DC;
+            // 3. Call the UpdateLayeredWindow.
+
+            IntPtr screenDc = Win32.GetDC(IntPtr.Zero);
+            IntPtr memDc = Win32.CreateCompatibleDC(screenDc);
+            IntPtr hBitmap = IntPtr.Zero;
+            IntPtr oldBitmap = IntPtr.Zero;
+
+            try
+            {
+                hBitmap = bitmap.GetHbitmap(Color.FromArgb(0));  // grab a GDI handle from this GDI+ bitmap
+                oldBitmap = Win32.SelectObject(memDc, hBitmap);
+
+                Win32.Size size = new Win32.Size(bitmap.Width, bitmap.Height);
+                Win32.Point pointSource = new Win32.Point(0, 0);
+                Win32.Point topPos = new Win32.Point(Left, Top);
+                Win32.BLENDFUNCTION blend = new Win32.BLENDFUNCTION();
+                blend.BlendOp = Win32.AC_SRC_OVER;
+                blend.BlendFlags = 0;
+                blend.SourceConstantAlpha = opacity;
+                blend.AlphaFormat = Win32.AC_SRC_ALPHA;
+
+                Win32.UpdateLayeredWindow(Handle, screenDc, ref topPos, ref size, memDc, ref pointSource, 0, ref blend, Win32.ULW_ALPHA);
+            }
+            finally
+            {
+                Win32.ReleaseDC(IntPtr.Zero, screenDc);
+                if (hBitmap != IntPtr.Zero)
+                {
+                    Win32.SelectObject(memDc, oldBitmap);
+                    //Windows.DeleteObject(hBitmap); // The documentation says that we have to use the Windows.DeleteObject... but since there is no such method I use the normal DeleteObject from Win32 GDI and it's working fine without any resource leak.
+                    Win32.DeleteObject(hBitmap);
+                }
+                Win32.DeleteDC(memDc);
+            }
+        }
+
+
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cp = base.CreateParams;
+                cp.ExStyle |= 0x00080000; // This form has to have the WS_EX_LAYERED extended style
+                return cp;
+            }
+        }
+
+        private void updateTimer_Tick(object sender, EventArgs e)
+        {
+            if (this.Visible)
+                UpdateImage();
         }
     }
 
@@ -492,5 +603,83 @@ namespace PopupMultibox
                 MessageBox.Show(ex.ToString());
             }
         }
+    }
+    class Win32
+    {
+        public enum Bool
+        {
+            False = 0,
+            True
+        };
+
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct Point
+        {
+            public Int32 x;
+            public Int32 y;
+
+            public Point(Int32 x, Int32 y) { this.x = x; this.y = y; }
+        }
+
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct Size
+        {
+            public Int32 cx;
+            public Int32 cy;
+
+            public Size(Int32 cx, Int32 cy) { this.cx = cx; this.cy = cy; }
+        }
+
+
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        struct ARGB
+        {
+            public byte Blue;
+            public byte Green;
+            public byte Red;
+            public byte Alpha;
+        }
+
+
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        public struct BLENDFUNCTION
+        {
+            public byte BlendOp;
+            public byte BlendFlags;
+            public byte SourceConstantAlpha;
+            public byte AlphaFormat;
+        }
+
+
+        public const Int32 ULW_COLORKEY = 0x00000001;
+        public const Int32 ULW_ALPHA = 0x00000002;
+        public const Int32 ULW_OPAQUE = 0x00000004;
+
+        public const byte AC_SRC_OVER = 0x00;
+        public const byte AC_SRC_ALPHA = 0x01;
+
+
+        [DllImport("user32.dll", ExactSpelling = true, SetLastError = true)]
+        public static extern Bool UpdateLayeredWindow(IntPtr hwnd, IntPtr hdcDst, ref Point pptDst, ref Size psize, IntPtr hdcSrc, ref Point pprSrc, Int32 crKey, ref BLENDFUNCTION pblend, Int32 dwFlags);
+
+        [DllImport("user32.dll", ExactSpelling = true, SetLastError = true)]
+        public static extern IntPtr GetDC(IntPtr hWnd);
+
+        [DllImport("user32.dll", ExactSpelling = true)]
+        public static extern int ReleaseDC(IntPtr hWnd, IntPtr hDC);
+
+        [DllImport("gdi32.dll", ExactSpelling = true, SetLastError = true)]
+        public static extern IntPtr CreateCompatibleDC(IntPtr hDC);
+
+        [DllImport("gdi32.dll", ExactSpelling = true, SetLastError = true)]
+        public static extern Bool DeleteDC(IntPtr hdc);
+
+        [DllImport("gdi32.dll", ExactSpelling = true)]
+        public static extern IntPtr SelectObject(IntPtr hDC, IntPtr hObject);
+
+        [DllImport("gdi32.dll", ExactSpelling = true, SetLastError = true)]
+        public static extern Bool DeleteObject(IntPtr hObject);
     }
 }
