@@ -181,7 +181,6 @@
             this.Shown += new System.EventHandler(this.MainClass_Shown);
             this.SizeChanged += new System.EventHandler(this.MainClass_SizeChanged);
             this.VisibleChanged += new System.EventHandler(this.MainClass_VisibleChanged);
-            this.Resize += new System.EventHandler(this.MainClass_Resize);
             this.trayMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
