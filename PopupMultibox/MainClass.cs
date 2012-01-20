@@ -119,6 +119,7 @@ namespace PopupMultibox
                 return;
             }
             this.outputLabel.Text = text;
+            UpdateImage();
         }
 
         private void SetInputFieldText(string text)
@@ -131,6 +132,7 @@ namespace PopupMultibox
             }
             this.inputField.Text = text;
             inputField.Select(inputField.Text.Length, 0);
+            UpdateImage();
         }
 
         private void SetDetailsLabelText(string text)
@@ -144,11 +146,13 @@ namespace PopupMultibox
             if (this.detailsLabel.Text.Equals(text))
                 return;
             this.detailsLabel.Text = text;
+            UpdateImage();
         }
 
         private void LMSelectionChanged(int resultIndex)
         {
             FunctionManager.SelectionChanged(this);
+            UpdateImage();
         }
 
         private void MainClass_SizeChanged(object sender, EventArgs e)
@@ -157,6 +161,7 @@ namespace PopupMultibox
             detailsLabel.Width = (this.Width - 200) / 2;
             detailsLabel.MaximumSize = new Size((this.Width - 200) / 2, 0);
             detailsLabel.Left = this.Width / 2;
+            UpdateImage();
         }
 
         private void ResizeInputField()
@@ -241,11 +246,13 @@ namespace PopupMultibox
                 this.detailsLabel.Hide();
             }
             this.CenterToScreen();
+            UpdateImage();
         }
 
         private void inputField_KeyDown(object sender, KeyEventArgs e)
         {
             FunctionManager.KeyDown(this, e);
+            UpdateImage();
         }
 
         private void MainClass_Load(object sender, EventArgs e)
@@ -296,6 +303,7 @@ namespace PopupMultibox
             if (outputLabel.Width != this.Width - 200)
                 outputLabel.Width = this.Width - 200;
             lm.UpdateWidth(this.Width);
+            UpdateImage();
         }
 
         private void ShowAndFocus()
@@ -341,7 +349,7 @@ namespace PopupMultibox
                 Properties.Settings.Default.LastVersion = cv;
                 Properties.Settings.Default.Save();
             }
-            updateTimer.Start();
+            //updateTimer.Start();
         }
 
         private void GenerateBGImage()
@@ -466,12 +474,6 @@ namespace PopupMultibox
                 cp.ExStyle |= 0x00080000;
                 return cp;
             }
-        }
-
-        private void updateTimer_Tick(object sender, EventArgs e)
-        {
-            if (this.Visible)
-                UpdateImage();
         }
     }
 }

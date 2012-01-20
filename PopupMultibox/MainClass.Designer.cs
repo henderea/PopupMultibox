@@ -40,7 +40,6 @@
             this.restartItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitItem = new System.Windows.Forms.ToolStripMenuItem();
             this.detailsLabel = new System.Windows.Forms.Label();
-            this.updateTimer = new System.Windows.Forms.Timer(this.components);
             this.trayMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -147,11 +146,6 @@
             this.detailsLabel.TabIndex = 2;
             this.detailsLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // updateTimer
-            // 
-            this.updateTimer.Interval = 10;
-            this.updateTimer.Tick += new System.EventHandler(this.updateTimer_Tick);
-            // 
             // MainClass
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -199,7 +193,6 @@
         private System.Windows.Forms.ToolStripMenuItem helpItem;
         private System.Windows.Forms.ToolStripMenuItem restartItem;
         private System.Windows.Forms.Label detailsLabel;
-        private System.Windows.Forms.Timer updateTimer;
     }
 }
 
