@@ -9,12 +9,12 @@ namespace PopupMultibox
     public class FunctionManager
     {
         private static List<MultiboxFunction> functions;
+        //private static bool isShowingActions = false;
 
         static FunctionManager()
         {
             functions = new List<MultiboxFunction>(0);
             functions.Add(new ScreensaverFunction());
-            functions.Add(new AboutLaunchFunction());
             functions.Add(new UpdateFunction());
             functions.Add(new WebSearchFunction());
             functions.Add(new FilesystemFunction());

@@ -22,14 +22,11 @@ namespace PopupMultibox
             hlp = new Help();
             hlp.Hide();
             vchk = new VersionCheck();
-            abt = new About();
-            abt.Hide();
         }
 
         private Prefs prefs;
         private Help hlp;
         private VersionCheck vchk;
-        private About abt;
         private LabelManager lm = null;
         private string hd;
         private Bitmap bgImage = null;
@@ -39,50 +36,78 @@ namespace PopupMultibox
 
         public Prefs PreferencesDialog
         {
-            get { return prefs; }
+            get
+            {
+                return prefs;
+            }
         }
 
         public Help HelpDialog
         {
-            get { return hlp; }
+            get
+            {
+                return hlp;
+            }
         }
 
         public LabelManager LabelManager
         {
-            get { return lm; }
+            get
+            {
+                return lm;
+            }
         }
 
         public VersionCheck VChk
         {
-            get { return vchk; }
-        }
-
-        public About AboutDialog
-        {
-            get { return abt; }
+            get
+            {
+                return vchk;
+            }
         }
 
         public string HomeDirectory
         {
-            get { return hd; }
+            get
+            {
+                return hd;
+            }
         }
 
         public string InputFieldText
         {
-            get { return inputField.Text; }
-            set { this.SetInputFieldText(value == null ? "" : value); }
+            get
+            {
+                return inputField.Text;
+            }
+            set
+            {
+                this.SetInputFieldText(value == null ? "" : value);
+            }
         }
 
         public string OutputLabelText
         {
-            get { return outputLabel.Text; }
-            set { this.SetOutputLabelText(value == null ? "" : value); }
+            get
+            {
+                return outputLabel.Text;
+            }
+            set
+            {
+                this.SetOutputLabelText(value == null ? "" : value);
+            }
         }
 
         public string DetailsLabelText
         {
-            get { return detailsLabel.Text; }
-            set { this.SetDetailsLabelText(value == null ? "" : value); }
+            get
+            {
+                return detailsLabel.Text;
+            }
+            set
+            {
+                this.SetDetailsLabelText(value == null ? "" : value);
+            }
         }
 
         private void SetOutputLabelText(string text)
@@ -239,7 +264,7 @@ namespace PopupMultibox
         protected override void WndProc(ref Message m)
         {
             base.WndProc(ref m);
-            if (m.Msg == WindowsShell.WM_HOTKEY && !prefs.Visible && !hlp.Visible && !vchk.Visible && !abt.Visible)
+            if (m.Msg == WindowsShell.WM_HOTKEY && !prefs.Visible && !hlp.Visible && !vchk.Visible)
             {
                 this.Show();
                 this.BringToFront();
@@ -291,14 +316,14 @@ namespace PopupMultibox
 
         private void trayIcon_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            if (prefs.Visible || hlp.Visible || vchk.Visible || abt.Visible)
+            if (prefs.Visible || hlp.Visible || vchk.Visible)
                 return;
             ShowAndFocus();
         }
 
         private void showItem_Click(object sender, EventArgs e)
         {
-            if (prefs.Visible || hlp.Visible || vchk.Visible || abt.Visible)
+            if (prefs.Visible || hlp.Visible || vchk.Visible)
                 return;
             ShowAndFocus();
         }
@@ -324,6 +349,7 @@ namespace PopupMultibox
                 Properties.Settings.Default.LastVersion = cv;
                 Properties.Settings.Default.Save();
             }
+            //updateTimer.Start();
         }
 
         private void GenerateBGImage()
@@ -378,6 +404,30 @@ namespace PopupMultibox
                 {
                     if (this.Visible && ctrl.Visible && b.Contains(ctrl.Bounds))
                         ctrl.DrawToBitmap(temp_bmp, ctrl.Bounds);
+                }
+                if (this.inputField.SelectionLength == 0)
+                {
+                    int ss = this.inputField.SelectionStart;
+                    bool sae = ss == this.inputField.Text.Length && ss > 0;
+                    bool cae = false;
+                    if(sae)
+                    {
+                        Point tmp = this.inputField.GetPositionFromCharIndex(ss - 1);
+                        this.inputField.Text = this.inputField.Text + " ";
+                        Point tmp2 = this.inputField.GetPositionFromCharIndex(ss - 1);
+                        if (tmp2.X != tmp.X)
+                            cae = true;
+                    }
+                    Point p = this.inputField.GetPositionFromCharIndex(ss);
+                    if(sae)
+                    {
+                        this.inputField.Text = this.inputField.Text.Remove(ss);
+                        this.inputField.Select(ss, 0);
+                    }
+                    if (cae)
+                        p.X = this.inputField.Width;
+                    Graphics g = Graphics.FromImage(temp_bmp);
+                    g.FillRectangle(Brushes.Black, new Rectangle(this.inputField.Left + p.X - 1, p.Y + this.inputField.Top, 2, this.inputField.Height - p.Y * 2));
                 }
                 SetBitmap(temp_bmp);
                 this.Invalidate(new Rectangle(new Point(0, 0), this.Size), false);

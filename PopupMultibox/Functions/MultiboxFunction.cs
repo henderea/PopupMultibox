@@ -49,37 +49,58 @@ namespace PopupMultibox
 
         public string MultiboxText
         {
-            get { return mc.InputFieldText; }
+            get
+            {
+                return mc.InputFieldText;
+            }
         }
 
         public string DisplayText
         {
-            get { return mc.OutputLabelText; }
+            get
+            {
+                return mc.OutputLabelText;
+            }
         }
 
         public Keys Key
         {
-            get { return key; }
+            get
+            {
+                return key;
+            }
         }
 
         public bool Control
         {
-            get { return control; }
+            get
+            {
+                return control;
+            }
         }
 
         public bool Alt
         {
-            get { return alt; }
+            get
+            {
+                return alt;
+            }
         }
 
         public bool Shift
         {
-            get { return shift; }
+            get
+            {
+                return shift;
+            }
         }
 
         public MainClass MC
         {
-            get { return mc; }
+            get
+            {
+                return mc;
+            }
         }
 
         public MultiboxFunctionParam(Keys key, bool control, bool alt, bool shift, MainClass mc)
