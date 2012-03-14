@@ -27,32 +27,32 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_77C6E048DEE6495EB9621B99A06940A8"
+        "MsmKey" = "8:_4BEA95DA96DAAEE25B662958F8482FCE"
+        "OwnerKey" = "8:_0E1600DEE94A4859A3F75B8791E4D610"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_695A247EFB0E462AB34CF434AA72C936"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_B7C46FAC946C587D334FA9F4C8B453A3"
-        "OwnerKey" = "8:_0E1600DEE94A4859A3F75B8791E4D610"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_0E1600DEE94A4859A3F75B8791E4D610"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_B7C46FAC946C587D334FA9F4C8B453A3"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_4AEDD386990E4AE19F23CBF22F6FCA9E"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_4BEA95DA96DAAEE25B662958F8482FCE"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -174,33 +174,18 @@
         }
         "File"
         {
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_77C6E048DEE6495EB9621B99A06940A8"
-            {
-            "SourcePath" = "8:..\\..\\..\\..\\..\\Pictures\\popupMultiboxIcon3.ico"
-            "TargetName" = "8:popupMultiboxIcon3.ico"
-            "Tag" = "8:"
-            "Folder" = "8:_91BB0024C8244E38AB40767882D26694"
-            "Condition" = "8:"
-            "Transitive" = "11:TRUE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:TRUE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_B7C46FAC946C587D334FA9F4C8B453A3"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_4BEA95DA96DAAEE25B662958F8482FCE"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
             "AssemblyAsmDisplayName" = "8:NCalc, Version=1.3.8.0, Culture=neutral, PublicKeyToken=973cde3f1cafed03, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_4BEA95DA96DAAEE25B662958F8482FCE"
+                    {
+                    "Name" = "8:NCalc.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:NCalc.dll"
             "TargetName" = "8:"
@@ -218,6 +203,26 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_695A247EFB0E462AB34CF434AA72C936"
+            {
+            "SourcePath" = "8:..\\..\\..\\..\\..\\Pictures\\illustrator drawings\\popupMultiboxIcon3.ico"
+            "TargetName" = "8:popupMultiboxIcon3.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_91BB0024C8244E38AB40767882D26694"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
         }
@@ -298,15 +303,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Popup Multibox"
-        "ProductCode" = "8:{BE9B55A2-0F45-46C1-A220-5DA1BFEB2148}"
-        "PackageCode" = "8:{C1B00DF7-8560-4E7D-8791-50917C6510B5}"
+        "ProductCode" = "8:{9ED9FB60-509D-4EBE-8066-CA9C92303DBF}"
+        "PackageCode" = "8:{65758290-569A-4EBB-B867-6AB5CB32FC4A}"
         "UpgradeCode" = "8:{721C179E-6E2B-4AE4-AE4B-B9A8B48F21E1}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:2.3.1"
+        "ProductVersion" = "8:2.3.2"
         "Manufacturer" = "8:Eric Henderson"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -316,7 +321,7 @@
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:Install the Popup Multibox program that was developed by Eric Henderson"
         "ARPURLINFOABOUT" = "8:"
-        "ARPPRODUCTICON" = "8:_77C6E048DEE6495EB9621B99A06940A8"
+        "ARPPRODUCTICON" = "8:_695A247EFB0E462AB34CF434AA72C936"
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
         "UseSystemSearchPath" = "11:TRUE"
@@ -430,7 +435,7 @@
             "Target" = "8:_0E1600DEE94A4859A3F75B8791E4D610"
             "Folder" = "8:_03E14C95B4B348E59338AF7C8DBC9230"
             "WorkingFolder" = "8:_91BB0024C8244E38AB40767882D26694"
-            "Icon" = "8:_77C6E048DEE6495EB9621B99A06940A8"
+            "Icon" = "8:_695A247EFB0E462AB34CF434AA72C936"
             "Feature" = "8:"
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_6B99D5E0BF39496FBFDC66737B618C5B"
@@ -444,7 +449,7 @@
             "Target" = "8:_0E1600DEE94A4859A3F75B8791E4D610"
             "Folder" = "8:_1B291149D40A473083EEE22D33C66E02"
             "WorkingFolder" = "8:_91BB0024C8244E38AB40767882D26694"
-            "Icon" = "8:_77C6E048DEE6495EB9621B99A06940A8"
+            "Icon" = "8:_695A247EFB0E462AB34CF434AA72C936"
             "Feature" = "8:"
             }
         }

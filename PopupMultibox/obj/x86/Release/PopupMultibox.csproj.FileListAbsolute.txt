@@ -7,7 +7,6 @@ C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMulti
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\obj\x86\Release\ResGen.write.1.tlog
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\obj\x86\Release\PopupMultibox.exe
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\obj\x86\Release\PopupMultibox.pdb
-C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\bin\Release\NCalc.dll
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\obj\x86\Release\PopupMultibox.Prefs.resources
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\bin\Release\PopupMultibox.exe.config
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\obj\x86\Release\GenerateResource.read.1.tlog
@@ -79,3 +78,4 @@ C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMulti
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\bin\Release\help files\_(7+Change Log)_[19+2.2.0].mbh
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\bin\Release\help files\_(7+Change Log)_[20+2.3.0].mbh
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\bin\Release\help files\_(7+Change Log)_[21+2.3.1].mbh
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\bin\Release\help files\_(7+Change Log)_[22+2.3.2].mbh
