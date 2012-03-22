@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using System.IO;
+using PopupMultibox.Functions;
 
-namespace PopupMultibox
+namespace PopupMultibox.UI
 {
+// ReSharper disable InconsistentNaming
     public partial class Prefs : Form
     {
         public Prefs()
@@ -20,7 +16,7 @@ namespace PopupMultibox
         }
 
         private int currentRow = -1;
-        private SearchItem curEdit = null;
+        private SearchItem curEdit;
 
         private void dataView_CellValueNeeded(object sender, DataGridViewCellValueEventArgs e)
         {
@@ -29,16 +25,19 @@ namespace PopupMultibox
                 if (e.RowIndex == dataView.Rows.Count - 1)
                     return;
                 SearchItem tmp;
-                if (e.RowIndex == currentRow)
-                    tmp = curEdit;
-                else
-                    tmp = SearchList.Get(e.RowIndex);
-                if (e.ColumnIndex == 0)
-                    e.Value = tmp.Name;
-                else if (e.ColumnIndex == 1)
-                    e.Value = tmp.Keyword;
-                else if (e.ColumnIndex == 2)
-                    e.Value = tmp.SearchPath;
+                tmp = e.RowIndex == currentRow ? curEdit : SearchList.Get(e.RowIndex);
+                switch (e.ColumnIndex)
+                {
+                    case 0:
+                        e.Value = tmp.Name;
+                        break;
+                    case 1:
+                        e.Value = tmp.Keyword;
+                        break;
+                    case 2:
+                        e.Value = tmp.SearchPath;
+                        break;
+                }
             }
             catch { }
         }
@@ -47,35 +46,41 @@ namespace PopupMultibox
         {
             try
             {
-                SearchItem tmp = null;
+                SearchItem tmp;
                 if (e.RowIndex < SearchList.Count)
                 {
                     tmp = SearchList.Get(e.RowIndex);
-                    this.currentRow = e.RowIndex;
-                    if (this.curEdit == null)
-                        this.curEdit = new SearchItem(tmp.Name, tmp.Keyword, tmp.SearchPath);
-                    tmp = this.curEdit;
-                    this.currentRow = e.RowIndex;
+                    currentRow = e.RowIndex;
+                    if (curEdit == null)
+                        curEdit = new SearchItem(tmp.Name, tmp.Keyword, tmp.SearchPath);
+                    tmp = curEdit;
+                    currentRow = e.RowIndex;
                 }
                 else
                 {
-                    tmp = this.curEdit;
+                    tmp = curEdit;
                 }
                 string val = e.Value as string;
-                if (e.ColumnIndex == 0)
-                    tmp.Name = val;
-                else if (e.ColumnIndex == 1)
-                    tmp.Keyword = val;
-                else if (e.ColumnIndex == 2)
-                    tmp.SearchPath = val;
+                switch (e.ColumnIndex)
+                {
+                    case 0:
+                        tmp.Name = val;
+                        break;
+                    case 1:
+                        tmp.Keyword = val;
+                        break;
+                    case 2:
+                        tmp.SearchPath = val;
+                        break;
+                }
             }
             catch { }
         }
 
         private void dataView_NewRowNeeded(object sender, DataGridViewRowEventArgs e)
         {
-            this.curEdit = new SearchItem();
-            this.currentRow = dataView.Rows.Count - 1;
+            curEdit = new SearchItem();
+            currentRow = dataView.Rows.Count - 1;
         }
 
         private void dataView_RowValidated(object sender, DataGridViewCellEventArgs e)
@@ -84,20 +89,20 @@ namespace PopupMultibox
             {
                 if (e.RowIndex >= SearchList.Count && e.RowIndex != dataView.Rows.Count)
                 {
-                    SearchList.Add(this.curEdit);
-                    this.curEdit = null;
-                    this.currentRow = -1;
+                    SearchList.Add(curEdit);
+                    curEdit = null;
+                    currentRow = -1;
                 }
-                else if (this.curEdit != null && e.RowIndex < SearchList.Count)
+                else if (curEdit != null && e.RowIndex < SearchList.Count)
                 {
-                    SearchList.Set(e.RowIndex, this.curEdit);
-                    this.curEdit = null;
-                    this.currentRow = -1;
+                    SearchList.Set(e.RowIndex, curEdit);
+                    curEdit = null;
+                    currentRow = -1;
                 }
                 else if (dataView.ContainsFocus)
                 {
-                    this.curEdit = null;
-                    this.currentRow = -1;
+                    curEdit = null;
+                    currentRow = -1;
                 }
             }
             catch { }
@@ -110,14 +115,14 @@ namespace PopupMultibox
 
         private void dataView_CancelRowEdit(object sender, QuestionEventArgs e)
         {
-            if (this.currentRow == dataView.Rows.Count - 2 && this.currentRow == SearchList.Count)
+            if (currentRow == dataView.Rows.Count - 2 && currentRow == SearchList.Count)
             {
-                this.curEdit = new SearchItem();
+                curEdit = new SearchItem();
             }
             else
             {
-                this.curEdit = null;
-                this.currentRow = -1;
+                curEdit = null;
+                currentRow = -1;
             }
         }
 
@@ -125,38 +130,34 @@ namespace PopupMultibox
         {
             if (e.Row.Index < SearchList.Count)
                 SearchList.RemoveAt(e.Row.Index);
-            if (e.Row.Index == this.currentRow)
-            {
-                this.currentRow = -1;
-                this.curEdit = null;
-            }
+            if (e.Row.Index != currentRow) return;
+            currentRow = -1;
+            curEdit = null;
         }
 
         private void Prefs_FormClosing(object sender, FormClosingEventArgs e)
         {
             SearchList.Store();
-            PrefsManager.MultiboxWidth = (int)this.widthSpinner.Value;
-            PrefsManager.ResultHeight = (int)this.heightSpinner.Value;
-            PrefsManager.AutoCheckUpdate = this.updateCheck.Checked;
-            PrefsManager.AutoCheckFrequency = (int)this.ufreqSpinner.Value;
+            PrefsManager.MultiboxWidth = (int)widthSpinner.Value;
+            PrefsManager.ResultHeight = (int)heightSpinner.Value;
+            PrefsManager.AutoCheckUpdate = updateCheck.Checked;
+            PrefsManager.AutoCheckFrequency = (int)ufreqSpinner.Value;
             PrefsManager.Store();
             if (e.CloseReason == CloseReason.UserClosing)
                 e.Cancel = true;
-            this.Hide();
+            Hide();
         }
 
         private void Prefs_VisibleChanged(object sender, EventArgs e)
         {
-            if (this.Visible)
-            {
-                SearchList.Load();
-                PrefsManager.Load();
-                dataView.RowCount = SearchList.Count + 1;
-                this.widthSpinner.Value = PrefsManager.MultiboxWidth;
-                this.heightSpinner.Value = PrefsManager.ResultHeight;
-                this.updateCheck.Checked = PrefsManager.AutoCheckUpdate;
-                this.ufreqSpinner.Value = PrefsManager.AutoCheckFrequency;
-            }
+            if (!Visible) return;
+            SearchList.Load();
+            PrefsManager.Load();
+            dataView.RowCount = SearchList.Count + 1;
+            widthSpinner.Value = PrefsManager.MultiboxWidth;
+            heightSpinner.Value = PrefsManager.ResultHeight;
+            updateCheck.Checked = PrefsManager.AutoCheckUpdate;
+            ufreqSpinner.Value = PrefsManager.AutoCheckFrequency;
         }
 
         private void updateCheck_CheckedChanged(object sender, EventArgs e)
@@ -164,6 +165,7 @@ namespace PopupMultibox
             ufreqSpinner.Enabled = updateCheck.Checked;
         }
     }
+// ReSharper restore InconsistentNaming
 
     public class PrefsManager
     {
@@ -230,7 +232,7 @@ namespace PopupMultibox
                 if (!Directory.Exists(Environment.GetEnvironmentVariable("USERPROFILE") + "\\Popup Multibox"))
                     Directory.CreateDirectory(Environment.GetEnvironmentVariable("USERPROFILE") + "\\Popup Multibox");
                 // write the log file output lines to the file
-                File.WriteAllLines(Environment.GetEnvironmentVariable("USERPROFILE") + "\\Popup Multibox\\prefs.txt", new string[] { MultiboxWidth + "", ResultHeight + "", AutoCheckUpdate + "", AutoCheckFrequency + "" });
+                File.WriteAllLines(Environment.GetEnvironmentVariable("USERPROFILE") + "\\Popup Multibox\\prefs.txt", new[] { MultiboxWidth + "", ResultHeight + "", AutoCheckUpdate + "", AutoCheckFrequency + "" });
             }
             catch { }
         }

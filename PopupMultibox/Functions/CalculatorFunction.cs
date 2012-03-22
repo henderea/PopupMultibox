@@ -1,40 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using NCalc;
-using System.Windows.Forms;
 
-namespace PopupMultibox
+namespace PopupMultibox.Functions
 {
     public class CalculatorFunction : AbstractFunction
     {
-        private Regex intToDec;
+        private readonly Regex intToDec;
 
         public CalculatorFunction()
         {
             intToDec = new Regex(@"(\d+(\.)?\d*)", RegexOptions.IgnoreCase);
         }
 
-        private string IntToDecHelper(Match m)
+        private static string IntToDecHelper(Match m)
         {
             return m.Value + ((m.Value.Length > 0 && !m.Value.Contains(".")) ? ".0" : "");
         }
 
-        #region MultiboxFunction Members
+        #region IMultiboxFunction Members
 
         public override bool Triggers(MultiboxFunctionParam args)
         {
-            return (args.MultiboxText != null && args.MultiboxText.Length > 0);
+            return !string.IsNullOrEmpty(args.MultiboxText);
         }
 
         public override string RunSingle(MultiboxFunctionParam args)
         {
             try
             {
-                string rval = "";
-                Expression tmp = new Expression(intToDec.Replace(args.MultiboxText, new MatchEvaluator(IntToDecHelper)), EvaluateOptions.IgnoreCase);
+                string rval;
+                Expression tmp = new Expression(intToDec.Replace(args.MultiboxText, IntToDecHelper), EvaluateOptions.IgnoreCase);
                 if (tmp.HasErrors())
                     rval = tmp.Error;
                 else

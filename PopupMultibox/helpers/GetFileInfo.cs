@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Runtime.InteropServices;
 using System.Drawing;
 
-namespace PopupMultibox
+namespace PopupMultibox.helpers
 {
     public class GetFileInfo
     {
@@ -25,7 +22,9 @@ namespace PopupMultibox
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
         private struct SHFILEINFO
         {
+// ReSharper disable UnusedParameter.Local
             public SHFILEINFO(bool b)
+// ReSharper restore UnusedParameter.Local
             {
                 hIcon = IntPtr.Zero;
                 iIcon = 0;
@@ -33,6 +32,8 @@ namespace PopupMultibox
                 szDisplayName = "";
                 szTypeName = "";
             }
+// ReSharper disable FieldCanBeMadeReadOnly.Local
+// ReSharper disable MemberCanBePrivate.Local
             public IntPtr hIcon;
             public int iIcon;
             public uint dwAttributes;
@@ -40,10 +41,16 @@ namespace PopupMultibox
             public string szDisplayName;
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = MAX_TYPE)]
             public string szTypeName;
+// ReSharper restore MemberCanBePrivate.Local
+// ReSharper restore FieldCanBeMadeReadOnly.Local
         };
 
         [Flags]
+// ReSharper disable EnumUnderlyingTypeIsInt
         enum SHGFI : int
+// ReSharper restore EnumUnderlyingTypeIsInt
+// ReSharper disable UnusedMember.Local
+// ReSharper disable InconsistentNaming
         {
             /// <summary>get icon</summary>
             Icon = 0x000000100,
@@ -82,6 +89,8 @@ namespace PopupMultibox
             /// <summary>Get the index of the overlay in the upper 8 bits of the iIcon</summary>
             OverlayIndex = 0x000000040,
         }
+// ReSharper restore InconsistentNaming
+// ReSharper restore UnusedMember.Local
 
         /// <summary>
         /// Get the associated Icon for a file or application, this method always returns

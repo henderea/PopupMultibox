@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
-namespace PopupMultibox
+namespace PopupMultibox.Functions
 {
     class UpdateFunction : AbstractFunction
     {
-        #region MultiboxFunction Members
+        #region IMultiboxFunction Members
 
         public override bool Triggers(MultiboxFunctionParam args)
         {

@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Drawing;
 
-namespace PopupMultibox
+namespace PopupMultibox.UI
 {
     public class ResultItem
     {
@@ -41,12 +38,14 @@ namespace PopupMultibox
     public delegate void SelectionChanged(int resultIndex);
     public class LabelManager
     {
-        private Label[] labels;
+        private readonly Label[] labels;
         private List<ResultItem> items;
-        public SelectionChanged sc;
+        public SelectionChanged Sc;
         private int resultIndex = -1;
-        private int indexOffset = 0;
-        private int MAX_NUM_ITEMS = 10;
+        private int indexOffset;
+// ReSharper disable InconsistentNaming
+        private static int MAX_NUM_ITEMS = 10;
+// ReSharper restore InconsistentNaming
 
         public int CurrentSelectionIndex
         {
@@ -70,7 +69,7 @@ namespace PopupMultibox
             }
         }
 
-        private int displayCount
+        private int DisplayCount
         {
             get
             {
@@ -82,7 +81,7 @@ namespace PopupMultibox
         {
             get
             {
-                return (displayCount * 50);
+                return (DisplayCount * 50);
             }
         }
 
@@ -106,27 +105,27 @@ namespace PopupMultibox
                 resultIndex = (items == null || items.Count <= 0) ? -1 : 0;
                 indexOffset = 0;
                 UpdateDisplay(true);
-                if (sc != null)
-                    sc.Invoke(CurrentSelectionIndex);
+                if (Sc != null)
+                    Sc.Invoke(CurrentSelectionIndex);
             }
         }
 
         public LabelManager(Form p, int m)
         {
-            this.MAX_NUM_ITEMS = m;
-            this.items = new List<ResultItem>(0);
-            this.labels = new Label[MAX_NUM_ITEMS];
+            MAX_NUM_ITEMS = m;
+            items = new List<ResultItem>(0);
+            labels = new Label[MAX_NUM_ITEMS];
             p.SuspendLayout();
             for (int i = 0; i < MAX_NUM_ITEMS; i++)
             {
-                this.labels[i] = new Label();
-                this.labels[i].AutoEllipsis = true;
-                this.labels[i].BackColor = Color.White;
-                this.labels[i].Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
-                this.labels[i].Location = new Point(100, 110 + (i * 50));
-                this.labels[i].Size = new Size(1050, 30);
-                this.labels[i].TextAlign = ContentAlignment.MiddleCenter;
-                p.Controls.Add(this.labels[i]);
+                labels[i] = new Label();
+                labels[i].AutoEllipsis = true;
+                labels[i].BackColor = Color.White;
+                labels[i].Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+                labels[i].Location = new Point(100, 110 + (i * 50));
+                labels[i].Size = new Size(1050, 30);
+                labels[i].TextAlign = ContentAlignment.MiddleCenter;
+                p.Controls.Add(labels[i]);
             }
             p.ResumeLayout();
             p.PerformLayout();
@@ -139,16 +138,16 @@ namespace PopupMultibox
             UpdateVisibility(resultIndex >= 0);
             if (labels[0].InvokeRequired)
             {
-                UpdateDisplayDel d = new UpdateDisplayDel(UpdateDisplay);
+                UpdateDisplayDel d = UpdateDisplay;
                 labels[0].Invoke(d, new object[] { updateText });
             }
             else
             {
                 for (int i = 0; i < MAX_NUM_ITEMS; i++)
                 {
-                    labels[i].BackColor = ((i == indexOffset && i < displayCount) ? Color.Gold : Color.White);
+                    labels[i].BackColor = ((i == indexOffset && i < DisplayCount) ? Color.Gold : Color.White);
                     if (updateText)
-                        labels[i].Text = ((i < displayCount) ? items[resultIndex + i].DisplayText : "");
+                        labels[i].Text = ((i < DisplayCount) ? items[resultIndex + i].DisplayText : "");
                 }
             }
         }
@@ -157,7 +156,7 @@ namespace PopupMultibox
         {
             if (labels[0].InvokeRequired)
             {
-                UpdateDisplayDel d = new UpdateDisplayDel(UpdateDisplay);
+                UpdateDisplayDel d = UpdateDisplay;
                 labels[0].Invoke(d, new object[] { visible });
             }
             else
@@ -182,8 +181,8 @@ namespace PopupMultibox
             }
             else
                 UpdateDisplay(false);
-            if (sc != null)
-                sc.Invoke(CurrentSelectionIndex);
+            if (Sc != null)
+                Sc.Invoke(CurrentSelectionIndex);
             return true;
         }
 
@@ -200,16 +199,16 @@ namespace PopupMultibox
             }
             else
                 UpdateDisplay(false);
-            if (sc != null)
-                sc.Invoke(CurrentSelectionIndex);
+            if (Sc != null)
+                Sc.Invoke(CurrentSelectionIndex);
             return true;
         }
 
         public void UpdateWidth(int windowWidth)
         {
-            foreach (Label l in this.labels)
+            foreach (Label l in labels)
             {
-                if (l.Width != (windowWidth - 200) / 2)
+                if (!Equals(l.Width, (windowWidth - 200) / 2))
                     l.Width = (windowWidth - 200) / 2;
             }
         }

@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
-using System.Text;
 
+// ReSharper disable CheckNamespace
 namespace Henderson.Util.MyDictionary
+// ReSharper restore CheckNamespace
 {
     class MyDictionary : IEnumerable<MyDictionary>
     {
-        Dictionary<MyKey, MyDictionary> dict;
-        object val = null;
-        MyKey myKey = null;
+        readonly Dictionary<MyKey, MyDictionary> dict;
+        object val;
+        MyKey myKey;
 
         public MyDictionary this[MyKey key]
         {
@@ -18,7 +18,7 @@ namespace Henderson.Util.MyDictionary
             {
                 try
                 {
-                    this.val = null;
+                    val = null;
                     return dict[key];
                 }
                 catch
@@ -202,10 +202,7 @@ namespace Henderson.Util.MyDictionary
             get
             {
                 List<string> lst = new List<string>(0);
-                foreach (MyDictionary d in dict.Values)
-                {
-                    lst.Add(d);
-                }
+                lst.AddRange(dict.Values.Select(d => (string) d));
                 return lst.ToArray();
             }
         }
@@ -223,15 +220,14 @@ namespace Henderson.Util.MyDictionary
             get
             {
                 List<string> lst = new List<string>(0);
-                foreach (MyKey k in dict.Keys)
-                {
-                    lst.Add(k);
-                }
+                lst.AddRange(dict.Keys.Select(k => (string) k));
                 return lst.ToArray();
             }
         }
 
+// ReSharper disable InconsistentNaming
         public int[] IKeys
+// ReSharper restore InconsistentNaming
         {
             get
             {
@@ -256,26 +252,26 @@ namespace Henderson.Util.MyDictionary
         public override bool Equals(object obj)
         {
             if (obj is MyKey)
-                return ((MyKey)obj).Equals(this);
+                return obj.Equals(this);
             if (obj is MyDictionary && ((MyDictionary)obj).Value != null)
-                return ((MyDictionary)obj).Value.Equals(this.Value);
-            else if (obj is MyDictionary)
+                return ((MyDictionary)obj).Value.Equals(Value);
+            if (obj is MyDictionary)
             {
                 try
                 {
-                    return ((MyDictionary)obj).dict.Equals(this.dict);
+                    return ((MyDictionary)obj).dict.Equals(dict);
                 }
                 catch { }
                 return false;
             }
             if (obj is string)
-                return ((string)obj).Equals((string)this);
+                return ((string)obj).Equals(this);
             if (obj is int)
-                return ((int)obj).Equals((int)this);
+                return ((int)obj).Equals(this);
             if (obj is double)
-                return ((double)obj).Equals((double)this);
+                return ((double)obj).Equals(this);
             if (obj is bool)
-                return ((bool)obj).Equals((bool)this);
+                return ((bool)obj).Equals(this);
             return false;
         }
 
@@ -307,19 +303,19 @@ namespace Henderson.Util.MyDictionary
 
         #endregion
 
-        public string makeRepresentationString()
+        public string MakeRepresentationString()
         {
-            return this.makeRepresentationString(4);
+            return MakeRepresentationString(4);
         }
 
-        public string makeRepresentationString(int indentAmount)
+        public string MakeRepresentationString(int indentAmount)
         {
             if (indentAmount <= 0)
                 indentAmount = 1;
-            return makeKeyValuePairsString(this, 0, indentAmount);
+            return MakeKeyValuePairsString(this, 0, indentAmount);
         }
 
-        private string makeKeyValuePairsString(MyDictionary dict, int lv, int indentAmount)
+        private static string MakeKeyValuePairsString(MyDictionary dict, int lv, int indentAmount)
         {
             string rval = "";
             foreach (KeyValuePair<MyKey, MyDictionary> d in dict)
@@ -330,7 +326,7 @@ namespace Henderson.Util.MyDictionary
                 }
                 rval += d.Key + ": " + d.Value + "\n";
                 if (d.Value.Value == null)
-                    rval += makeKeyValuePairsString(d.Value, lv + 1, indentAmount);
+                    rval += MakeKeyValuePairsString(d.Value, lv + 1, indentAmount);
             }
             return rval;
         }
@@ -338,7 +334,9 @@ namespace Henderson.Util.MyDictionary
 
     class MyKey
     {
-        object key = null;
+// ReSharper disable FieldCanBeMadeReadOnly.Local
+        object key;
+// ReSharper restore FieldCanBeMadeReadOnly.Local
 
         public object Key
         {
@@ -396,13 +394,13 @@ namespace Henderson.Util.MyDictionary
         public override bool Equals(object obj)
         {
             if (obj is MyKey)
-                return ((MyKey)obj).key.Equals(this.key);
+                return ((MyKey)obj).key.Equals(key);
             if (obj is MyDictionary && ((MyDictionary)obj).Value != null)
-                return ((MyDictionary)obj).Value.Equals(this.key);
+                return ((MyDictionary)obj).Value.Equals(key);
             if (obj is string)
-                return ((string)obj).Equals((string)this);
+                return ((string)obj).Equals(this);
             if (obj is int)
-                return ((int)obj).Equals((int)this);
+                return ((int)obj).Equals(this);
             return false;
         }
 
@@ -419,13 +417,11 @@ namespace Henderson.Util.MyDictionary
 
     class MyValueIterator : IEnumerator<MyDictionary>
     {
-        private Dictionary<MyKey, MyDictionary> dict;
-        private IEnumerator<MyDictionary> iter;
+        private readonly IEnumerator<MyDictionary> iter;
 
         public MyValueIterator(Dictionary<MyKey, MyDictionary> dict)
         {
-            this.dict = dict;
-            this.iter = dict.Values.GetEnumerator();
+            iter = dict.Values.GetEnumerator();
         }
 
         #region IEnumerator<MyDictionary> Members

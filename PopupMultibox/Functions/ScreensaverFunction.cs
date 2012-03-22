@@ -1,18 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Runtime.InteropServices;
 
-namespace PopupMultibox
+namespace PopupMultibox.Functions
 {
     public class ScreensaverFunction : AbstractFunction
     {
-        #region MultiboxFunction Members
+        #region IMultiboxFunction Members
 
         public override bool Triggers(MultiboxFunctionParam args)
         {
-            return (args.MultiboxText != null && args.MultiboxText.Length > 0 && args.MultiboxText.Equals("scr"));
+            return (!string.IsNullOrEmpty(args.MultiboxText) && args.MultiboxText.Equals("scr"));
         }
 
         public override string RunSingle(MultiboxFunctionParam args)
@@ -38,7 +35,7 @@ namespace PopupMultibox
         private static extern IntPtr GetDesktopWindow();
 
         [DllImport("user32.dll")]
-        private static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, int wParam, int lParam);
+        private static extern IntPtr SendMessage(IntPtr hWnd, uint msg, int wParam, int lParam);
 
         [DllImport("user32.dll", EntryPoint = "LockWorkStation")]
         private static extern IntPtr LockWorkStation();

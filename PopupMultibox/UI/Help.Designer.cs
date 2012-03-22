@@ -1,4 +1,4 @@
-﻿namespace PopupMultibox
+﻿namespace PopupMultibox.UI
 {
     partial class Help
     {

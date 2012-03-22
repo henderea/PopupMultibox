@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using System.IO;
+using PopupMultibox.UI;
 
-namespace PopupMultibox
+namespace PopupMultibox.Functions
 {
     public class FilesystemBookmarkFunction : AbstractFunction
     {
-        #region MultiboxFunction Members
+        #region IMultiboxFunction Members
 
         public override bool Triggers(MultiboxFunctionParam args)
         {
@@ -60,9 +60,7 @@ namespace PopupMultibox
                 }
                 catch { }
             }
-            if (ritms == null || ritms.Count <= 0)
-                return null;
-            return ritms;
+            return ritms.Count <= 0 ? null : ritms;
         }
 
         public override bool HasDetails(MultiboxFunctionParam args)
@@ -139,20 +137,20 @@ namespace PopupMultibox
 
         public BookmarkItem(string n, string p)
         {
-            this.Name = n;
-            this.Path = p;
+            Name = n;
+            Path = p;
         }
 
         public string ToFileString()
         {
-            return this.Name + ";;;" + this.Path;
+            return Name + ";;;" + Path;
         }
 
         public static BookmarkItem FromFileString(string data)
         {
             try
             {
-                string[] parts = data.Split(new string[] { ";;;" }, StringSplitOptions.None);
+                string[] parts = data.Split(new[] { ";;;" }, StringSplitOptions.None);
                 return new BookmarkItem(parts[0], parts[1]);
             }
             catch { }
@@ -163,7 +161,7 @@ namespace PopupMultibox
 
         public int CompareTo(BookmarkItem other)
         {
-            return this.Name.CompareTo(other.Name);
+            return Name.CompareTo(other.Name);
         }
 
         #endregion
@@ -171,7 +169,7 @@ namespace PopupMultibox
 
     public class BookmarkList
     {
-        private static List<BookmarkItem> items;
+        private static readonly List<BookmarkItem> items;
 
         public static BookmarkItem[] Items
         {
@@ -261,11 +259,7 @@ namespace PopupMultibox
             {
                 List<BookmarkItem> tmp = new List<BookmarkItem>(0);
                 string fnd2 = fnd.ToLower();
-                foreach (BookmarkItem itm in items)
-                {
-                    if (itm.Name.ToLower().StartsWith(fnd2))
-                        tmp.Add(itm);
-                }
+                tmp.AddRange(items.Where(itm => itm.Name.ToLower().StartsWith(fnd2)));
                 try
                 {
                     tmp.Sort();
@@ -307,12 +301,7 @@ namespace PopupMultibox
                 }
                 catch { }
                 List<string> lines = new List<string>(0);
-                foreach (BookmarkItem i in items)
-                {
-                    string tmp = i.ToFileString();
-                    if (!tmp.Equals(";;;"))
-                        lines.Add(tmp);
-                }
+                lines.AddRange(items.Select(i => i.ToFileString()).Where(tmp => !tmp.Equals(";;;")));
                 if (!Directory.Exists(Environment.GetEnvironmentVariable("USERPROFILE") + "\\Popup Multibox"))
                     Directory.CreateDirectory(Environment.GetEnvironmentVariable("USERPROFILE") + "\\Popup Multibox");
                 File.WriteAllLines(Environment.GetEnvironmentVariable("USERPROFILE") + "\\Popup Multibox\\bookmarks.txt", lines.ToArray());

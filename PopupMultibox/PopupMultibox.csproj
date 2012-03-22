@@ -76,7 +76,7 @@
     <Compile Include="UI\MainClass.Designer.cs">
       <DependentUpon>MainClass.cs</DependentUpon>
     </Compile>
-    <Compile Include="Functions\MultiboxFunction.cs" />
+    <Compile Include="Functions\IMultiboxFunction.cs" />
     <Compile Include="helpers\MyDictionary.cs" />
     <Compile Include="UI\Prefs.cs">
       <SubType>Form</SubType>

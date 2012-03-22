@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Windows.Forms;
+using PopupMultibox.UI;
 
-namespace PopupMultibox
+namespace PopupMultibox.Functions
 {
     public class HelpLaunchFuncion : AbstractFunction
     {
-        #region MultiboxFunction Members
+        #region IMultiboxFunction Members
 
         public override bool Triggers(MultiboxFunctionParam args)
         {
-            return (args.MultiboxText != null && args.MultiboxText.Length > 0 && args.MultiboxText[0] == '?');
+            return (!string.IsNullOrEmpty(args.MultiboxText) && args.MultiboxText[0] == '?');
         }
 
         public override bool IsMulti(MultiboxFunctionParam args)
@@ -29,7 +27,7 @@ namespace PopupMultibox
         {
             if (args.MultiboxText.Trim().Length == 1 && !(args.Key == Keys.Up || args.Key == Keys.Down || args.Key == Keys.Tab || args.Key == Keys.Enter || args.Key == Keys.Back))
                 return args.MC.HelpDialog.GetAutocompleteOptions("");
-            else if (args.Key == Keys.Tab)
+            if (args.Key == Keys.Tab)
             {
                 ResultItem tmp = args.MC.LabelManager.CurrentSelection;
                 if (tmp != null)
@@ -51,11 +49,8 @@ namespace PopupMultibox
                     args.MC.InputFieldText = args.MultiboxText.Remove(ind + 1);
                     return args.MC.HelpDialog.GetAutocompleteOptions(args.MultiboxText.Substring(1));
                 }
-                else
-                {
-                    args.MC.InputFieldText = "?";
-                    return args.MC.HelpDialog.GetAutocompleteOptions("");
-                }
+                args.MC.InputFieldText = "?";
+                return args.MC.HelpDialog.GetAutocompleteOptions("");
             }
             return null;
         }
@@ -71,7 +66,7 @@ namespace PopupMultibox
             {
                 ResultItem tmp2 = args.MC.LabelManager.CurrentSelection;
                 if (tmp2 != null)
-                    return "Path: " + ((tmp2.FullText != null && tmp2.FullText.Length > 0) ? tmp2.FullText : "--") + "\nSection #: " + ((tmp2.EvalText != null && tmp2.EvalText.Length > 0) ? tmp2.EvalText : "--");
+                    return "Path: " + (!string.IsNullOrEmpty(tmp2.FullText) ? tmp2.FullText : "--") + "\nSection #: " + (!string.IsNullOrEmpty(tmp2.EvalText) ? tmp2.EvalText : "--");
             }
             catch { }
             return "";

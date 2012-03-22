@@ -4,9 +4,12 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
+using PopupMultibox.Functions;
+using PopupMultibox.helpers;
 
-namespace PopupMultibox
+namespace PopupMultibox.UI
 {
+// ReSharper disable InconsistentNaming
     public partial class MainClass : Form
     {
         public MainClass()
@@ -14,7 +17,7 @@ namespace PopupMultibox
             InitializeComponent();
             PrefsManager.Load();
             lm = new LabelManager(this, PrefsManager.ResultHeight);
-            lm.sc = new SelectionChanged(LMSelectionChanged);
+            lm.Sc = LMSelectionChanged;
             hd = Environment.GetEnvironmentVariable("USERPROFILE");
             ResizeInputField();
             prefs = new Prefs();
@@ -24,12 +27,12 @@ namespace PopupMultibox
             vchk = new VersionCheck();
         }
 
-        private Prefs prefs;
-        private Help hlp;
-        private VersionCheck vchk;
-        private LabelManager lm = null;
-        private string hd;
-        private Bitmap bgImage = null;
+        private readonly Prefs prefs;
+        private readonly Help hlp;
+        private readonly VersionCheck vchk;
+        private readonly LabelManager lm;
+        private readonly string hd;
+        private Bitmap bgImage;
         delegate void SetTextCallback(string text);
         delegate void USDel();
         private delegate void UpdateImageDel();
@@ -82,7 +85,7 @@ namespace PopupMultibox
             }
             set
             {
-                this.SetInputFieldText(value == null ? "" : value);
+                SetInputFieldText(value ?? "");
             }
         }
 
@@ -94,7 +97,7 @@ namespace PopupMultibox
             }
             set
             {
-                this.SetOutputLabelText(value == null ? "" : value);
+                SetOutputLabelText(value ?? "");
             }
         }
 
@@ -106,46 +109,46 @@ namespace PopupMultibox
             }
             set
             {
-                this.SetDetailsLabelText(value == null ? "" : value);
+                SetDetailsLabelText(value ?? "");
             }
         }
 
         private void SetOutputLabelText(string text)
         {
-            if (this.outputLabel.InvokeRequired)
+            if (outputLabel.InvokeRequired)
             {
-                SetTextCallback d = new SetTextCallback(SetOutputLabelText);
-                this.Invoke(d, new object[] { text });
+                SetTextCallback d = SetOutputLabelText;
+                Invoke(d, new object[] { text });
                 return;
             }
-            this.outputLabel.Text = text;
+            outputLabel.Text = text;
             UpdateImage();
         }
 
         private void SetInputFieldText(string text)
         {
-            if (this.inputField.InvokeRequired)
+            if (inputField.InvokeRequired)
             {
-                SetTextCallback d = new SetTextCallback(SetInputFieldText);
-                this.Invoke(d, new object[] { text });
+                SetTextCallback d = SetInputFieldText;
+                Invoke(d, new object[] { text });
                 return;
             }
-            this.inputField.Text = text;
+            inputField.Text = text;
             inputField.Select(inputField.Text.Length, 0);
             UpdateImage();
         }
 
         private void SetDetailsLabelText(string text)
         {
-            if (this.detailsLabel.InvokeRequired)
+            if (detailsLabel.InvokeRequired)
             {
-                SetTextCallback d = new SetTextCallback(SetDetailsLabelText);
-                this.Invoke(d, new object[] { text });
+                SetTextCallback d = SetDetailsLabelText;
+                Invoke(d, new object[] { text });
                 return;
             }
-            if (this.detailsLabel.Text.Equals(text))
+            if (detailsLabel.Text.Equals(text))
                 return;
-            this.detailsLabel.Text = text;
+            detailsLabel.Text = text;
             UpdateImage();
         }
 
@@ -158,19 +161,19 @@ namespace PopupMultibox
         private void MainClass_SizeChanged(object sender, EventArgs e)
         {
             ResizeInputField();
-            detailsLabel.Width = (this.Width - 200) / 2;
-            detailsLabel.MaximumSize = new Size((this.Width - 200) / 2, 0);
-            detailsLabel.Left = this.Width / 2;
+            detailsLabel.Width = (Width - 200) / 2;
+            detailsLabel.MaximumSize = new Size((Width - 200) / 2, 0);
+            detailsLabel.Left = Width / 2;
             UpdateImage();
         }
 
         private void ResizeInputField()
         {
-            if (inputField.Width != this.Width - 200)
+            if (inputField.Width != Width - 200)
             {
-                inputField.Width = this.Width - 200;
+                inputField.Width = Width - 200;
                 inputField.Top = (100 - inputField.Height) / 2;
-                inputField.Left = ((this.Width - 100) - inputField.Width) / 2;
+                inputField.Left = ((Width - 100) - inputField.Width) / 2;
             }
         }
 
@@ -181,7 +184,7 @@ namespace PopupMultibox
             if (e.KeyCode == Keys.Escape && e.Shift && !e.Control && !e.Alt)
             {
                 e.Handled = true;
-                this.Close();
+                Close();
                 return;
             }
             if (e.KeyCode == Keys.P && e.Control)
@@ -200,7 +203,7 @@ namespace PopupMultibox
             if (e.KeyCode == Keys.Escape || e.KeyCode == Keys.Enter)
             {
                 e.Handled = true;
-                this.Hide();
+                Hide();
             }
             if (im)
                 outputLabel.Hide();
@@ -211,41 +214,39 @@ namespace PopupMultibox
 
         public void UpdateSize()
         {
-            if (this.InvokeRequired)
+            if (InvokeRequired)
             {
-                USDel d = new USDel(UpdateSize);
-                this.Invoke(d, null);
+                USDel d = UpdateSize;
+                Invoke(d, null);
                 return;
             }
-            if (this.lm != null && this.lm.ResultHeight > 0)
+            if (lm != null && lm.ResultHeight > 0)
             {
-                int detailsLabelHeight = -1;
-                this.detailsLabel.AutoSize = true;
-                detailsLabelHeight = this.detailsLabel.Height;
-                this.detailsLabel.AutoSize = false;
-                detailsLabel.Width = (this.Width - 200) / 2;
-                int nh = -1;
-                nh = (detailsLabelHeight <= this.lm.WindowHeight - 120) ? this.lm.WindowHeight : detailsLabelHeight + 120;
-                if (this.Height != nh)
+                int detailsLabelHeight;
+                detailsLabel.AutoSize = true;
+                detailsLabelHeight = detailsLabel.Height;
+                detailsLabel.AutoSize = false;
+                detailsLabel.Width = (Width - 200) / 2;
+                int nh;
+                nh = (detailsLabelHeight <= lm.WindowHeight - 120) ? lm.WindowHeight : detailsLabelHeight + 120;
+                if (Height != nh)
                 {
-                    this.Height = nh;
-                    this.detailsLabel.Height = this.Height - 120;
-                    this.detailsLabel.Show();
+                    Height = nh;
+                    detailsLabel.Height = Height - 120;
+                    detailsLabel.Show();
                 }
             }
             else if (outputLabel.Text.Trim().Length <= 0)
             {
-                if (this.Height != 100)
-                    this.Height = 100;
-                this.detailsLabel.Hide();
+                Height = 100;
+                detailsLabel.Hide();
             }
             else
             {
-                if (this.Height != 200)
-                    this.Height = 200;
-                this.detailsLabel.Hide();
+                Height = 200;
+                detailsLabel.Hide();
             }
-            this.CenterToScreen();
+            CenterToScreen();
             UpdateImage();
         }
 
@@ -257,20 +258,18 @@ namespace PopupMultibox
 
         private void MainClass_Load(object sender, EventArgs e)
         {
-            Keys k = Keys.Space | Keys.Control | Keys.Alt;
+            const Keys k = Keys.Space | Keys.Control | Keys.Alt;
             WindowsShell.RegisterHotKey(this, k);
         }
 
         protected override void WndProc(ref Message m)
         {
             base.WndProc(ref m);
-            if (m.Msg == WindowsShell.WM_HOTKEY && !prefs.Visible && !hlp.Visible && !vchk.Visible)
-            {
-                this.Show();
-                this.BringToFront();
-                this.CenterToScreen();
-                inputField.Focus();
-            }
+            if (m.Msg != WindowsShell.WM_HOTKEY || prefs.Visible || hlp.Visible || vchk.Visible) return;
+            Show();
+            BringToFront();
+            CenterToScreen();
+            inputField.Focus();
         }
 
         private void MainClass_FormClosing(object sender, FormClosingEventArgs e)
@@ -280,37 +279,35 @@ namespace PopupMultibox
 
         private void MainClass_Deactivate(object sender, EventArgs e)
         {
-            this.Hide();
+            Hide();
         }
 
         private void MainClass_VisibleChanged(object sender, EventArgs e)
         {
-            if (!this.Visible)
+            if (!Visible)
             {
                 inputField.Text = "";
                 outputLabel.Text = "";
-                this.lm.ResultItems = null;
-                this.Height = 100;
+                lm.ResultItems = null;
+                Height = 100;
                 return;
             }
-            this.BringToFront();
-            this.CenterToScreen();
-            this.Activate();
+            BringToFront();
+            CenterToScreen();
+            Activate();
             inputField.Focus();
-            if (this.Width != PrefsManager.MultiboxWidth)
-                this.Width = PrefsManager.MultiboxWidth;
+            Width = PrefsManager.MultiboxWidth;
             ResizeInputField();
-            if (outputLabel.Width != this.Width - 200)
-                outputLabel.Width = this.Width - 200;
-            lm.UpdateWidth(this.Width);
+            outputLabel.Width = Width - 200;
+            lm.UpdateWidth(Width);
             UpdateImage();
         }
 
         private void ShowAndFocus()
         {
-            this.Show();
-            this.BringToFront();
-            this.CenterToScreen();
+            Show();
+            BringToFront();
+            CenterToScreen();
             inputField.Focus();
         }
 
@@ -330,7 +327,7 @@ namespace PopupMultibox
 
         private void exitItem_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void prefsItem_Click(object sender, EventArgs e)
@@ -340,97 +337,95 @@ namespace PopupMultibox
 
         private void MainClass_Shown(object sender, EventArgs e)
         {
-            this.Hide();
+            Hide();
             string cv = Application.ProductVersion;
             cv = cv.Remove(cv.LastIndexOf("."));
-            if (!cv.Equals(Properties.Settings.Default.LastVersion))
-            {
-                hlp.LaunchPage("7");
-                Properties.Settings.Default.LastVersion = cv;
-                Properties.Settings.Default.Save();
-            }
+            if (cv.Equals(Properties.Settings.Default.LastVersion)) return;
+            hlp.LaunchPage("7");
+            Properties.Settings.Default.LastVersion = cv;
+            Properties.Settings.Default.Save();
             //updateTimer.Start();
         }
 
         private void GenerateBGImage()
         {
-            if (this.bgImage != null && this.bgImage.Width == this.Width && this.bgImage.Height == this.Height)
+            if (bgImage != null && bgImage.Width == Width && bgImage.Height == Height)
                 return;
-            this.bgImage = new Bitmap(this.Width, this.Height, PixelFormat.Format32bppArgb);
+            bgImage = new Bitmap(Width, Height, PixelFormat.Format32bppArgb);
             GC.Collect();
-            Graphics g = Graphics.FromImage(this.bgImage);
+            Graphics g = Graphics.FromImage(bgImage);
             g.CompositingQuality = CompositingQuality.HighSpeed;
             g.PixelOffsetMode = PixelOffsetMode.HighSpeed;
             g.SmoothingMode = SmoothingMode.HighSpeed;
             g.InterpolationMode = InterpolationMode.Low;
             g.Clear(Color.FromArgb(0, Color.White));
             Brush b = new SolidBrush(Color.FromArgb(127, 230, 230, 230));
-            if (this.Height > 100)
+            if (Height > 100)
             {
-                g.FillRectangle(b, new Rectangle(50, 100, this.Width - 100, this.Height - 150));
-                g.FillRectangle(b, new Rectangle(100, this.Height - 50, this.Width - 200, 50));
-                g.FillPie(b, 50, this.Height - 100, 100, 100, 180, -90);
-                g.FillPie(b, this.Width - 150, this.Height - 100, 100, 100, 0, 90);
-                g.FillRectangle(Brushes.White, new Rectangle(60, 100, this.Width - 120, this.Height - 150));
-                g.FillRectangle(Brushes.White, new Rectangle(100, this.Height - 50, this.Width - 200, 40));
-                g.FillEllipse(Brushes.White, new Rectangle(60, this.Height - 90, 80, 80));
-                g.FillEllipse(Brushes.White, new Rectangle(this.Width - 140, this.Height - 90, 80, 80));
+                g.FillRectangle(b, new Rectangle(50, 100, Width - 100, Height - 150));
+                g.FillRectangle(b, new Rectangle(100, Height - 50, Width - 200, 50));
+                g.FillPie(b, 50, Height - 100, 100, 100, 180, -90);
+                g.FillPie(b, Width - 150, Height - 100, 100, 100, 0, 90);
+                g.FillRectangle(Brushes.White, new Rectangle(60, 100, Width - 120, Height - 150));
+                g.FillRectangle(Brushes.White, new Rectangle(100, Height - 50, Width - 200, 40));
+                g.FillEllipse(Brushes.White, new Rectangle(60, Height - 90, 80, 80));
+                g.FillEllipse(Brushes.White, new Rectangle(Width - 140, Height - 90, 80, 80));
             }
-            g.FillRectangle(b, new Rectangle(50, 0, this.Width - 100, 100));
+            g.FillRectangle(b, new Rectangle(50, 0, Width - 100, 100));
             g.FillPie(b, 0, 0, 100, 100, 90, 180);
-            g.FillPie(b, this.Width - 100, 0, 100, 100, 90, -180);
-            g.FillRectangle(Brushes.White, new Rectangle(50, 10, this.Width - 100, 80));
+            g.FillPie(b, Width - 100, 0, 100, 100, 90, -180);
+            g.FillRectangle(Brushes.White, new Rectangle(50, 10, Width - 100, 80));
             g.FillEllipse(Brushes.White, new Rectangle(10, 10, 80, 80));
-            g.FillEllipse(Brushes.White, new Rectangle(this.Width - 90, 10, 80, 80));
-            g.DrawImage(Properties.Resources.popupMultiboxIcon3_small, new Rectangle(this.Width - 130, 10, 80, 80));
+            g.FillEllipse(Brushes.White, new Rectangle(Width - 90, 10, 80, 80));
+            g.DrawImage(Properties.Resources.popupMultiboxIcon3_small, new Rectangle(Width - 130, 10, 80, 80));
         }
 
         private void UpdateImage()
         {
-            if (this.InvokeRequired)
+            if (InvokeRequired)
             {
-                UpdateImageDel d = new UpdateImageDel(UpdateImage);
-                this.Invoke(d, null);
+                UpdateImageDel d = UpdateImage;
+                Invoke(d, null);
                 return;
             }
             try
             {
-                if(!this.Visible)
+                if(!Visible)
                     return;
                 GenerateBGImage();
-                Bitmap temp_bmp = new Bitmap(this.bgImage);
-                Rectangle b = new Rectangle(0, 0, this.Width, this.Height);
-                foreach (Control ctrl in this.Controls)
+                Bitmap temp_bmp = new Bitmap(bgImage);
+                Rectangle b = new Rectangle(0, 0, Width, Height);
+                foreach (Control ctrl in Controls)
                 {
-                    if (this.Visible && ctrl.Visible && b.Contains(ctrl.Bounds))
+                    if (Visible && ctrl.Visible && b.Contains(ctrl.Bounds))
                         ctrl.DrawToBitmap(temp_bmp, ctrl.Bounds);
                 }
-                if (this.inputField.SelectionLength == 0)
+                if (inputField.SelectionLength == 0)
                 {
-                    int ss = this.inputField.SelectionStart;
-                    bool sae = ss == this.inputField.Text.Length && ss > 0;
+                    int ss = inputField.SelectionStart;
+                    bool sae = ss == inputField.Text.Length && ss > 0;
                     bool cae = false;
                     if(sae)
                     {
-                        Point tmp = this.inputField.GetPositionFromCharIndex(ss - 1);
-                        this.inputField.Text = this.inputField.Text + " ";
-                        Point tmp2 = this.inputField.GetPositionFromCharIndex(ss - 1);
+                        Point tmp = inputField.GetPositionFromCharIndex(ss - 1);
+                        inputField.Text = inputField.Text + " ";
+                        Point tmp2 = inputField.GetPositionFromCharIndex(ss - 1);
                         if (tmp2.X != tmp.X)
                             cae = true;
                     }
-                    Point p = this.inputField.GetPositionFromCharIndex(ss);
+                    Point p = inputField.GetPositionFromCharIndex(ss);
                     if(sae)
                     {
-                        this.inputField.Text = this.inputField.Text.Remove(ss);
-                        this.inputField.Select(ss, 0);
+                        inputField.Text = inputField.Text.Remove(ss);
+                        inputField.Select(ss, 0);
                     }
                     if (cae)
-                        p.X = this.inputField.Width;
+                        p.X = inputField.Width;
                     Graphics g = Graphics.FromImage(temp_bmp);
-                    g.FillRectangle(Brushes.Black, new Rectangle(this.inputField.Left + p.X - 1, p.Y + this.inputField.Top, 2, this.inputField.Height - p.Y * 2));
+                    g.FillRectangle(Brushes.Black, new Rectangle(inputField.Left + p.X - 1, p.Y + inputField.Top, 2, inputField.Height - p.Y * 2));
                 }
                 SetBitmap(temp_bmp);
-                this.Invalidate(new Rectangle(new Point(0, 0), this.Size), false);
+                Invalidate(new Rectangle(new Point(0, 0), Size), false);
             }
             catch { }
         }
@@ -500,4 +495,5 @@ namespace PopupMultibox
             }
         }
     }
+// ReSharper restore InconsistentNaming
 }

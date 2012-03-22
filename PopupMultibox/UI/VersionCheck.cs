@@ -1,17 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.Net;
 using System.IO;
 
-namespace PopupMultibox
+namespace PopupMultibox.UI
 {
+// ReSharper disable InconsistentNaming
     public partial class VersionCheck : Form
     {
         public VersionCheck()
@@ -28,16 +24,14 @@ namespace PopupMultibox
 
         private void VersionCheck_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (e.CloseReason == CloseReason.UserClosing)
-            {
-                e.Cancel = true;
-                this.Hide();
-            }
+            if (e.CloseReason != CloseReason.UserClosing) return;
+            e.Cancel = true;
+            Hide();
         }
 
         private void okButton_Click(object sender, EventArgs e)
         {
-            this.Hide();
+            Hide();
         }
 
         private void checkTimer_Tick(object sender, EventArgs e)
@@ -70,13 +64,13 @@ namespace PopupMultibox
                 downloadButton.Visible = true;
                 progressBar.Visible = false;
                 installButton.Visible = false;
-                this.Show();
+                Show();
             }
             Properties.Settings.Default.LastVersionCheck = DateTime.Now;
             Properties.Settings.Default.Save();
         }
 
-        private string getData()
+        private static string getData()
         {
             try
             {
@@ -105,8 +99,8 @@ namespace PopupMultibox
             progressBar.Visible = true;
             installButton.Visible = true;
             WebClient webClient = new WebClient();
-            webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(Completed);
-            webClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(ProgressChanged);
+            webClient.DownloadFileCompleted += Completed;
+            webClient.DownloadProgressChanged += ProgressChanged;
             webClient.DownloadFileAsync(new Uri("http://multibox.everydayprogramminggenius.com/MultiboxInstaller.msi"), fileChooserS.FileName);
         }
 
@@ -130,4 +124,5 @@ namespace PopupMultibox
             MainClass.CloseAndInstall(fileChooserS.FileName);
         }
     }
+// ReSharper restore InconsistentNaming
 }

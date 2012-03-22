@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Windows.Forms;
+using PopupMultibox.UI;
 
-namespace PopupMultibox
+namespace PopupMultibox.Functions
 {
-    public interface MultiboxFunction
+    public interface IMultiboxFunction
     {
         bool Triggers(MultiboxFunctionParam args);
         bool IsMulti(MultiboxFunctionParam args);
@@ -41,11 +39,11 @@ namespace PopupMultibox
 
     public class MultiboxFunctionParam
     {
-        private Keys key;
-        private bool control;
-        private bool alt;
-        private bool shift;
-        private MainClass mc;
+        private readonly Keys key;
+        private readonly bool control;
+        private readonly bool alt;
+        private readonly bool shift;
+        private readonly MainClass mc;
 
         public string MultiboxText
         {

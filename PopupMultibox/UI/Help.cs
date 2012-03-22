@@ -1,20 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using Henderson.Util.MyDictionary;
 using System.Text.RegularExpressions;
 using System.Security.Permissions;
 
-namespace PopupMultibox
+namespace PopupMultibox.UI
 {
     [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
     [System.Runtime.InteropServices.ComVisibleAttribute(true)]
+// ReSharper disable InconsistentNaming
     public partial class Help : Form
     {
         public Help()
@@ -32,17 +29,17 @@ namespace PopupMultibox
         }
 
         private MyDictionary fileIndex;
-        private Regex indexMatcher1;
-        private Regex indexMatcher2;
-        private Regex indexMatcher3;
-        private Regex linkMatcher1;
-        private Regex linkMatcher2;
+        private readonly Regex indexMatcher1;
+        private readonly Regex indexMatcher2;
+        private readonly Regex indexMatcher3;
+        private readonly Regex linkMatcher1;
+        private readonly Regex linkMatcher2;
 
         private void Help_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (e.CloseReason == CloseReason.UserClosing)
                 e.Cancel = true;
-            this.Hide();
+            Hide();
         }
 
         private void IndexHelpFiles()
@@ -68,11 +65,7 @@ namespace PopupMultibox
                         int mi = int.Parse(m.Groups[1].Value);
                         string mn = m.Groups[2].Value;
                         inds.Add(mi);
-                        MyDictionary tmpd = fileIndex;
-                        foreach (int ti in inds)
-                        {
-                            tmpd = tmpd[ti];
-                        }
+                        MyDictionary tmpd = inds.Aggregate(fileIndex, (current, ti) => current[ti]);
                         tmpd["name"] = mn;
                     }
                     catch { }
@@ -84,22 +77,14 @@ namespace PopupMultibox
                         int mi = int.Parse(m2.Groups[1].Value);
                         string mn = m2.Groups[2].Value;
                         inds.Add(mi);
-                        MyDictionary tmpd = fileIndex;
-                        foreach (int ti in inds)
-                        {
-                            tmpd = tmpd[ti];
-                        }
+                        MyDictionary tmpd = inds.Aggregate(fileIndex, (current, ti) => current[ti]);
                         tmpd["sname"] = mn;
                     }
                 }
                 catch { }
                 try
                 {
-                    MyDictionary tmpd = fileIndex;
-                    foreach (int ti in inds)
-                    {
-                        tmpd = tmpd[ti];
-                    }
+                    MyDictionary tmpd = inds.Aggregate(fileIndex, (current, ti) => current[ti]);
                     tmpd["fname"] = f;
                 }
                 catch { }
@@ -116,10 +101,10 @@ namespace PopupMultibox
         private string GeneratePage(string page)
         {
             string rval = "<html><body>";
-            if (page != null && page.Length > 0)
+            if (!string.IsNullOrEmpty(page))
             {
                 rval += "<div style=\"paddding:20px;\"><a href=\"#\" onclick=\"window.external.ShowPage('');\" style=\"color:#0000FF;cursor:pointer;\">Home</a></div>";
-                string[] parts = page.Split(new string[] { "." }, StringSplitOptions.RemoveEmptyEntries);
+                string[] parts = page.Split(new[] { "." }, StringSplitOptions.RemoveEmptyEntries);
                 List<int> inds = new List<int>(0);
                 foreach (string p in parts)
                 {
@@ -204,12 +189,12 @@ namespace PopupMultibox
             return rval;
         }
 
-        private string GenerateLinks(MyDictionary d, string baseindstr, string indstr)
+        private static string GenerateLinks(MyDictionary d, string baseindstr, string indstr)
         {
             string rval = "";
             if (indstr == null || indstr.Length <= 0)
                 rval = "<br><div style=\"font-size:larger;font-weight:bold;\">Links</div>";
-            if ((indstr != null && indstr.Length > 0))
+            if (!string.IsNullOrEmpty(indstr))
             {
                 if (d.Keys.Length <= 0 || d["name"].Value == null || d["name"].Value.ToString().Length <= 0)
                     return "";
@@ -219,10 +204,7 @@ namespace PopupMultibox
             if (ik.Length <= 0)
                 return rval;
             rval += "<div style=\"padding:0px;padding-left:20px;\">";
-            foreach (int i in ik)
-            {
-                rval += GenerateLinks(d[i], baseindstr, (((indstr == null || indstr.Length <= 0) && (baseindstr == null || baseindstr.Length <= 0)) ? "" : indstr + ".") + i);
-            }
+            rval = ik.Aggregate(rval, (current, i) => current + GenerateLinks(d[i], baseindstr, (((indstr == null || indstr.Length <= 0) && (baseindstr == null || baseindstr.Length <= 0)) ? "" : indstr + ".") + i));
             rval += "</div>";
             return rval;
         }
@@ -236,20 +218,20 @@ namespace PopupMultibox
 
         public void LaunchPage(string page)
         {
-            this.Show();
+            Show();
             ShowPage(page);
         }
 
         public List<ResultItem> GetAutocompleteOptions(string path)
         {
             List<ResultItem> lst = new List<ResultItem>(0);
-            GetAutocompleteOptions(fileIndex, path, "", path, "", lst, true);
+            GetAutocompleteOptions(fileIndex, "", path, "", lst, true);
             return lst;
         }
 
-        private void GetAutocompleteOptions(MyDictionary d, string origpath, string path, string rempath, string numpath, List<ResultItem> lst, bool fv)
+        private static void GetAutocompleteOptions(MyDictionary d, string path, string rempath, string numpath, List<ResultItem> lst, bool fv)
         {
-            if ((path != null && path.Length > 0) || !fv)
+            if (!string.IsNullOrEmpty(path) || !fv)
             {
                 if (d.Keys.Length <= 0 || d["name"].Value == null || d["name"].Value.ToString().Length <= 0)
                     return;
@@ -276,7 +258,7 @@ namespace PopupMultibox
                         }
                         foreach (int i in ik)
                         {
-                            GetAutocompleteOptions(d[i], origpath, newpath, newrempath, ((numpath == null || numpath.Length <= 0) ? "" : numpath + ".") + i, lst, false);
+                            GetAutocompleteOptions(d[i], newpath, newrempath, ((numpath == null || numpath.Length <= 0) ? "" : numpath + ".") + i, lst, false);
                         }
                     }
                 }
@@ -290,9 +272,10 @@ namespace PopupMultibox
                     return;
                 foreach (int i in ik)
                 {
-                    GetAutocompleteOptions(d[i], origpath, path, rempath, ((numpath == null || numpath.Length <= 0) ? "" : numpath + ".") + i, lst, false);
+                    GetAutocompleteOptions(d[i], path, rempath, ((numpath == null || numpath.Length <= 0) ? "" : numpath + ".") + i, lst, false);
                 }
             }
         }
     }
+// ReSharper restore InconsistentNaming
 }

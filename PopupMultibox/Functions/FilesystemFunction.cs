@@ -1,27 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
 using System.Threading;
+using PopupMultibox.UI;
+using PopupMultibox.helpers;
 
-namespace PopupMultibox
+namespace PopupMultibox.Functions
 {
     public class FilesystemFunction : AbstractFunction
     {
-        private void DirSearch(string sDir, string fnd, List<string> itms)
+        private static void DirSearch(string sDir, string fnd, List<string> itms)
         {
             try
             {
                 Regex tmp = new Regex(fnd.Replace(@"\\", @"\\\\").Replace(@".", @"\.").Replace(@"*", @".*").Replace(@"?", @".?").Replace(@"[", @"\[").Replace(@"]", @"\]".Replace(@"(", @"\(").Replace(@")", @"\)")), RegexOptions.IgnoreCase);
-                foreach (string f in Directory.GetFiles(sDir))
-                {
-                    if (tmp.IsMatch(f.Substring(f.LastIndexOf("\\") + 1)))
-                        itms.Add(f);
-                }
+                itms.AddRange(Directory.GetFiles(sDir).Where(f => tmp.IsMatch(f.Substring(f.LastIndexOf("\\") + 1))));
                 foreach (string d in Directory.GetDirectories(sDir))
                 {
                     DirSearch(d, fnd, itms);
@@ -30,59 +27,45 @@ namespace PopupMultibox
             catch { }
         }
 
-        private string[] DirList(string sDir, string fnd)
+        private static string[] DirList(string sDir, string fnd)
         {
             try
             {
                 List<string> itms = new List<string>(0);
-                foreach (string d in Directory.GetDirectories(sDir))
-                {
-                    if (d.StartsWith(fnd))
-                        itms.Add(d.Remove(0, sDir.Length) + "\\");
-                }
-                foreach (string f in Directory.GetFiles(sDir))
-                {
-                    if (f.StartsWith(fnd))
-                        itms.Add(f.Remove(0, sDir.Length));
-                }
+                itms.AddRange(from d in Directory.GetDirectories(sDir) where d.StartsWith(fnd) select d.Remove(0, sDir.Length) + "\\");
+                itms.AddRange(from f in Directory.GetFiles(sDir) where f.StartsWith(fnd) select f.Remove(0, sDir.Length));
                 return itms.ToArray();
             }
             catch { }
             return null;
         }
 
-        private string[] DirList2(string sDir)
+        private static string[] DirList2(string sDir)
         {
             try
             {
                 List<string> itms = new List<string>(0);
-                foreach (string d in Directory.GetDirectories(sDir))
-                {
-                    itms.Add(d + "\\");
-                }
-                foreach (string f in Directory.GetFiles(sDir))
-                {
-                    itms.Add(f);
-                }
+                itms.AddRange(Directory.GetDirectories(sDir).Select(d => d + "\\"));
+                itms.AddRange(Directory.GetFiles(sDir));
                 return itms.ToArray();
             }
             catch { }
             return null;
         }
 
-        private long GetFileSize(string path)
+        private static long GetFileSize(string path)
         {
             try
             {
                 FileAttributes fa = File.GetAttributes(path);
-                if (!((fa & FileAttributes.Directory) == FileAttributes.Directory))
+                if ((fa & FileAttributes.Directory) != FileAttributes.Directory)
                     return new FileInfo(path).Length;
             }
             catch { }
             return -1;
         }
 
-        private long GetFileSize2(string path)
+        private static long GetFileSize2(string path)
         {
             try
             {
@@ -92,7 +75,7 @@ namespace PopupMultibox
             return -1;
         }
 
-        private bool GetFolderSize(string path, MainClass mc, ref long cs, ref long files, ref long folders, ref DateTime ld, long delay)
+        private static bool GetFolderSize(string path, MainClass mc, ref long cs, ref long files, ref long folders, ref DateTime ld, long delay)
         {
             try
             {
@@ -129,10 +112,10 @@ namespace PopupMultibox
             return false;
         }
 
-        private void SetMCOutputLabelText(MainClass mc, long cs, long files, long folders, string ending)
+        private static void SetMCOutputLabelText(MainClass mc, long cs, long files, long folders, string ending)
         {
             int i = 0;
-            double size = (double)cs;
+            double size = cs;
             while (size >= 1024 && i < sizeEndings.Length - 1)
             {
                 if (sizeEndings[i].ToLower().Equals(ending))
@@ -143,15 +126,15 @@ namespace PopupMultibox
             mc.OutputLabelText = files + " file(s); " + folders + " folder(s); " + size.ToString("#.###") + sizeEndings[i];
         }
 
-        private static string lastSizePath = null;
+        private static string lastSizePath;
         private static long lastSizeValue = -1;
         private static long lastSizeFiles = -1;
         private static long lastSizeFolders = -1;
         private static DateTime lastSizeTime;
-        private static volatile string currentEnding = null;
-        private static string[] sizeEndings = new string[] { "B", "KB", "MB", "GB", "TB" };
-        private static volatile bool cancelCalc = false;
-        private static volatile bool isCalculating = false;
+        private static volatile string currentEnding;
+        private static readonly string[] sizeEndings = new[] { "B", "KB", "MB", "GB", "TB" };
+        private static volatile bool cancelCalc;
+        private static volatile bool isCalculating;
         private delegate void SetMCOutputLabelTextDel(MainClass mc, long cs, long files, long folders, string ending);
 
         public FilesystemFunction()
@@ -159,11 +142,11 @@ namespace PopupMultibox
             BookmarkList.Load();
         }
 
-        #region MultiboxFunction Members
+        #region IMultiboxFunction Members
 
         public override bool Triggers(MultiboxFunctionParam args)
         {
-            return (args.MultiboxText != null && args.MultiboxText.Length > 0 && args.MultiboxText[0] == ':');
+            return (!string.IsNullOrEmpty(args.MultiboxText) && args.MultiboxText[0] == ':');
         }
 
         public override bool IsMulti(MultiboxFunctionParam args)
@@ -227,10 +210,7 @@ namespace PopupMultibox
                     if (pths != null)
                     {
                         List<ResultItem> tmp = new List<ResultItem>(0);
-                        foreach (string tpth in pths)
-                        {
-                            tmp.Add(new ResultItem(tpth, pth3 + tpth, pth2 + tpth));
-                        }
+                        tmp.AddRange(pths.Select(tpth => new ResultItem(tpth, pth3 + tpth, pth2 + tpth)));
                         return tmp;
                     }
                 }
@@ -247,13 +227,10 @@ namespace PopupMultibox
                         fnd = @"^" + fnd.Substring(1) + @"$";
                     List<string> rlts = new List<string>(0);
                     DirSearch(pth3, fnd, rlts);
-                    if (rlts != null && rlts.Count > 0)
+                    if (rlts.Count > 0)
                     {
                         List<ResultItem> tmp = new List<ResultItem>(0);
-                        foreach (string tpth in rlts)
-                        {
-                            tmp.Add(new ResultItem(tpth.Substring(tpth.LastIndexOf("\\") + 1), tpth, ht ? tpth.Replace(args.MC.HomeDirectory, "~") : tpth));
-                        }
+                        tmp.AddRange(rlts.Select(tpth => new ResultItem(tpth.Substring(tpth.LastIndexOf("\\") + 1), tpth, ht ? tpth.Replace(args.MC.HomeDirectory, "~") : tpth)));
                         return tmp;
                     }
                 }
@@ -282,7 +259,7 @@ namespace PopupMultibox
                 cancelCalc = true;
                 Thread.Sleep(10);
                 cancelCalc = false;
-                if (args.Key == Keys.Tab || lastSizeValue <= 0 || lastSizePath == null || lastSizeTime == null || !lastSizePath.Equals(pth) || (DateTime.Now - lastSizeTime).TotalMinutes >= 5)
+                if (args.Key == Keys.Tab || lastSizeValue <= 0 || lastSizePath == null || !lastSizePath.Equals(pth) || (DateTime.Now - lastSizeTime).TotalMinutes >= 5)
                 {
                     lastSizePath = pth;
                     args.MC.OutputLabelText = "Calculating size, please wait...";
@@ -324,7 +301,7 @@ namespace PopupMultibox
             if (pth.Length > 0 && pth[0] == '~')
                 pth = args.MC.HomeDirectory + pth.Substring(1);
             long sz = GetFileSize(pth);
-            double size = (double)sz;
+            double size = sz;
             string sizestr = "--";
             if (size > 0)
             {
@@ -338,7 +315,7 @@ namespace PopupMultibox
                 }
                 sizestr = size.ToString("#.###") + sizeEndings[i];
             }
-            string typ = "";
+            string typ;
             if (sz > 0)
             {
                 try

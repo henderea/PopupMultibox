@@ -1,17 +1,14 @@
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\bin\Release\PopupMultibox.exe
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\bin\Release\PopupMultibox.pdb
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\obj\x86\Release\ResolveAssemblyReference.cache
-C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\obj\x86\Release\PopupMultibox.MainClass.resources
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\obj\x86\Release\PopupMultibox.Properties.Resources.resources
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\obj\x86\Release\ResGen.read.1.tlog
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\obj\x86\Release\ResGen.write.1.tlog
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\obj\x86\Release\PopupMultibox.exe
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\obj\x86\Release\PopupMultibox.pdb
-C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\obj\x86\Release\PopupMultibox.Prefs.resources
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\bin\Release\PopupMultibox.exe.config
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\obj\x86\Release\GenerateResource.read.1.tlog
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\obj\x86\Release\GenerateResource.write.1.tlog
-C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\obj\x86\Release\PopupMultibox.Help.resources
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\bin\Release\help files\_(1+Application Startup and Exit)_[1+Opening the Application].mbh
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\bin\Release\help files\_(1+Application Startup and Exit)_[2+Closing the Application].mbh
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\bin\Release\help files\_(1+Application Startup and Exit)_[3+Restarting the Application].mbh
@@ -52,7 +49,6 @@ C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMulti
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\bin\Release\help files\_(3+Multibox Functions)_(3+Filesystem Operations)_[2+File Size].mbh
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\bin\Release\help files\_(3+Multibox Functions)_(3+Filesystem Operations)_[3+Creating a Bookmark].mbh
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\bin\Release\help files\_(3+Multibox Functions)_(3+Filesystem Operations)_[4+Opening a Bookmark].mbh
-C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\obj\x86\Release\PopupMultibox.VersionCheck.resources
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\bin\Release\help files\_(4+Preferences Dialog)_(2+Updates Tab).mbh
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\bin\Release\help files\_(4+Preferences Dialog)_(3+Other Options Tab).mbh
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\bin\Release\help files\_(7+Change Log)_[10+1.1.4].mbh
@@ -79,3 +75,7 @@ C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMulti
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\bin\Release\help files\_(7+Change Log)_[20+2.3.0].mbh
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\bin\Release\help files\_(7+Change Log)_[21+2.3.1].mbh
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\bin\Release\help files\_(7+Change Log)_[22+2.3.2].mbh
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\obj\x86\Release\PopupMultibox.UI.Help.resources
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\obj\x86\Release\PopupMultibox.UI.MainClass.resources
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\obj\x86\Release\PopupMultibox.UI.Prefs.resources
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\obj\x86\Release\PopupMultibox.UI.VersionCheck.resources

@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using PopupMultibox.UI;
 
-namespace PopupMultibox
+namespace PopupMultibox.Functions
 {
-    public abstract class AbstractFunction : MultiboxFunction
+    public abstract class AbstractFunction : IMultiboxFunction
     {
-        #region MultiboxFunction Members
+        #region IMultiboxFunction Members
 
         public abstract bool Triggers(MultiboxFunctionParam args);
 

@@ -1,27 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Diagnostics;
+using PopupMultibox.UI;
 
-namespace PopupMultibox
+namespace PopupMultibox.Functions
 {
     public class AppLaunchFunction : AbstractFunction
     {
-        private void GetApps(string sDir, List<string> itms)
+        private static void GetApps(string sDir, List<string> itms)
         {
             try
             {
                 Regex tmp = new Regex(@".*\.lnk", RegexOptions.IgnoreCase);
-                foreach (string f in Directory.GetFiles(sDir))
-                {
-                    if (tmp.IsMatch(f.Substring(f.LastIndexOf("\\") + 1)))
-                        itms.Add(f);
-                }
+                itms.AddRange(Directory.GetFiles(sDir).Where(f => tmp.IsMatch(f.Substring(f.LastIndexOf("\\") + 1))));
                 foreach (string d in Directory.GetDirectories(sDir))
                 {
                     itms.Add(d + "\\");
@@ -46,10 +42,10 @@ namespace PopupMultibox
             catch { }
             GetApps(p2, tmp2);
             List<string> fnd = new List<string>(0);
-            for (int i = 0; i < tmp1.Count; i++)
+            foreach (string t in tmp1)
             {
-                string fnd2 = tmp1[i].Substring(p1.Length + 1);
-                string dtxt = fnd2;
+                string fnd2 = t.Substring(p1.Length + 1);
+                string dtxt;
                 if (!fnd2.EndsWith("\\"))
                 {
                     fnd2 = fnd2.Remove(fnd2.Length - 4);
@@ -57,13 +53,13 @@ namespace PopupMultibox
                 }
                 else
                     dtxt = fnd2.Substring(fnd2.Remove(fnd2.Length - 1).LastIndexOf("\\") + 1);
-                appCache.Add(new ResultItem(dtxt, tmp1[i], fnd2));
+                appCache.Add(new ResultItem(dtxt, t, fnd2));
                 fnd.Add(fnd2);
             }
-            for (int i = 0; i < tmp2.Count; i++)
+            foreach (string t in tmp2)
             {
-                string fnd2 = tmp2[i].Substring(p2.Length + 1);
-                string dtxt = fnd2;
+                string fnd2 = t.Substring(p2.Length + 1);
+                string dtxt;
                 if (!fnd2.EndsWith("\\"))
                 {
                     fnd2 = fnd2.Remove(fnd2.Length - 4);
@@ -71,22 +67,20 @@ namespace PopupMultibox
                 }
                 else
                     dtxt = fnd2.Substring(fnd2.Remove(fnd2.Length - 1).LastIndexOf("\\") + 1);
-                if (!fnd.Contains(fnd2))
+                if (fnd.Contains(fnd2)) continue;
+                int ind = 0;
+                foreach (string t1 in tmp1)
                 {
-                    int ind = 0;
-                    for (int j = 0; j < tmp1.Count; j++)
-                    {
-                        string fnd3 = tmp1[j].Substring(p2.Length + 1);
-                        if (!fnd3.EndsWith("\\")) 
-                            fnd3 = fnd3.Remove(fnd3.Length - 4);
-                        if (fnd2.CompareTo(fnd3) < 0)
-                            ind++;
-                        else
-                            break;
-                    }
-                    tmp1.Insert(ind, tmp2[i]);
-                    appCache.Insert(ind, new ResultItem(dtxt, tmp2[i], fnd2));
+                    string fnd3 = t1.Substring(p2.Length + 1);
+                    if (!fnd3.EndsWith("\\")) 
+                        fnd3 = fnd3.Remove(fnd3.Length - 4);
+                    if (fnd2.CompareTo(fnd3) < 0)
+                        ind++;
+                    else
+                        break;
                 }
+                tmp1.Insert(ind, t);
+                appCache.Insert(ind, new ResultItem(dtxt, t, fnd2));
             }
         }
 
@@ -105,7 +99,9 @@ namespace PopupMultibox
                 }
                 catch { }
             }
+// ReSharper disable FunctionNeverReturns
         }
+// ReSharper restore FunctionNeverReturns
 
         private List<ResultItem> DirList(string fnd)
         {
@@ -139,7 +135,7 @@ namespace PopupMultibox
             new CacheReloaderDel(CacheReloader).BeginInvoke(null, null);
         }
 
-        #region MultiboxFunction Members
+        #region IMultiboxFunction Members
 
         public override bool Triggers(MultiboxFunctionParam args)
         {
@@ -209,10 +205,15 @@ namespace PopupMultibox
 
         public override void RunKeyDownAction(MultiboxFunctionParam args)
         {
-            if (args.Key == Keys.Up)
-                args.MC.LabelManager.SelectPrev();
-            else if (args.Key == Keys.Down)
-                args.MC.LabelManager.SelectNext();
+            switch (args.Key)
+            {
+                case Keys.Up:
+                    args.MC.LabelManager.SelectPrev();
+                    break;
+                case Keys.Down:
+                    args.MC.LabelManager.SelectNext();
+                    break;
+            }
         }
 
         public override bool HasActionKeyEvent(MultiboxFunctionParam args)
@@ -225,7 +226,8 @@ namespace PopupMultibox
             try
             {
                 ResultItem tmp2 = args.MC.LabelManager.CurrentSelection;
-                if (tmp2 != null)
+                if (tmp2 == null) {}
+                else
                 {
                     string tmpt = tmp2.FullText;
                     Process.Start(tmpt);

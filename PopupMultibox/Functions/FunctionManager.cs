@@ -1,19 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Windows.Forms;
+using PopupMultibox.UI;
 
-namespace PopupMultibox
+namespace PopupMultibox.Functions
 {
     public class FunctionManager
     {
-        private static List<MultiboxFunction> functions;
-        //private static bool isShowingActions = false;
+        private static readonly List<IMultiboxFunction> functions;
 
         static FunctionManager()
         {
-            functions = new List<MultiboxFunction>(0);
+            functions = new List<IMultiboxFunction>(0);
             functions.Add(new ScreensaverFunction());
             functions.Add(new UpdateFunction());
             functions.Add(new WebSearchFunction());
@@ -24,11 +21,11 @@ namespace PopupMultibox
             functions.Add(new CalculatorFunction());
         }
 
-        private static MultiboxFunction GetActivatedFunction(MultiboxFunctionParam args)
+        private static IMultiboxFunction GetActivatedFunction(MultiboxFunctionParam args)
         {
             try
             {
-                foreach (MultiboxFunction f in functions)
+                foreach (IMultiboxFunction f in functions)
                 {
                     if (f.Triggers(args))
                         return f;
@@ -43,7 +40,7 @@ namespace PopupMultibox
             try
             {
                 MultiboxFunctionParam p = new MultiboxFunctionParam(e.KeyCode, e.Control, e.Alt, e.Shift, mc);
-                MultiboxFunction af = GetActivatedFunction(p);
+                IMultiboxFunction af = GetActivatedFunction(p);
                 if (af == null)
                     return;
                 if (af.HasKeyDownAction(p))
@@ -61,7 +58,7 @@ namespace PopupMultibox
             try
             {
                 MultiboxFunctionParam p = new MultiboxFunctionParam(e.KeyCode, e.Control, e.Alt, e.Shift, mc);
-                MultiboxFunction af = GetActivatedFunction(p);
+                IMultiboxFunction af = GetActivatedFunction(p);
                 if (af == null)
                 {
                     mc.OutputLabelText = "";
@@ -78,7 +75,7 @@ namespace PopupMultibox
                     string tc = p.DisplayText;
                     if (af.HasSpecialDisplayCopyHandling(p))
                         tc = af.RunSpecialDisplayCopyHandling(p);
-                    if (tc != null && tc.Length > 0)
+                    if (!string.IsNullOrEmpty(tc))
                         Clipboard.SetText(tc);
                 }
                 else if (p.Key == Keys.Enter && p.Shift && !p.Control && !p.Alt && p.MultiboxText.Trim().Length > 0)
@@ -86,7 +83,7 @@ namespace PopupMultibox
                     string tc = p.MultiboxText;
                     if (af.HasSpecialInputCopyHandling(p))
                         tc = af.RunSpecialInputCopyHandling(p);
-                    if (tc != null && tc.Length > 0)
+                    if (!string.IsNullOrEmpty(tc))
                         Clipboard.SetText(tc);
                 }
                 else
@@ -106,7 +103,7 @@ namespace PopupMultibox
                             e.SuppressKeyPress = true;
                         return true;
                     }
-                    else if (sr)
+                    if (sr)
                     {
                         if (ibs)
                             new RunBgS(af.RunSingleBackgroundStream).BeginInvoke(p, null, null);
@@ -126,7 +123,7 @@ namespace PopupMultibox
             try
             {
                 MultiboxFunctionParam p = new MultiboxFunctionParam(Keys.None, false, false, false, mc);
-                MultiboxFunction af = GetActivatedFunction(p);
+                IMultiboxFunction af = GetActivatedFunction(p);
                 if (!af.IsMulti(p) || !af.HasDetails(p))
                 {
                     p.MC.DetailsLabelText = "";

@@ -1,20 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace PopupMultibox
+namespace PopupMultibox.helpers
 {
     public class WindowsShell
     {
         #region fields
+// ReSharper disable InconsistentNaming
         public static int MOD_ALT = 0x1;
         public static int MOD_CONTROL = 0x2;
         public static int MOD_SHIFT = 0x4;
         public static int MOD_WIN = 0x8;
         public static int WM_HOTKEY = 0x312;
+// ReSharper restore InconsistentNaming
         #endregion
 
         [DllImport("user32.dll")]
@@ -28,17 +27,15 @@ namespace PopupMultibox
         {
             int modifiers = 0;
             if ((key & Keys.Alt) == Keys.Alt)
-                modifiers = modifiers | WindowsShell.MOD_ALT;
+                modifiers = modifiers | MOD_ALT;
             if ((key & Keys.Control) == Keys.Control)
-                modifiers = modifiers | WindowsShell.MOD_CONTROL;
+                modifiers = modifiers | MOD_CONTROL;
             if ((key & Keys.Shift) == Keys.Shift)
-                modifiers = modifiers | WindowsShell.MOD_SHIFT;
+                modifiers = modifiers | MOD_SHIFT;
             Keys k = key & ~Keys.Control & ~Keys.Shift & ~Keys.Alt;
             keyId = f.GetHashCode(); // this should be a key unique ID, modify this if you want more than one hotkey
-            RegisterHotKey((IntPtr)f.Handle, keyId, (uint)modifiers, (uint)k);
+            RegisterHotKey(f.Handle, keyId, (uint)modifiers, (uint)k);
         }
-
-        private delegate void Func();
 
         public static void UnregisterHotKey(Form f)
         {
@@ -83,12 +80,18 @@ namespace PopupMultibox
 
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
+// ReSharper disable UnusedMember.Local
         struct ARGB
+// ReSharper restore UnusedMember.Local
         {
+// ReSharper disable FieldCanBeMadeReadOnly.Local
+// ReSharper disable MemberCanBePrivate.Local
             public byte Blue;
             public byte Green;
             public byte Red;
             public byte Alpha;
+// ReSharper restore MemberCanBePrivate.Local
+// ReSharper restore FieldCanBeMadeReadOnly.Local
         }
 
 

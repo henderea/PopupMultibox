@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Windows.Forms;
 using System.Web;
 using System.Diagnostics;
 using System.IO;
 
-namespace PopupMultibox
+namespace PopupMultibox.Functions
 {
     public class WebSearchFunction : AbstractFunction
     {
@@ -16,19 +14,19 @@ namespace PopupMultibox
             SearchList.Load();
         }
 
-        #region MultiboxFunction Members
+        #region IMultiboxFunction Members
 
         public override bool Triggers(MultiboxFunctionParam args)
         {
-            return (args.MultiboxText != null && args.MultiboxText.Length > 0 && args.MultiboxText[0] == '@');
+            return (!string.IsNullOrEmpty(args.MultiboxText) && args.MultiboxText[0] == '@');
         }
 
         public override string RunSingle(MultiboxFunctionParam args)
         {
             string rval = "Search engine not found";
             int ind = args.MultiboxText.IndexOf(" ");
-            string k = "";
-            string t = "";
+            string k;
+            string t;
             if (ind > 1)
             {
                 k = args.MultiboxText.Substring(1, ind - 1);
@@ -65,8 +63,8 @@ namespace PopupMultibox
         public override void RunActionKeyEvent(MultiboxFunctionParam args)
         {
             int ind = args.MultiboxText.IndexOf(" ");
-            string k = "";
-            string t = "";
+            string k;
+            string t;
             if (ind > 1)
             {
                 k = args.MultiboxText.Substring(1, ind - 1);
@@ -120,28 +118,28 @@ namespace PopupMultibox
 
         public SearchItem()
         {
-            this.Name = "";
-            this.Keyword = "";
-            this.SearchPath = "";
+            Name = "";
+            Keyword = "";
+            SearchPath = "";
         }
 
         public SearchItem(string n, string k, string s)
         {
-            this.Name = n;
-            this.Keyword = k;
-            this.SearchPath = s;
+            Name = n;
+            Keyword = k;
+            SearchPath = s;
         }
 
         public string ToFileString()
         {
-            return this.Name + ";;;" + this.Keyword + ";;;" + this.SearchPath;
+            return Name + ";;;" + Keyword + ";;;" + SearchPath;
         }
 
         public static SearchItem FromFileString(string data)
         {
             try
             {
-                string[] parts = data.Split(new string[] { ";;;" }, StringSplitOptions.None);
+                string[] parts = data.Split(new[] { ";;;" }, StringSplitOptions.None);
                 return new SearchItem(parts[0], parts[1], parts[2]);
             }
             catch { }
@@ -151,7 +149,7 @@ namespace PopupMultibox
 
     public class SearchList
     {
-        private static List<SearchItem> items;
+        private static readonly List<SearchItem> items;
 
         public static SearchItem[] Items
         {
@@ -234,12 +232,7 @@ namespace PopupMultibox
             try
             {
                 List<string> lines = new List<string>(0);
-                foreach (SearchItem i in items)
-                {
-                    string tmp = i.ToFileString();
-                    if (!tmp.Equals(";;;;;;"))
-                        lines.Add(tmp);
-                }
+                lines.AddRange(items.Select(i => i.ToFileString()).Where(tmp => !tmp.Equals(";;;;;;")));
                 if (!Directory.Exists(Environment.GetEnvironmentVariable("USERPROFILE") + "\\Popup Multibox"))
                     Directory.CreateDirectory(Environment.GetEnvironmentVariable("USERPROFILE") + "\\Popup Multibox");
                 File.WriteAllLines(Environment.GetEnvironmentVariable("USERPROFILE") + "\\Popup Multibox\\searches.txt", lines.ToArray());
