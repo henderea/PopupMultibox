@@ -53,6 +53,18 @@ namespace PopupMultibox.Functions
             return null;
         }
 
+        private static string[] DriveList(string fnd)
+        {
+            try
+            {
+                List<string> itms = new List<string>(0);
+                itms.AddRange(from di in DriveInfo.GetDrives() where string.IsNullOrEmpty(fnd) || di.Name.StartsWith(fnd) select di.Name);
+                return itms.ToArray();
+            }
+            catch {}
+            return null;
+        }
+
         private static long GetFileSize(string path)
         {
             try
@@ -199,19 +211,48 @@ namespace PopupMultibox.Functions
                 if (ind <= 1)
                 {
                     string pth = args.MultiboxText.Substring(1);
-                    string pth2 = pth.Substring(0, pth.LastIndexOf("\\") + 1);
-                    string pth3 = pth2;
-                    if (pth3.Length > 0 && pth3[0] == '~')
-                        pth3 = args.MC.HomeDirectory + pth3.Substring(1);
-                    string pth4 = pth;
-                    if (pth4.Length > 0 && pth4[0] == '~')
-                        pth4 = args.MC.HomeDirectory + pth4.Substring(1);
-                    string[] pths = DirList(pth3, pth4);
-                    if (pths != null)
+                    if (!pth.Contains("\\"))
                     {
-                        List<ResultItem> tmp = new List<ResultItem>(0);
-                        tmp.AddRange(pths.Select(tpth => new ResultItem(tpth, pth3 + tpth, pth2 + tpth)));
-                        return tmp;
+                        if (args.Key == Keys.Back && args.Control)
+                        {
+                            if(string.IsNullOrEmpty(pth))
+                            {
+                                args.MC.InputFieldText = "";
+                                return null;
+                            }
+                            args.MC.InputFieldText = ":";
+                            pth = "";
+                        }
+                        string[] pths = DriveList(pth);
+                        if (pths != null)
+                        {
+                            List<ResultItem> tmp = new List<ResultItem>(0);
+                            tmp.AddRange(pths.Select(tpth => new ResultItem(tpth, tpth, tpth)));
+                            return tmp;
+                        }
+                        return null;
+                    }
+                    else
+                    {
+                        if (args.Key == Keys.Back && args.Control)
+                        {
+                            pth = pth.EndsWith("\\") ? pth.Remove(pth.LastIndexOf("\\", pth.Length - 2) + 1) : pth.Remove(pth.LastIndexOf("\\")+1);
+                            args.MC.InputFieldText = ":" + pth;
+                        }
+                        string pth2 = pth.Substring(0, pth.LastIndexOf("\\") + 1);
+                        string pth3 = pth2;
+                        if (pth3.Length > 0 && pth3[0] == '~')
+                            pth3 = args.MC.HomeDirectory + pth3.Substring(1);
+                        string pth4 = pth;
+                        if (pth4.Length > 0 && pth4[0] == '~')
+                            pth4 = args.MC.HomeDirectory + pth4.Substring(1);
+                        string[] pths = DirList(pth3, pth4);
+                        if (pths != null)
+                        {
+                            List<ResultItem> tmp = new List<ResultItem>(0);
+                            tmp.AddRange(pths.Select(tpth => new ResultItem(tpth, pth3 + tpth, pth2 + tpth)));
+                            return tmp;
+                        }
                     }
                 }
                 else
@@ -241,53 +282,51 @@ namespace PopupMultibox.Functions
         public override void RunSingleBackgroundStream(MultiboxFunctionParam args)
         {
             int ind = args.MultiboxText.IndexOf(">>>");
-            if (ind > 1)
+            if (ind <= 1) return;
+            string pth = args.MultiboxText.Substring(1, ind - 1);
+            if (pth.Length > 0 && pth[0] == '~')
+                pth = args.MC.HomeDirectory + pth.Substring(1);
+            string ending = sizeEndings[sizeEndings.Length - 1];
+            try
             {
-                string pth = args.MultiboxText.Substring(1, ind - 1);
-                if (pth.Length > 0 && pth[0] == '~')
-                    pth = args.MC.HomeDirectory + pth.Substring(1);
-                string ending = sizeEndings[sizeEndings.Length - 1];
-                try
-                {
-                    ending = args.MultiboxText.Substring(ind + 3);
-                }
-                catch { }
-                ending = ending.ToLower();
-                currentEnding = ending;
-                if (args.Key != Keys.Tab && lastSizePath != null && lastSizePath.Equals(pth) && isCalculating)
-                    return;
-                cancelCalc = true;
-                Thread.Sleep(10);
-                cancelCalc = false;
-                if (args.Key == Keys.Tab || lastSizeValue <= 0 || lastSizePath == null || !lastSizePath.Equals(pth) || (DateTime.Now - lastSizeTime).TotalMinutes >= 5)
-                {
-                    lastSizePath = pth;
-                    args.MC.OutputLabelText = "Calculating size, please wait...";
-                    args.MC.UpdateSize();
-                    DateTime ld = DateTime.Now;
-                    lastSizeValue = 0;
-                    lastSizeFiles = 0;
-                    lastSizeFolders = 0;
-                    isCalculating = true;
-                    if (!GetFolderSize(pth, args.MC, ref lastSizeValue, ref lastSizeFiles, ref lastSizeFolders, ref ld, 500))
-                    {
-                        lastSizeValue = -1;
-                        lastSizeFiles = -1;
-                        lastSizeFolders = -1;
-                    }
-                    isCalculating = false;
-                    if (cancelCalc)
-                        return;
-                    lastSizeTime = DateTime.Now;
-                }
-                if (lastSizeValue <= 0)
-                {
-                    args.MC.OutputLabelText = "Invalid selection";
-                    return;
-                }
-                SetMCOutputLabelText(args.MC, lastSizeValue, lastSizeFiles, lastSizeFolders, currentEnding);
-                args.MC.UpdateSize();
+                ending = args.MultiboxText.Substring(ind + 3);
             }
+            catch { }
+            ending = ending.ToLower();
+            currentEnding = ending;
+            if (args.Key != Keys.Tab && lastSizePath != null && lastSizePath.Equals(pth) && isCalculating)
+                return;
+            cancelCalc = true;
+            Thread.Sleep(10);
+            cancelCalc = false;
+            if (args.Key == Keys.Tab || lastSizeValue <= 0 || lastSizePath == null || !lastSizePath.Equals(pth) || (DateTime.Now - lastSizeTime).TotalMinutes >= 5)
+            {
+                lastSizePath = pth;
+                args.MC.OutputLabelText = "Calculating size, please wait...";
+                args.MC.UpdateSize();
+                DateTime ld = DateTime.Now;
+                lastSizeValue = 0;
+                lastSizeFiles = 0;
+                lastSizeFolders = 0;
+                isCalculating = true;
+                if (!GetFolderSize(pth, args.MC, ref lastSizeValue, ref lastSizeFiles, ref lastSizeFolders, ref ld, 500))
+                {
+                    lastSizeValue = -1;
+                    lastSizeFiles = -1;
+                    lastSizeFolders = -1;
+                }
+                isCalculating = false;
+                if (cancelCalc)
+                    return;
+                lastSizeTime = DateTime.Now;
+            }
+            if (lastSizeValue <= 0)
+            {
+                args.MC.OutputLabelText = "Invalid selection";
+                return;
+            }
+            SetMCOutputLabelText(args.MC, lastSizeValue, lastSizeFiles, lastSizeFolders, currentEnding);
+            args.MC.UpdateSize();
         }
 
         public override bool HasDetails(MultiboxFunctionParam args)
@@ -341,7 +380,7 @@ namespace PopupMultibox.Functions
 
         public override bool SupressKeyPress(MultiboxFunctionParam args)
         {
-            return (args.Key == Keys.Up || args.Key == Keys.Down || args.Key == Keys.Tab);
+            return (args.Key == Keys.Up || args.Key == Keys.Down || args.Key == Keys.Tab || (args.Key == Keys.Back && args.Control));
         }
 
         public override bool HasKeyDownAction(MultiboxFunctionParam args)
@@ -351,10 +390,15 @@ namespace PopupMultibox.Functions
 
         public override void RunKeyDownAction(MultiboxFunctionParam args)
         {
-            if (args.Key == Keys.Up)
-                args.MC.LabelManager.SelectPrev();
-            else if (args.Key == Keys.Down)
-                args.MC.LabelManager.SelectNext();
+            switch (args.Key)
+            {
+                case Keys.Up:
+                    args.MC.LabelManager.SelectPrev();
+                    break;
+                case Keys.Down:
+                    args.MC.LabelManager.SelectNext();
+                    break;
+            }
         }
 
         public override bool HasActionKeyEvent(MultiboxFunctionParam args)
