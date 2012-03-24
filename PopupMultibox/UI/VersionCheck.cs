@@ -123,6 +123,13 @@ namespace PopupMultibox.UI
         {
             MainClass.CloseAndInstall(fileChooserS.FileName);
         }
+
+        private void diffLogLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            string cv = Application.ProductVersion;
+            cv = cv.Remove(cv.LastIndexOf("."));
+            Process.Start("http://multibox.everydayprogramminggenius.com/difflog?v=" + cv);
+        }
     }
 // ReSharper restore InconsistentNaming
 }

@@ -46,13 +46,13 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_4BEA95DA96DAAEE25B662958F8482FCE"
+        "OwnerKey" = "8:_4AEDD386990E4AE19F23CBF22F6FCA9E"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_4AEDD386990E4AE19F23CBF22F6FCA9E"
+        "OwnerKey" = "8:_4BEA95DA96DAAEE25B662958F8482FCE"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -298,15 +298,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Popup Multibox"
-        "ProductCode" = "8:{257E5C18-F6FE-48AF-9637-39D0D866AA85}"
-        "PackageCode" = "8:{5F6E9EB9-056D-48DC-A860-75EFC1949E9F}"
+        "ProductCode" = "8:{0E3FBFBA-6699-41CE-ABCB-E3A70B859FC5}"
+        "PackageCode" = "8:{EEE6E815-C186-49CF-BDED-61725927BBF0}"
         "UpgradeCode" = "8:{721C179E-6E2B-4AE4-AE4B-B9A8B48F21E1}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:2.3.3"
+        "ProductVersion" = "8:2.3.4"
         "Manufacturer" = "8:Eric Henderson"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"

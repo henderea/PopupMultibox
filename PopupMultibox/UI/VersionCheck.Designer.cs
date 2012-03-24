@@ -39,6 +39,7 @@
             this.fileChooserS = new System.Windows.Forms.SaveFileDialog();
             this.progressBar = new System.Windows.Forms.ProgressBar();
             this.installButton = new System.Windows.Forms.Button();
+            this.diffLogLink = new System.Windows.Forms.LinkLabel();
             this.SuspendLayout();
             // 
             // displayLabel
@@ -63,6 +64,9 @@
             // 
             // linkLabel
             // 
+            this.linkLabel.ActiveLinkColor = System.Drawing.Color.Blue;
+            this.linkLabel.DisabledLinkColor = System.Drawing.Color.Blue;
+            this.linkLabel.LinkColor = System.Drawing.Color.Blue;
             this.linkLabel.Location = new System.Drawing.Point(0, 150);
             this.linkLabel.Name = "linkLabel";
             this.linkLabel.Size = new System.Drawing.Size(300, 25);
@@ -75,7 +79,7 @@
             // 
             // okButton
             // 
-            this.okButton.Location = new System.Drawing.Point(25, 200);
+            this.okButton.Location = new System.Drawing.Point(25, 225);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(50, 25);
             this.okButton.TabIndex = 3;
@@ -90,7 +94,7 @@
             // 
             // downloadButton
             // 
-            this.downloadButton.Location = new System.Drawing.Point(125, 200);
+            this.downloadButton.Location = new System.Drawing.Point(125, 225);
             this.downloadButton.Name = "downloadButton";
             this.downloadButton.Size = new System.Drawing.Size(150, 25);
             this.downloadButton.TabIndex = 4;
@@ -106,7 +110,7 @@
             // 
             // progressBar
             // 
-            this.progressBar.Location = new System.Drawing.Point(0, 200);
+            this.progressBar.Location = new System.Drawing.Point(0, 225);
             this.progressBar.Name = "progressBar";
             this.progressBar.Size = new System.Drawing.Size(225, 25);
             this.progressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
@@ -116,7 +120,7 @@
             // installButton
             // 
             this.installButton.Enabled = false;
-            this.installButton.Location = new System.Drawing.Point(225, 200);
+            this.installButton.Location = new System.Drawing.Point(225, 225);
             this.installButton.Name = "installButton";
             this.installButton.Size = new System.Drawing.Size(75, 25);
             this.installButton.TabIndex = 6;
@@ -125,6 +129,21 @@
             this.installButton.Visible = false;
             this.installButton.Click += new System.EventHandler(this.installButton_Click);
             // 
+            // diffLogLink
+            // 
+            this.diffLogLink.ActiveLinkColor = System.Drawing.Color.Blue;
+            this.diffLogLink.DisabledLinkColor = System.Drawing.Color.Blue;
+            this.diffLogLink.LinkColor = System.Drawing.Color.Blue;
+            this.diffLogLink.Location = new System.Drawing.Point(0, 185);
+            this.diffLogLink.Name = "diffLogLink";
+            this.diffLogLink.Size = new System.Drawing.Size(300, 25);
+            this.diffLogLink.TabIndex = 7;
+            this.diffLogLink.TabStop = true;
+            this.diffLogLink.Text = "Click for a list of changes since your current version";
+            this.diffLogLink.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.diffLogLink.VisitedLinkColor = System.Drawing.Color.Blue;
+            this.diffLogLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.diffLogLink_LinkClicked);
+            // 
             // VersionCheck
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -132,6 +151,7 @@
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(383, 305);
+            this.Controls.Add(this.diffLogLink);
             this.Controls.Add(this.installButton);
             this.Controls.Add(this.progressBar);
             this.Controls.Add(this.downloadButton);
@@ -162,5 +182,6 @@
         private System.Windows.Forms.SaveFileDialog fileChooserS;
         private System.Windows.Forms.ProgressBar progressBar;
         private System.Windows.Forms.Button installButton;
+        private System.Windows.Forms.LinkLabel diffLogLink;
     }
 }
