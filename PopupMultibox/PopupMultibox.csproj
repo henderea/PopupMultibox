@@ -58,11 +58,11 @@
     <Compile Include="Functions\AbstractFunction.cs" />
     <Compile Include="Functions\AppLaunchFunction.cs" />
     <Compile Include="Functions\CalculatorFunction.cs" />
-    <Compile Include="helpers\FileList.cs" />
+    <Compile Include="Helpers\FileList.cs" />
     <Compile Include="Functions\FilesystemBookmarkFunction.cs" />
     <Compile Include="Functions\FilesystemFunction.cs" />
     <Compile Include="Functions\FunctionManager.cs" />
-    <Compile Include="helpers\GetFileInfo.cs" />
+    <Compile Include="Helpers\GetFileInfo.cs" />
     <Compile Include="UI\Help.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -78,7 +78,7 @@
       <DependentUpon>MainClass.cs</DependentUpon>
     </Compile>
     <Compile Include="Functions\IMultiboxFunction.cs" />
-    <Compile Include="helpers\MyDictionary.cs" />
+    <Compile Include="Helpers\MyDictionary.cs" />
     <Compile Include="UI\Prefs.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -89,7 +89,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Functions\ScreensaverFunction.cs" />
     <Compile Include="Functions\UpdateFunction.cs" />
-    <Compile Include="helpers\Utilities.cs" />
+    <Compile Include="Helpers\Utilities.cs" />
     <Compile Include="UI\VersionCheck.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -299,6 +299,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="help files\_%287+Change Log%29_[24+2.3.4].mbh">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="help files\_%287+Change Log%29_[25+2.3.5].mbh">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="popupMultiboxIcon3.ico" />

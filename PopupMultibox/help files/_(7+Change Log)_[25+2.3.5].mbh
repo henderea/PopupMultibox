@@ -1,0 +1,1 @@
+In this version, I did some refactoring of the code.  I also made it so that when you are looking at the details of a drive (such as C:\), it will say "Drive" rather than "Folder", and will also show the drive size (used and total), if possible (it doesn't work for empty CD drives).
