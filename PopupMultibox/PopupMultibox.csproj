@@ -58,6 +58,7 @@
     <Compile Include="Functions\AbstractFunction.cs" />
     <Compile Include="Functions\AppLaunchFunction.cs" />
     <Compile Include="Functions\CalculatorFunction.cs" />
+    <Compile Include="helpers\FileList.cs" />
     <Compile Include="Functions\FilesystemBookmarkFunction.cs" />
     <Compile Include="Functions\FilesystemFunction.cs" />
     <Compile Include="Functions\FunctionManager.cs" />
