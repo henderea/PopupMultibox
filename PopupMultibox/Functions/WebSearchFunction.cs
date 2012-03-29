@@ -24,9 +24,22 @@ namespace PopupMultibox.Functions
         public override string RunSingle(MultiboxFunctionParam args)
         {
             string rval = "Search engine not found";
+            string t;
+            string k = ParseSearchText(args, out t);
+            foreach (SearchItem i in SearchList.Items)
+            {
+                if (!i.Keyword.Equals(k))
+                    continue;
+                rval = "Search " + i.Name + " for \"" + t + "\"";
+                break;
+            }
+            return rval;
+        }
+
+        private static string ParseSearchText(MultiboxFunctionParam args, out string t)
+        {
             int ind = args.MultiboxText.IndexOf(" ");
             string k;
-            string t;
             if (ind > 1)
             {
                 k = args.MultiboxText.Substring(1, ind - 1);
@@ -44,15 +57,7 @@ namespace PopupMultibox.Functions
                 k = args.MultiboxText.Substring(1);
                 t = "";
             }
-            foreach (SearchItem i in SearchList.Items)
-            {
-                if (i.Keyword.Equals(k))
-                {
-                    rval = "Search " + i.Name + " for \"" + t + "\"";
-                    break;
-                }
-            }
-            return rval;
+            return k;
         }
 
         public override bool HasActionKeyEvent(MultiboxFunctionParam args)
@@ -62,34 +67,15 @@ namespace PopupMultibox.Functions
 
         public override void RunActionKeyEvent(MultiboxFunctionParam args)
         {
-            int ind = args.MultiboxText.IndexOf(" ");
-            string k;
             string t;
-            if (ind > 1)
-            {
-                k = args.MultiboxText.Substring(1, ind - 1);
-                try
-                {
-                    t = args.MultiboxText.Substring(ind + 1);
-                }
-                catch
-                {
-                    t = "";
-                }
-            }
-            else
-            {
-                k = args.MultiboxText.Substring(1);
-                t = "";
-            }
+            string k = ParseSearchText(args, out t);
             t = HttpUtility.UrlEncode(t);
             foreach (SearchItem i in SearchList.Items)
             {
-                if (i.Keyword.Equals(k))
-                {
-                    Process.Start(i.SearchPath.Replace("%s", t));
-                    break;
-                }
+                if (!i.Keyword.Equals(k))
+                    continue;
+                Process.Start(i.SearchPath.Replace("%s", t));
+                break;
             }
         }
 

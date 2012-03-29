@@ -42,12 +42,7 @@ namespace PopupMultibox.Functions
 
         public override void RunMultiBackgroundStream(MultiboxFunctionParam args)
         {
-            if (args.Key == Keys.Tab)
-            {
-                ResultItem tmp2 = args.MC.LabelManager.CurrentSelection;
-                if (tmp2 != null)
-                    args.MC.InputFieldText = ">" + tmp2.EvalText;
-            }
+            AutocompleteIfNeeded(args);
             try
             {
                 args.MC.LabelManager.ResultItems = AppList.DirList(args.MultiboxText.Substring(1));
@@ -57,6 +52,14 @@ namespace PopupMultibox.Functions
             catch { }
             args.MC.LabelManager.ResultItems = null;
             args.MC.UpdateSize();
+        }
+
+        private static void AutocompleteIfNeeded(MultiboxFunctionParam args)
+        {
+            if (args.Key != Keys.Tab) return;
+            ResultItem tmp2 = args.MC.LabelManager.CurrentSelection;
+            if (tmp2 != null)
+                args.MC.InputFieldText = ">" + tmp2.EvalText;
         }
 
         public override bool HasDetails(MultiboxFunctionParam args)
@@ -127,9 +130,7 @@ namespace PopupMultibox.Functions
         public override string RunSpecialDisplayCopyHandling(MultiboxFunctionParam args)
         {
             ResultItem tmp2 = args.MC.LabelManager.CurrentSelection;
-            if (tmp2 != null)
-                return tmp2.FullText;
-            return null;
+            return tmp2 != null ? tmp2.FullText : null;
         }
 
         #endregion
