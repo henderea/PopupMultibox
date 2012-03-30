@@ -135,8 +135,6 @@ namespace PopupMultibox.Functions
             new CacheReloaderDel(CacheReloader).BeginInvoke(null, null);
         }
 
-        #region IMultiboxFunction Members
-
         public override bool Triggers(MultiboxFunctionParam args)
         {
             return args.MultiboxText.StartsWith(">");
@@ -248,7 +246,5 @@ namespace PopupMultibox.Functions
                 return tmp2.FullText;
             return null;
         }
-
-        #endregion
     }
 }

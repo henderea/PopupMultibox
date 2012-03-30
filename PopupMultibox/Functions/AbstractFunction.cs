@@ -6,8 +6,6 @@ namespace PopupMultibox.Functions
 {
     public abstract class AbstractFunction : IMultiboxFunction
     {
-        #region IMultiboxFunction Members
-
         public abstract bool Triggers(MultiboxFunctionParam args);
 
         public virtual bool IsMulti(MultiboxFunctionParam args)
@@ -139,7 +137,5 @@ namespace PopupMultibox.Functions
         {
             throw new InvalidOperationException();
         }
-
-        #endregion
     }
 }
