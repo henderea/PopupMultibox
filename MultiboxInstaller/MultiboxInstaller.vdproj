@@ -46,13 +46,13 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_4BEA95DA96DAAEE25B662958F8482FCE"
+        "OwnerKey" = "8:_4AEDD386990E4AE19F23CBF22F6FCA9E"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_4AEDD386990E4AE19F23CBF22F6FCA9E"
+        "OwnerKey" = "8:_4BEA95DA96DAAEE25B662958F8482FCE"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -181,6 +181,11 @@
             "AssemblyAsmDisplayName" = "8:NCalc, Version=1.3.8.0, Culture=neutral, PublicKeyToken=973cde3f1cafed03, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_4BEA95DA96DAAEE25B662958F8482FCE"
+                    {
+                    "Name" = "8:NCalc.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:NCalc.dll"
             "TargetName" = "8:"
@@ -298,15 +303,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Popup Multibox"
-        "ProductCode" = "8:{8284B28C-8079-4F5C-B154-79EBBBBB97C7}"
-        "PackageCode" = "8:{A91D5252-277F-4197-BBB0-FDE546BFD133}"
+        "ProductCode" = "8:{16DD5E7C-0117-48DB-AF7A-0E3057961428}"
+        "PackageCode" = "8:{5C56DB6F-B2DD-467B-B0A5-1B4D7A2EF388}"
         "UpgradeCode" = "8:{721C179E-6E2B-4AE4-AE4B-B9A8B48F21E1}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:2.3.5"
+        "ProductVersion" = "8:2.3.6"
         "Manufacturer" = "8:Eric Henderson"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"

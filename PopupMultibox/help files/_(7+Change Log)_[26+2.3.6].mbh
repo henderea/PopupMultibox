@@ -1,0 +1,1 @@
+In this version, I fixed at least one issue caused by my refactoring in the previous version.  I just undid all of the refactorings that I had done, which (because the refactorings and feature change were in the same commit) meant that I had to re-make the feature change from the last version.

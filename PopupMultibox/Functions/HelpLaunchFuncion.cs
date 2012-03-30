@@ -27,40 +27,30 @@ namespace PopupMultibox.Functions
         {
             if (args.MultiboxText.Trim().Length == 1 && !(args.Key == Keys.Up || args.Key == Keys.Down || args.Key == Keys.Tab || args.Key == Keys.Enter || args.Key == Keys.Back))
                 return args.MC.HelpDialog.GetAutocompleteOptions("");
-            switch (args.Key)
+            if (args.Key == Keys.Tab)
             {
-                case Keys.Tab:
-                    return AutocompleteIfNeeded(args);
-                case Keys.Back:
-                    return UpOneLevel(args);
+                ResultItem tmp = args.MC.LabelManager.CurrentSelection;
+                if (tmp != null)
+                {
+                    args.MC.InputFieldText = "?" + tmp.FullText;
+                    return args.MC.HelpDialog.GetAutocompleteOptions(tmp.FullText);
+                }
             }
-            return null;
-        }
-
-        private static List<ResultItem> UpOneLevel(MultiboxFunctionParam args)
-        {
-            if (args.MultiboxText.Length <= 1)
+            else if (args.Key == Keys.Back)
             {
-                args.MC.InputFieldText = "";
-                return null;
-            }
-            int ind = args.MultiboxText.LastIndexOf(">", args.MultiboxText.Length - 2);
-            if (ind > 1)
-            {
-                args.MC.InputFieldText = args.MultiboxText.Remove(ind + 1);
-                return args.MC.HelpDialog.GetAutocompleteOptions(args.MultiboxText.Substring(1));
-            }
-            args.MC.InputFieldText = "?";
-            return args.MC.HelpDialog.GetAutocompleteOptions("");
-        }
-
-        private static List<ResultItem> AutocompleteIfNeeded(MultiboxFunctionParam args)
-        {
-            ResultItem tmp = args.MC.LabelManager.CurrentSelection;
-            if (tmp != null)
-            {
-                args.MC.InputFieldText = "?" + tmp.FullText;
-                return args.MC.HelpDialog.GetAutocompleteOptions(tmp.FullText);
+                if (args.MultiboxText.Length <= 1)
+                {
+                    args.MC.InputFieldText = "";
+                    return null;
+                }
+                int ind = args.MultiboxText.LastIndexOf(">", args.MultiboxText.Length - 2);
+                if (ind > 1)
+                {
+                    args.MC.InputFieldText = args.MultiboxText.Remove(ind + 1);
+                    return args.MC.HelpDialog.GetAutocompleteOptions(args.MultiboxText.Substring(1));
+                }
+                args.MC.InputFieldText = "?";
+                return args.MC.HelpDialog.GetAutocompleteOptions("");
             }
             return null;
         }
@@ -94,15 +84,10 @@ namespace PopupMultibox.Functions
 
         public override void RunKeyDownAction(MultiboxFunctionParam args)
         {
-            switch (args.Key)
-            {
-                case Keys.Up:
-                    args.MC.LabelManager.SelectPrev();
-                    break;
-                case Keys.Down:
-                    args.MC.LabelManager.SelectNext();
-                    break;
-            }
+            if (args.Key == Keys.Up)
+                args.MC.LabelManager.SelectPrev();
+            else if (args.Key == Keys.Down)
+                args.MC.LabelManager.SelectNext();
         }
 
         public override bool HasActionKeyEvent(MultiboxFunctionParam args)
@@ -125,7 +110,9 @@ namespace PopupMultibox.Functions
         public override string RunSpecialDisplayCopyHandling(MultiboxFunctionParam args)
         {
             ResultItem tmp = args.MC.LabelManager.CurrentSelection;
-            return tmp != null ? tmp.FullText : null;
+            if (tmp != null)
+                return tmp.FullText;
+            return null;
         }
 
         #endregion

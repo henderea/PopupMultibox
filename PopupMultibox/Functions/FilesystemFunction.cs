@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Diagnostics;
 using System.Threading;
 using PopupMultibox.UI;
@@ -12,6 +13,142 @@ namespace PopupMultibox.Functions
 {
     public class FilesystemFunction : AbstractFunction
     {
+        private static void DirSearch(string sDir, string fnd, List<string> itms)
+        {
+            try
+            {
+                Regex tmp = new Regex(fnd.Replace(@"\\", @"\\\\").Replace(@".", @"\.").Replace(@"*", @".*").Replace(@"?", @".?").Replace(@"[", @"\[").Replace(@"]", @"\]".Replace(@"(", @"\(").Replace(@")", @"\)")), RegexOptions.IgnoreCase);
+                itms.AddRange(Directory.GetFiles(sDir).Where(f => tmp.IsMatch(f.Substring(f.LastIndexOf("\\") + 1))));
+                foreach (string d in Directory.GetDirectories(sDir))
+                {
+                    DirSearch(d, fnd, itms);
+                }
+            }
+            catch { }
+        }
+
+        private static string[] DirList(string sDir, string fnd)
+        {
+            try
+            {
+                List<string> itms = new List<string>(0);
+                itms.AddRange(from d in Directory.GetDirectories(sDir) where d.StartsWith(fnd) select d.Remove(0, sDir.Length) + "\\");
+                itms.AddRange(from f in Directory.GetFiles(sDir) where f.StartsWith(fnd) select f.Remove(0, sDir.Length));
+                return itms.ToArray();
+            }
+            catch { }
+            return null;
+        }
+
+        private static string[] DirList2(string sDir)
+        {
+            try
+            {
+                List<string> itms = new List<string>(0);
+                itms.AddRange(Directory.GetDirectories(sDir).Select(d => d + "\\"));
+                itms.AddRange(Directory.GetFiles(sDir));
+                return itms.ToArray();
+            }
+            catch { }
+            return null;
+        }
+
+        private static string[] DriveList(string fnd)
+        {
+            try
+            {
+                List<string> itms = new List<string>(0);
+                itms.AddRange(from di in DriveInfo.GetDrives() where string.IsNullOrEmpty(fnd) || di.Name.StartsWith(fnd) select di.Name);
+                return itms.ToArray();
+            }
+            catch {}
+            return null;
+        }
+
+        private static long GetFileSize(string path)
+        {
+            try
+            {
+                FileAttributes fa = File.GetAttributes(path);
+                if ((fa & FileAttributes.Directory) != FileAttributes.Directory)
+                    return new FileInfo(path).Length;
+            }
+            catch { }
+            return -1;
+        }
+
+        private static long GetFileSize2(string path)
+        {
+            try
+            {
+                return new FileInfo(path).Length;
+            }
+            catch { }
+            return -1;
+        }
+
+        private static bool GetFolderSize(string path, MainClass mc, ref long cs, ref long files, ref long folders, ref DateTime ld, long delay)
+        {
+            try
+            {
+                if (cancelCalc)
+                    return false;
+                FileAttributes fa = File.GetAttributes(path);
+                if ((fa & FileAttributes.Directory) != FileAttributes.Directory)
+                {
+                    cs += GetFileSize2(path);
+                    files++;
+                    DateTime nw = DateTime.Now;
+                    if ((nw - ld).TotalMilliseconds > delay)
+                    {
+                        ld = nw;
+                        if (cancelCalc)
+                            return false;
+                        new SetMCOutputLabelTextDel(SetMCOutputLabelText).BeginInvoke(mc, cs, files, folders, currentEnding, null, null);
+                    }
+                    return true;
+                }
+                folders++;
+                string[] itms = DirList2(path);
+                if (itms == null || itms.Length <= 0 || cancelCalc)
+                    return false;
+                foreach (string itm in itms)
+                {
+                    if (cancelCalc)
+                        return false;
+                    GetFolderSize(itm, mc, ref cs, ref files, ref folders, ref ld, delay);
+                }
+                return true;
+            }
+            catch { }
+            return false;
+        }
+
+        private static void SetMCOutputLabelText(MainClass mc, long cs, long files, long folders, string ending)
+        {
+            int i = 0;
+            double size = cs;
+            while (size >= 1024 && i < sizeEndings.Length - 1)
+            {
+                if (sizeEndings[i].ToLower().Equals(ending))
+                    break;
+                i++;
+                size = size / 1024.0;
+            }
+            mc.OutputLabelText = files + " file(s); " + folders + " folder(s); " + size.ToString("#.###") + sizeEndings[i];
+        }
+
+        private static string lastSizePath;
+        private static long lastSizeValue = -1;
+        private static long lastSizeFiles = -1;
+        private static long lastSizeFolders = -1;
+        private static DateTime lastSizeTime;
+        private static volatile string currentEnding;
+        private static readonly string[] sizeEndings = new[] { "B", "KB", "MB", "GB", "TB" };
+        private static volatile bool cancelCalc;
+        private static volatile bool isCalculating;
+        private delegate void SetMCOutputLabelTextDel(MainClass mc, long cs, long files, long folders, string ending);
+
         public FilesystemFunction()
         {
             BookmarkList.Load();
@@ -21,7 +158,7 @@ namespace PopupMultibox.Functions
 
         public override bool Triggers(MultiboxFunctionParam args)
         {
-            return (!String.IsNullOrEmpty(args.MultiboxText) && args.MultiboxText[0] == ':');
+            return (!string.IsNullOrEmpty(args.MultiboxText) && args.MultiboxText[0] == ':');
         }
 
         public override bool IsMulti(MultiboxFunctionParam args)
@@ -41,225 +178,155 @@ namespace PopupMultibox.Functions
 
         public override string RunSingle(MultiboxFunctionParam args)
         {
-            if (IsBookmark(args))
+            int ind = args.MultiboxText.IndexOf(">>>");
+            int ind2 = args.MultiboxText.IndexOf("<<");
+            if (ind <= 1 && ind2 > 1)
             {
-                return GetBookmarkString(args, args.MultiboxText.IndexOf("<<"));
+                string pth = args.MultiboxText.Substring(1, ind2 - 1);
+                string pth2 = pth.Substring(0, pth.LastIndexOf("\\") + 1);
+                string name = "";
+                try
+                {
+                    name = args.MultiboxText.Substring(ind2 + 2);
+                }
+                catch { }
+                return "Bookmark " + pth2 + " as \"" + name + "\"";
             }
             throw new InvalidOperationException();
-        }
-
-        private static bool IsBookmark(MultiboxFunctionParam args)
-        {
-            return args.MultiboxText.IndexOf(">>>") <= 1 && args.MultiboxText.IndexOf("<<") > 1;
-        }
-
-        private static string GetBookmarkString(MultiboxFunctionParam args, int ind2)
-        {
-            string pth = args.MultiboxText.Substring(1, ind2 - 1);
-            string pth2 = pth.Substring(0, pth.LastIndexOf("\\") + 1);
-            string name = "";
-            try
-            {
-                name = args.MultiboxText.Substring(ind2 + 2);
-            }
-            catch {}
-            return "Bookmark " + pth2 + " as \"" + name + "\"";
         }
 
         public override List<ResultItem> RunMulti(MultiboxFunctionParam args)
         {
             if ((args.MultiboxText.IndexOf(">>>") > 1) || (args.MultiboxText.IndexOf("<<") > 1))
                 throw new InvalidOperationException();
-            AutocompleteIfNeeded(args);
+            if (args.Key == Keys.Tab)
+            {
+                ResultItem tmp2 = args.MC.LabelManager.CurrentSelection;
+                if (tmp2 != null)
+                    args.MC.InputFieldText = ":" + tmp2.EvalText;
+            }
             int ind = args.MultiboxText.IndexOf(">> ");
-            if (args.Key == Keys.Up || args.Key == Keys.Down)
-                return null;
-            if (ind <= 1)
+            if (args.Key != Keys.Up && args.Key != Keys.Down)
             {
-                string pth = args.MultiboxText.Substring(1);
-                if (!pth.Contains("\\"))
+                if (ind <= 1)
                 {
-                    return DeleteIfNeeded(args, ref pth) ? null : GetDriveList(pth);
+                    string pth = args.MultiboxText.Substring(1);
+                    if (!pth.Contains("\\"))
+                    {
+                        if (args.Key == Keys.Back && args.Control)
+                        {
+                            if(string.IsNullOrEmpty(pth))
+                            {
+                                args.MC.InputFieldText = "";
+                                return null;
+                            }
+                            args.MC.InputFieldText = ":";
+                            pth = "";
+                        }
+                        string[] pths = DriveList(pth);
+                        if (pths != null)
+                        {
+                            List<ResultItem> tmp = new List<ResultItem>(0);
+                            tmp.AddRange(pths.Select(tpth => new ResultItem(tpth, tpth, tpth)));
+                            return tmp;
+                        }
+                        return null;
+                    }
+                    else
+                    {
+                        if (args.Key == Keys.Back && args.Control)
+                        {
+                            pth = pth.EndsWith("\\") ? pth.Remove(pth.LastIndexOf("\\", pth.Length - 2) + 1) : pth.Remove(pth.LastIndexOf("\\")+1);
+                            args.MC.InputFieldText = ":" + pth;
+                        }
+                        string pth2 = pth.Substring(0, pth.LastIndexOf("\\") + 1);
+                        string pth3 = pth2;
+                        if (pth3.Length > 0 && pth3[0] == '~')
+                            pth3 = args.MC.HomeDirectory + pth3.Substring(1);
+                        string pth4 = pth;
+                        if (pth4.Length > 0 && pth4[0] == '~')
+                            pth4 = args.MC.HomeDirectory + pth4.Substring(1);
+                        string[] pths = DirList(pth3, pth4);
+                        if (pths != null)
+                        {
+                            List<ResultItem> tmp = new List<ResultItem>(0);
+                            tmp.AddRange(pths.Select(tpth => new ResultItem(tpth, pth3 + tpth, pth2 + tpth)));
+                            return tmp;
+                        }
+                    }
                 }
-                pth = DeleteIfNeeded2(args, pth);
-                return GetFileList(args, pth);
-            }
-            return GetSearchResults(args, ind);
-        }
-
-        private static List<ResultItem> GetSearchResults(MultiboxFunctionParam args, int ind)
-        {
-            string pth = args.MultiboxText.Substring(1, ind - 1);
-            string pth2 = pth.Substring(0, pth.LastIndexOf("\\") + 1);
-            string pth3 = FileList.ExtendPath(args, pth2);
-            string fnd = args.MultiboxText.Substring(ind + 3);
-            fnd = ExactMatchIfNeeded(fnd);
-            List<string> rlts = new List<string>(0);
-            FileList.DirSearch(pth3, fnd, rlts);
-            if (rlts.Count <= 0)
-                return null;
-            List<ResultItem> tmp = new List<ResultItem>(0);
-            tmp.AddRange(rlts.Select(tpth => new ResultItem(tpth.Substring(tpth.LastIndexOf("\\") + 1), tpth, (pth2.Length > 0 && pth2[0] == '~') ? tpth.Replace(args.MC.HomeDirectory, "~") : tpth)));
-            return tmp;
-        }
-
-        private static string ExactMatchIfNeeded(string fnd)
-        {
-            if (fnd.Length > 0 && fnd[0] == '/')
-                fnd = @"^" + fnd.Substring(1) + @"$";
-            return fnd;
-        }
-
-        private static List<ResultItem> GetFileList(MultiboxFunctionParam args, string pth)
-        {
-            string pth2 = pth.Substring(0, pth.LastIndexOf("\\") + 1);
-            string pth3 = FileList.ExtendPath(args, pth2);
-            string pth4 = FileList.ExtendPath(args, pth);
-            string[] pths = FileList.DirList(pth3, pth4);
-            if (pths == null)
-                return null;
-            List<ResultItem> tmp = new List<ResultItem>(0);
-            tmp.AddRange(pths.Select(tpth => new ResultItem(tpth, pth3 + tpth, pth2 + tpth)));
-            return tmp;
-        }
-
-        private static string DeleteIfNeeded2(MultiboxFunctionParam args, string pth)
-        {
-            if (args.Key == Keys.Back && args.Control)
-            {
-                pth = pth.EndsWith("\\") ? pth.Remove(pth.LastIndexOf("\\", pth.Length - 2) + 1) : pth.Remove(pth.LastIndexOf("\\") + 1);
-                args.MC.InputFieldText = ":" + pth;
-            }
-            return pth;
-        }
-
-        private static List<ResultItem> GetDriveList(string pth)
-        {
-            string[] pths = FileList.DriveList(pth);
-            if (pths != null)
-            {
-                List<ResultItem> tmp = new List<ResultItem>(0);
-                tmp.AddRange(pths.Select(tpth => new ResultItem(tpth, tpth, tpth)));
-                return tmp;
+                else
+                {
+                    string pth = args.MultiboxText.Substring(1, ind - 1);
+                    string pth2 = pth.Substring(0, pth.LastIndexOf("\\") + 1);
+                    string pth3 = pth2;
+                    bool ht = (pth3.Length > 0 && pth3[0] == '~');
+                    if (ht)
+                        pth3 = args.MC.HomeDirectory + pth3.Substring(1);
+                    string fnd = args.MultiboxText.Substring(ind + 3);
+                    if (fnd.Length > 0 && fnd[0] == '/')
+                        fnd = @"^" + fnd.Substring(1) + @"$";
+                    List<string> rlts = new List<string>(0);
+                    DirSearch(pth3, fnd, rlts);
+                    if (rlts.Count > 0)
+                    {
+                        List<ResultItem> tmp = new List<ResultItem>(0);
+                        tmp.AddRange(rlts.Select(tpth => new ResultItem(tpth.Substring(tpth.LastIndexOf("\\") + 1), tpth, ht ? tpth.Replace(args.MC.HomeDirectory, "~") : tpth)));
+                        return tmp;
+                    }
+                }
             }
             return null;
-        }
-
-        private static bool DeleteIfNeeded(MultiboxFunctionParam args, ref string pth)
-        {
-            if (args.Key == Keys.Back && args.Control)
-            {
-                if (String.IsNullOrEmpty(pth))
-                {
-                    args.MC.InputFieldText = "";
-                    return true;
-                }
-                args.MC.InputFieldText = ":";
-                pth = "";
-            }
-            return false;
-        }
-
-        private static void AutocompleteIfNeeded(MultiboxFunctionParam args)
-        {
-            if (args.Key != Keys.Tab) return;
-            ResultItem tmp2 = args.MC.LabelManager.CurrentSelection;
-            if (tmp2 != null)
-                args.MC.InputFieldText = ":" + tmp2.EvalText;
         }
 
         public override void RunSingleBackgroundStream(MultiboxFunctionParam args)
         {
             int ind = args.MultiboxText.IndexOf(">>>");
-            if (ind <= 1)
-                return;
-            string pth = FileList.ExtendPath(args, args.MultiboxText.Substring(1, ind - 1));
-            string ending = GetEnding(args, ind);
-            FileList.CurrentEnding = ending;
-            if (IsCalculatingSamePath(args, pth))
-                return;
-            CancelCurrentCalc();
-            if (CalculateIfNeeded(args, pth)) return;
-            if (IsInvalidSize())
-            {
-                args.MC.OutputLabelText = "Invalid selection";
-                return;
-            }
-            FileList.SetMCOutputLabelText(args.MC, FileList.LastSizeValue, FileList.LastSizeFiles, FileList.LastSizeFolders, FileList.CurrentEnding);
-            args.MC.UpdateSize();
-        }
-
-        private static void CancelCurrentCalc()
-        {
-            FileList.CancelCalc = true;
-            Thread.Sleep(10);
-            FileList.CancelCalc = false;
-        }
-
-        private static bool IsInvalidSize()
-        {
-            return FileList.LastSizeValue <= 0;
-        }
-
-        private static bool CalculateIfNeeded(MultiboxFunctionParam args, string pth)
-        {
-            if (ShouldRecalculate(args, pth))
-            {
-                FileList.LastSizePath = pth;
-                args.MC.OutputLabelText = "Calculating size, please wait...";
-                args.MC.UpdateSize();
-                DateTime ld = DateTime.Now;
-                ResetLastSizeFields();
-                CalculateSize(args, ld, pth);
-                if (FileList.CancelCalc)
-                    return true;
-                FileList.LastSizeTime = DateTime.Now;
-            }
-            return false;
-        }
-
-        private static void CalculateSize(MultiboxFunctionParam args, DateTime ld, string pth)
-        {
-            FileList.IsCalculating = true;
-            if (!FileList.GetFolderSize(pth, args.MC, ref ld, 500))
-                InvalidateLastSizeFields();
-            FileList.IsCalculating = false;
-        }
-
-        private static void InvalidateLastSizeFields()
-        {
-            FileList.LastSizeValue = -1;
-            FileList.LastSizeFiles = -1;
-            FileList.LastSizeFolders = -1;
-        }
-
-        private static void ResetLastSizeFields()
-        {
-            FileList.LastSizeValue = 0;
-            FileList.LastSizeFiles = 0;
-            FileList.LastSizeFolders = 0;
-        }
-
-        private static bool ShouldRecalculate(MultiboxFunctionParam args, string pth)
-        {
-            return args.Key == Keys.Tab || FileList.LastSizeValue <= 0 || FileList.LastSizePath == null || !FileList.LastSizePath.Equals(pth) || (DateTime.Now - FileList.LastSizeTime).TotalMinutes >= 5;
-        }
-
-        private static bool IsCalculatingSamePath(MultiboxFunctionParam args, string pth)
-        {
-            return args.Key != Keys.Tab && FileList.LastSizePath != null && FileList.LastSizePath.Equals(pth) && FileList.IsCalculating;
-        }
-
-        private static string GetEnding(MultiboxFunctionParam args, int ind)
-        {
-            string ending = FileList.SizeEndings[FileList.SizeEndings.Length - 1];
+            if (ind <= 1) return;
+            string pth = args.MultiboxText.Substring(1, ind - 1);
+            if (pth.Length > 0 && pth[0] == '~')
+                pth = args.MC.HomeDirectory + pth.Substring(1);
+            string ending = sizeEndings[sizeEndings.Length - 1];
             try
             {
                 ending = args.MultiboxText.Substring(ind + 3);
             }
-            catch {}
+            catch { }
             ending = ending.ToLower();
-            return ending;
+            currentEnding = ending;
+            if (args.Key != Keys.Tab && lastSizePath != null && lastSizePath.Equals(pth) && isCalculating)
+                return;
+            cancelCalc = true;
+            Thread.Sleep(10);
+            cancelCalc = false;
+            if (args.Key == Keys.Tab || lastSizeValue <= 0 || lastSizePath == null || !lastSizePath.Equals(pth) || (DateTime.Now - lastSizeTime).TotalMinutes >= 5)
+            {
+                lastSizePath = pth;
+                args.MC.OutputLabelText = "Calculating size, please wait...";
+                args.MC.UpdateSize();
+                DateTime ld = DateTime.Now;
+                lastSizeValue = 0;
+                lastSizeFiles = 0;
+                lastSizeFolders = 0;
+                isCalculating = true;
+                if (!GetFolderSize(pth, args.MC, ref lastSizeValue, ref lastSizeFiles, ref lastSizeFolders, ref ld, 500))
+                {
+                    lastSizeValue = -1;
+                    lastSizeFiles = -1;
+                    lastSizeFolders = -1;
+                }
+                isCalculating = false;
+                if (cancelCalc)
+                    return;
+                lastSizeTime = DateTime.Now;
+            }
+            if (lastSizeValue <= 0)
+            {
+                args.MC.OutputLabelText = "Invalid selection";
+                return;
+            }
+            SetMCOutputLabelText(args.MC, lastSizeValue, lastSizeFiles, lastSizeFolders, currentEnding);
+            args.MC.UpdateSize();
         }
 
         public override bool HasDetails(MultiboxFunctionParam args)
@@ -269,10 +336,70 @@ namespace PopupMultibox.Functions
 
         public override string GetDetails(MultiboxFunctionParam args)
         {
-            string pth = FileList.ExtendPath(args, args.MC.LabelManager.CurrentSelection.FullText);
-            double size = FileList.GetFileSize(pth);
-            string sizestr = GetSizestr(pth, size);
-            string typ = GetElementType(pth, size);
+            string pth = args.MC.LabelManager.CurrentSelection.FullText;
+            if (pth.Length > 0 && pth[0] == '~')
+                pth = args.MC.HomeDirectory + pth.Substring(1);
+            long sz = GetFileSize(pth);
+            double size = sz;
+            string sizestr = "--";
+            if (size > 0)
+            {
+                int i = 0;
+                while (size >= 1024 && i < sizeEndings.Length - 1)
+                {
+                    if (sizeEndings[i].ToLower().Equals(currentEnding))
+                        break;
+                    i++;
+                    size = size / 1024.0;
+                }
+                sizestr = size.ToString("#.###") + sizeEndings[i];
+            }
+            string typ;
+            if (sz > 0)
+            {
+                try
+                {
+                    typ = GetFileInfo.GetTypeName(pth);
+                }
+                catch
+                {
+                    typ = "File";
+                }
+            }
+            else if(pth.EndsWith(":\\"))
+            {
+                try
+                {
+                    foreach (DriveInfo di in DriveInfo.GetDrives())
+                    {
+                        if (!di.Name.Equals(pth)) continue;
+                        double size1 = di.TotalSize - di.TotalFreeSpace;
+                        int i = 0;
+                        while (size1 >= 1024 && i < sizeEndings.Length - 1)
+                        {
+                            if (sizeEndings[i].ToLower().Equals(currentEnding))
+                                break;
+                            i++;
+                            size1 = size1 / 1024.0;
+                        }
+                        double size2 = di.TotalSize;
+                        int i2 = 0;
+                        while (size2 >= 1024 && i2 < sizeEndings.Length - 1)
+                        {
+                            if (sizeEndings[i2].ToLower().Equals(currentEnding))
+                                break;
+                            i2++;
+                            size2 = size2 / 1024.0;
+                        }
+                        sizestr = size1.ToString("#.###") + sizeEndings[i] + " / " + size2.ToString("#.###") + sizeEndings[i2];
+                        break;
+                    }
+                }
+                catch {}
+                typ = "Drive";
+            }
+            else
+                typ = "Folder";
             string lmd = "";
             try
             {
@@ -281,32 +408,6 @@ namespace PopupMultibox.Functions
             }
             catch { }
             return "Name: " + args.MC.LabelManager.CurrentSelection.DisplayText + "\nType: " + typ + "\nSize: " + sizestr + "\nLast Modified: " + lmd;
-        }
-
-        private static string GetSizestr(string pth, double size)
-        {
-            string sizestr = "--";
-            if (size > 0)
-                sizestr = FileList.FormatSizeStr(size);
-            else if (pth.EndsWith(":\\"))
-                sizestr = FileList.DriveSizeStr(pth);
-            return sizestr;
-        }
-
-        private static string GetElementType(string pth, double size)
-        {
-            if (size > 0)
-            {
-                try
-                {
-                    return GetFileInfo.GetTypeName(pth);
-                }
-                catch
-                {
-                    return "File";
-                }
-            }
-            return pth.EndsWith(":\\") ? "Drive" : "Folder";
         }
 
         public override bool SupressKeyPress(MultiboxFunctionParam args)
@@ -343,31 +444,28 @@ namespace PopupMultibox.Functions
                 throw new InvalidOperationException();
             int ind2 = args.MultiboxText.IndexOf("<<");
             if (ind2 <= 1)
-                OpenSelectedFile(args);
-            else
-                CreateBookmark(args, ind2);
-        }
-
-        private static void CreateBookmark(MultiboxFunctionParam args, int ind2)
-        {
-            string pth = args.MultiboxText.Substring(1, ind2 - 1);
-            string name = "";
-            try
             {
-                name = args.MultiboxText.Substring(ind2 + 2);
+                ResultItem tmp2 = args.MC.LabelManager.CurrentSelection;
+                if (tmp2 != null)
+                {
+                    string tmpt = tmp2.FullText;
+                    if (tmpt.Length > 0 && tmpt[0] == '~')
+                        tmpt = args.MC.HomeDirectory + tmpt.Substring(1);
+                    Process.Start(tmpt);
+                }
             }
-            catch {}
-            if (name.Length > 0)
-                BookmarkList.Add(new BookmarkItem(name, pth));
-        }
-
-        private static void OpenSelectedFile(MultiboxFunctionParam args)
-        {
-            ResultItem tmp2 = args.MC.LabelManager.CurrentSelection;
-            if (tmp2 == null)
-                return;
-            string tmpt = FileList.ExtendPath(args, tmp2.FullText);
-            Process.Start(tmpt);
+            else
+            {
+                string pth = args.MultiboxText.Substring(1, ind2 - 1);
+                string name = "";
+                try
+                {
+                    name = args.MultiboxText.Substring(ind2 + 2);
+                }
+                catch { }
+                if (name.Length > 0)
+                    BookmarkList.Add(new BookmarkItem(name, pth));
+            }
         }
 
         public override bool HasSpecialDisplayCopyHandling(MultiboxFunctionParam args)
@@ -380,7 +478,9 @@ namespace PopupMultibox.Functions
             ResultItem tmp2 = args.MC.LabelManager.CurrentSelection;
             if (tmp2 != null)
             {
-                string tmpt = FileList.ExtendPath(args, tmp2.FullText);
+                string tmpt = tmp2.FullText;
+                if (tmpt.Length > 0 && tmpt[0] == '~')
+                    tmpt = args.MC.HomeDirectory + tmpt.Substring(1);
                 return tmpt;
             }
             return null;

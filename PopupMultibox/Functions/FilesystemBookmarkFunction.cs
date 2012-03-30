@@ -28,32 +28,6 @@ namespace PopupMultibox.Functions
 
         public override List<ResultItem> RunMulti(MultiboxFunctionParam args)
         {
-            List<ResultItem> resultItems;
-            if (AutocompleteIfNeeded(args, out resultItems)) return resultItems;
-            RemoveBookmarkIfNeeded(args);
-            return GetBookmarkItems(args);
-        }
-
-        private static List<ResultItem> GetBookmarkItems(MultiboxFunctionParam args)
-        {
-            BookmarkItem[] itms = BookmarkList.Find(args.MultiboxText.Substring(2));
-            if (itms == null || itms.Length <= 0)
-                return null;
-            List<ResultItem> ritms = new List<ResultItem>(0);
-            ritms.AddRange(itms.Select(itm => new ResultItem(itm.Name, itm.Path, itm.Path)));
-            return ritms.Count <= 0 ? null : ritms;
-        }
-
-        private static void RemoveBookmarkIfNeeded(MultiboxFunctionParam args)
-        {
-            if (args.Key != Keys.Delete || !args.Shift) return;
-            ResultItem tmp2 = args.MC.LabelManager.CurrentSelection;
-            if (tmp2 != null)
-                BookmarkList.Delete(tmp2.DisplayText);
-        }
-
-        private static bool AutocompleteIfNeeded(MultiboxFunctionParam args, out List<ResultItem> resultItems)
-        {
             if (args.Key == Keys.Tab)
             {
                 ResultItem tmp2 = args.MC.LabelManager.CurrentSelection;
@@ -62,20 +36,31 @@ namespace PopupMultibox.Functions
                     try
                     {
                         args.MC.InputFieldText = ":" + tmp2.FullText;
-                        {
-                            resultItems = new FilesystemFunction().RunMulti(args);
-                            return true;
-                        }
+                        return new FilesystemFunction().RunMulti(args);
                     }
-                    catch {}
-                    {
-                        resultItems = null;
-                        return true;
-                    }
+                    catch { }
+                    return null;
                 }
             }
-            resultItems = null;
-            return false;
+            if (args.Key == Keys.Delete && args.Shift)
+            {
+                ResultItem tmp2 = args.MC.LabelManager.CurrentSelection;
+                if (tmp2 != null)
+                        BookmarkList.Delete(tmp2.DisplayText);
+            }
+            BookmarkItem[] itms = BookmarkList.Find(args.MultiboxText.Substring(2));
+            if (itms == null || itms.Length <= 0)
+                return null;
+            List<ResultItem> ritms = new List<ResultItem>(0);
+            foreach (BookmarkItem itm in itms)
+            {
+                try
+                {
+                    ritms.Add(new ResultItem(itm.Name, itm.Path, itm.Path));
+                }
+                catch { }
+            }
+            return ritms.Count <= 0 ? null : ritms;
         }
 
         public override bool HasDetails(MultiboxFunctionParam args)
@@ -107,15 +92,10 @@ namespace PopupMultibox.Functions
 
         public override void RunKeyDownAction(MultiboxFunctionParam args)
         {
-            switch (args.Key)
-            {
-                case Keys.Up:
-                    args.MC.LabelManager.SelectPrev();
-                    break;
-                case Keys.Down:
-                    args.MC.LabelManager.SelectNext();
-                    break;
-            }
+            if (args.Key == Keys.Up)
+                args.MC.LabelManager.SelectPrev();
+            else if (args.Key == Keys.Down)
+                args.MC.LabelManager.SelectNext();
         }
 
         public override bool HasSpecialDisplayCopyHandling(MultiboxFunctionParam args)
@@ -300,9 +280,11 @@ namespace PopupMultibox.Functions
                 string name2 = name.ToLower();
                 foreach (BookmarkItem itm in items)
                 {
-                    if (!itm.Name.ToLower().Equals(name2)) continue;
-                    items.Remove(itm);
-                    break;
+                    if (itm.Name.ToLower().Equals(name2))
+                    {
+                        items.Remove(itm);
+                        break;
+                    }
                 }
                 Store();
             }
