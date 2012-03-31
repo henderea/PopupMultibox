@@ -1,0 +1,1 @@
+In this version, I fixed an issue that would cause the program to crash if it tried to check for updates when you didn't have an internet connection.  I also added thousands-separating commas to the numbers listed for size, # of files, and # of folders when using that feature of the filesystem function.

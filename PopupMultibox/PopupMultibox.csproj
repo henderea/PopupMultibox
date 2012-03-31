@@ -306,6 +306,9 @@
     <Content Include="help files\_%287+Change Log%29_[26+2.3.6].mbh">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="help files\_%287+Change Log%29_[27+2.3.7].mbh">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="popupMultiboxIcon3.ico" />
     <None Include="Resources\popupMultiboxIcon3_small.png" />
     <EmbeddedResource Include="UI\Help.resx">

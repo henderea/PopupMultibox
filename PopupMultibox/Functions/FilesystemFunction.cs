@@ -120,7 +120,7 @@ namespace PopupMultibox.Functions
 
         private static void SetMCOutputLabelText(MainClass mc, long cs, long files, long folders, string ending)
         {
-            mc.OutputLabelText = files + " file(s); " + folders + " folder(s); " + FormatSizestr(cs);
+            mc.OutputLabelText = files.ToString("#,##0") + " file(s); " + folders.ToString("#,##0") + " folder(s); " + FormatSizestr(cs);
         }
 
         private static string lastSizePath;

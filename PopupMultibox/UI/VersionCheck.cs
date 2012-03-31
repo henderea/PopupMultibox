@@ -52,22 +52,26 @@ namespace PopupMultibox.UI
 
         public void checkForUpdateForce()
         {
-            string cv = Application.ProductVersion;
-            cv = cv.Remove(cv.LastIndexOf("."));
-            string nv = getData().Trim();
-            if (!nv.Equals(cv))
+            try
             {
-                versionLabel.Text = "Current version: " + cv + "\n\nNew version: " + nv;
-                installButton.Enabled = false;
-                progressBar.Value = 0;
-                okButton.Visible = true;
-                downloadButton.Visible = true;
-                progressBar.Visible = false;
-                installButton.Visible = false;
-                Show();
+                string cv = Application.ProductVersion;
+                cv = cv.Remove(cv.LastIndexOf("."));
+                string nv = getData().Trim();
+                if (!nv.Equals(cv))
+                {
+                    versionLabel.Text = "Current version: " + cv + "\n\nNew version: " + nv;
+                    installButton.Enabled = false;
+                    progressBar.Value = 0;
+                    okButton.Visible = true;
+                    downloadButton.Visible = true;
+                    progressBar.Visible = false;
+                    installButton.Visible = false;
+                    Show();
+                }
+                Properties.Settings.Default.LastVersionCheck = DateTime.Now;
+                Properties.Settings.Default.Save();
             }
-            Properties.Settings.Default.LastVersionCheck = DateTime.Now;
-            Properties.Settings.Default.Save();
+            catch {}
         }
 
         private static string getData()
