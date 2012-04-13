@@ -1,4 +1,4 @@
-﻿namespace PopupMultibox.UI
+﻿namespace Multibox.Core.UI
 {
     partial class VersionCheck
     {
@@ -40,6 +40,7 @@
             this.progressBar = new System.Windows.Forms.ProgressBar();
             this.installButton = new System.Windows.Forms.Button();
             this.diffLogLink = new System.Windows.Forms.LinkLabel();
+            this.launchButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // displayLabel
@@ -144,6 +145,17 @@
             this.diffLogLink.VisitedLinkColor = System.Drawing.Color.Blue;
             this.diffLogLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.diffLogLink_LinkClicked);
             // 
+            // launchButton
+            // 
+            this.launchButton.Location = new System.Drawing.Point(125, 225);
+            this.launchButton.Name = "launchButton";
+            this.launchButton.Size = new System.Drawing.Size(150, 25);
+            this.launchButton.TabIndex = 8;
+            this.launchButton.Text = "Launch Plugin Updater";
+            this.launchButton.UseVisualStyleBackColor = true;
+            this.launchButton.Visible = false;
+            this.launchButton.Click += new System.EventHandler(this.launchButton_Click);
+            // 
             // VersionCheck
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -151,6 +163,7 @@
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(383, 305);
+            this.Controls.Add(this.launchButton);
             this.Controls.Add(this.diffLogLink);
             this.Controls.Add(this.installButton);
             this.Controls.Add(this.progressBar);
@@ -183,5 +196,6 @@
         private System.Windows.Forms.ProgressBar progressBar;
         private System.Windows.Forms.Button installButton;
         private System.Windows.Forms.LinkLabel diffLogLink;
+        private System.Windows.Forms.Button launchButton;
     }
 }

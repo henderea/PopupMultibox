@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Forms;
-using PopupMultibox.UI;
+using Multibox.Core.UI;
 
-namespace PopupMultibox.Functions
+namespace Multibox.Core.Functions
 {
     public interface IMultiboxFunction
     {
+        int SuggestedIndex();
         bool Triggers(MultiboxFunctionParam args);
         bool IsMulti(MultiboxFunctionParam args);
         bool IsBackgroundStream(MultiboxFunctionParam args);

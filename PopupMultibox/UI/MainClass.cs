@@ -4,10 +4,10 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
-using PopupMultibox.Functions;
-using PopupMultibox.helpers;
+using Multibox.Core.Functions;
+using Multibox.Core.helpers;
 
-namespace PopupMultibox.UI
+namespace Multibox.Core.UI
 {
 // ReSharper disable InconsistentNaming
     public partial class MainClass : Form
@@ -15,6 +15,7 @@ namespace PopupMultibox.UI
         public MainClass()
         {
             InitializeComponent();
+            FunctionManager.Setup();
             PrefsManager.Load();
             lm = new LabelManager(this, PrefsManager.ResultHeight);
             lm.Sc = LMSelectionChanged;

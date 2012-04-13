@@ -7,7 +7,7 @@ using Henderson.Util.MyDictionary;
 using System.Text.RegularExpressions;
 using System.Security.Permissions;
 
-namespace PopupMultibox.UI
+namespace Multibox.Core.UI
 {
     [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
     [System.Runtime.InteropServices.ComVisibleAttribute(true)]

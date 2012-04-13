@@ -1,0 +1,5 @@
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\UpdateFunction\obj\Release\ResolveAssemblyReference.cache
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\UpdateFunction\bin\Release\Multibox.Plugin.UpdateFunction.dll
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\UpdateFunction\bin\Release\Multibox.Plugin.UpdateFunction.pdb
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\UpdateFunction\obj\Release\Multibox.Plugin.UpdateFunction.dll
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\UpdateFunction\obj\Release\Multibox.Plugin.UpdateFunction.pdb

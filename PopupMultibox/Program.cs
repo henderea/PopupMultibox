@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
-using PopupMultibox.UI;
+using Multibox.Core.UI;
 
-namespace PopupMultibox
+namespace Multibox.Core
 {
     static class Program
     {

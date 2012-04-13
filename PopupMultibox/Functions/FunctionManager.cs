@@ -1,24 +1,55 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
-using PopupMultibox.UI;
+using Multibox.Core.UI;
 
-namespace PopupMultibox.Functions
+namespace Multibox.Core.Functions
 {
     public class FunctionManager
     {
-        private static readonly List<IMultiboxFunction> functions;
+        private static List<IMultiboxFunction> functions;
 
-        static FunctionManager()
+        public static void Setup()
         {
             functions = new List<IMultiboxFunction>(0);
-            functions.Add(new ScreensaverFunction());
+            LoadPlugins();
+            IEnumerable<Type> pluginClasses = TypesExtendingClass(typeof (IMultiboxFunction));
+            foreach (Type t in pluginClasses)
+            {
+                if (IsRealClass(t))
+                    functions.Add((IMultiboxFunction) Activator.CreateInstance(t));
+            }
+            functions = new List<IMultiboxFunction>(functions.OrderByDescending(f => f.SuggestedIndex()));
+            /*functions.Add(new ScreensaverFunction());
             functions.Add(new UpdateFunction());
             functions.Add(new WebSearchFunction());
             functions.Add(new FilesystemFunction());
             functions.Add(new HelpLaunchFuncion());
             functions.Add(new FilesystemBookmarkFunction());
             functions.Add(new AppLaunchFunction());
-            functions.Add(new CalculatorFunction());
+            functions.Add(new CalculatorFunction());*/
+        }
+
+        private static void LoadPlugins()
+        {
+            foreach (string f in Directory.EnumerateFiles(Application.StartupPath + "\\plugins\\"))
+            {
+                if (!f.EndsWith(".dll")) continue;
+                Assembly.LoadFrom(f);
+            }
+        }
+
+        public static IEnumerable<Type> TypesExtendingClass(Type desiredType)
+        {
+            return AppDomain.CurrentDomain.GetAssemblies().SelectMany(assembly => assembly.GetTypes()).Where(desiredType.IsAssignableFrom);
+        }
+
+        public static bool IsRealClass(Type testType)
+        {
+            return testType.IsAbstract == false && testType.IsGenericTypeDefinition == false && testType.IsInterface == false;
         }
 
         private static IMultiboxFunction GetActivatedFunction(MultiboxFunctionParam args)
@@ -31,7 +62,7 @@ namespace PopupMultibox.Functions
                         return f;
                 }
             }
-            catch { }
+            catch {}
             return null;
         }
 
@@ -50,7 +81,7 @@ namespace PopupMultibox.Functions
                 if (af.SupressKeyPress(p))
                     e.SuppressKeyPress = true;
             }
-            catch { }
+            catch {}
         }
 
         public static bool KeyUp(MainClass mc, KeyEventArgs e)
@@ -114,7 +145,7 @@ namespace PopupMultibox.Functions
                 if (af.SupressKeyPress(p))
                     e.SuppressKeyPress = true;
             }
-            catch { }
+            catch {}
             return false;
         }
 
@@ -139,7 +170,7 @@ namespace PopupMultibox.Functions
                     p.MC.UpdateSize();
                 }
             }
-            catch { }
+            catch {}
         }
     }
 }

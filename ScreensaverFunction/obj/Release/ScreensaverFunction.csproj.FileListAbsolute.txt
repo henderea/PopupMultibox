@@ -1,0 +1,5 @@
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\ScreensaverFunction\obj\Release\ResolveAssemblyReference.cache
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\ScreensaverFunction\bin\Release\Multibox.Plugin.ScreensaverFunction.dll
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\ScreensaverFunction\bin\Release\Multibox.Plugin.ScreensaverFunction.pdb
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\ScreensaverFunction\obj\Release\Multibox.Plugin.ScreensaverFunction.dll
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\ScreensaverFunction\obj\Release\Multibox.Plugin.ScreensaverFunction.pdb

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.IO;
-using PopupMultibox.Functions;
+using Multibox.Core.helpers;
 
-namespace PopupMultibox.UI
+namespace Multibox.Core.UI
 {
 // ReSharper disable InconsistentNaming
     public partial class Prefs : Form

@@ -1,7 +1,6 @@
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\bin\Release\PopupMultibox.exe
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\bin\Release\PopupMultibox.pdb
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\obj\x86\Release\ResolveAssemblyReference.cache
-C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\obj\x86\Release\PopupMultibox.Properties.Resources.resources
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\obj\x86\Release\ResGen.read.1.tlog
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\obj\x86\Release\ResGen.write.1.tlog
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\obj\x86\Release\PopupMultibox.exe
@@ -75,12 +74,16 @@ C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMulti
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\bin\Release\help files\_(7+Change Log)_[20+2.3.0].mbh
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\bin\Release\help files\_(7+Change Log)_[21+2.3.1].mbh
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\bin\Release\help files\_(7+Change Log)_[22+2.3.2].mbh
-C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\obj\x86\Release\PopupMultibox.UI.Help.resources
-C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\obj\x86\Release\PopupMultibox.UI.MainClass.resources
-C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\obj\x86\Release\PopupMultibox.UI.Prefs.resources
-C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\obj\x86\Release\PopupMultibox.UI.VersionCheck.resources
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\bin\Release\help files\_(7+Change Log)_[23+2.3.3].mbh
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\bin\Release\help files\_(7+Change Log)_[24+2.3.4].mbh
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\bin\Release\help files\_(7+Change Log)_[25+2.3.5].mbh
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\bin\Release\help files\_(7+Change Log)_[26+2.3.6].mbh
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\bin\Release\help files\_(7+Change Log)_[27+2.3.7].mbh
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\obj\x86\Release\Multibox.Core.UI.Help.resources
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\obj\x86\Release\Multibox.Core.UI.MainClass.resources
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\obj\x86\Release\Multibox.Core.UI.Prefs.resources
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\obj\x86\Release\Multibox.Core.Properties.Resources.resources
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\obj\x86\Release\Multibox.Core.UI.VersionCheck.resources
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\bin\Release\plugins\Multibox.Plugin.AppLaunchFunction.dll
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\bin\Release\plugins\Multibox.Plugin.UpdateFunction.dll
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\bin\Release\help files\_(7+Change Log)_[28+3.0.0].mbh

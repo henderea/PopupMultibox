@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using PopupMultibox.UI;
+using Multibox.Core.UI;
 
-namespace PopupMultibox.Functions
+namespace Multibox.Core.Functions
 {
     public abstract class AbstractFunction : IMultiboxFunction
     {
+        public abstract int SuggestedIndex();
         public abstract bool Triggers(MultiboxFunctionParam args);
 
         public virtual bool IsMulti(MultiboxFunctionParam args)

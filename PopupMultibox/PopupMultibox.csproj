@@ -8,7 +8,7 @@
     <ProjectGuid>{1A3EFD49-4B16-42A2-82D8-8BA71A47C3E2}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PopupMultibox</RootNamespace>
+    <RootNamespace>Multibox.Core</RootNamespace>
     <AssemblyName>PopupMultibox</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -37,12 +37,9 @@
     <ApplicationIcon>popupMultiboxIcon3.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>PopupMultibox.Program</StartupObject>
+    <StartupObject>Multibox.Core.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NCalc">
-      <HintPath>..\..\..\..\NCalc - Binaries\NCalc.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
@@ -56,19 +53,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Functions\AbstractFunction.cs" />
-    <Compile Include="Functions\AppLaunchFunction.cs" />
-    <Compile Include="Functions\CalculatorFunction.cs" />
-    <Compile Include="Functions\FilesystemBookmarkFunction.cs" />
-    <Compile Include="Functions\FilesystemFunction.cs" />
     <Compile Include="Functions\FunctionManager.cs" />
-    <Compile Include="helpers\GetFileInfo.cs" />
+    <Compile Include="helpers\SearchList.cs" />
     <Compile Include="UI\Help.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\Help.Designer.cs">
       <DependentUpon>Help.cs</DependentUpon>
     </Compile>
-    <Compile Include="Functions\HelpLaunchFuncion.cs" />
     <Compile Include="UI\LabelManager.cs" />
     <Compile Include="UI\MainClass.cs">
       <SubType>Form</SubType>
@@ -86,8 +78,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Functions\ScreensaverFunction.cs" />
-    <Compile Include="Functions\UpdateFunction.cs" />
     <Compile Include="helpers\Utilities.cs" />
     <Compile Include="UI\VersionCheck.cs">
       <SubType>Form</SubType>
@@ -95,7 +85,6 @@
     <Compile Include="UI\VersionCheck.Designer.cs">
       <DependentUpon>VersionCheck.cs</DependentUpon>
     </Compile>
-    <Compile Include="Functions\WebSearchFunction.cs" />
     <Content Include="help files\_%281+Application Startup and Exit%29.mbh">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -307,6 +296,15 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="help files\_%287+Change Log%29_[27+2.3.7].mbh">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="plugins\Multibox.Plugin.AppLaunchFunction.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="plugins\Multibox.Plugin.UpdateFunction.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="help files\_%287+Change Log%29_[28+3.0.0].mbh">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="popupMultiboxIcon3.ico" />

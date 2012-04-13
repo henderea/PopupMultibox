@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace PopupMultibox.helpers
+namespace Multibox.Core.helpers
 {
     public class WindowsShell
     {

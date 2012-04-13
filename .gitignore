@@ -4,3 +4,13 @@
 /MultiboxInstaller/Release
 /Startup/bin
 /_ReSharper.PopupMultibox
+/AppLaunchFunction/bin
+/CalculatorFunction/bin
+/FilesystemFunction/bin
+/HelpLaunchFunction/bin
+/PluginManager/bin
+/PluginManager/plugins
+/PopupMultibox/plugins
+/ScreensaverFunction/bin
+/UpdateFunction/bin
+/WebSearchFunction/bin

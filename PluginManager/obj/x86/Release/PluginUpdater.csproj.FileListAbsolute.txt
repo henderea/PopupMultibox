@@ -1,0 +1,11 @@
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PluginManager\obj\x86\Release\ResolveAssemblyReference.cache
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PluginManager\obj\x86\Release\Multibox.PluginUpdater.MainClass.resources
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PluginManager\obj\x86\Release\Multibox.PluginUpdater.Properties.Resources.resources
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PluginManager\obj\x86\Release\GenerateResource.read.1.tlog
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PluginManager\obj\x86\Release\GenerateResource.write.1.tlog
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PluginManager\bin\Release\plugins\Multibox.Plugin.AppLaunchFunction.dll
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PluginManager\bin\Release\PluginUpdater.exe.config
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PluginManager\bin\Release\PluginUpdater.exe
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PluginManager\bin\Release\PluginUpdater.pdb
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PluginManager\obj\x86\Release\PluginUpdater.exe
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PluginManager\obj\x86\Release\PluginUpdater.pdb

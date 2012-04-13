@@ -1,0 +1,6 @@
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\CalculatorFunction\bin\Release\NCalc.dll
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\CalculatorFunction\obj\Release\ResolveAssemblyReference.cache
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\CalculatorFunction\bin\Release\Multibox.Plugin.CalculatorFunction.dll
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\CalculatorFunction\bin\Release\Multibox.Plugin.CalculatorFunction.pdb
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\CalculatorFunction\obj\Release\Multibox.Plugin.CalculatorFunction.dll
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\CalculatorFunction\obj\Release\Multibox.Plugin.CalculatorFunction.pdb

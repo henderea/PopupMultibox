@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using System.Drawing;
 
-namespace PopupMultibox.UI
+namespace Multibox.Core.UI
 {
     public class ResultItem
     {
