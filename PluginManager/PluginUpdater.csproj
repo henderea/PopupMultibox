@@ -129,6 +129,9 @@
     <Content Include="plugins\Multibox.Plugin.AppLaunchFunction.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="plugins\Multibox.Plugin.UpdateFunction.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="popupMultiboxIcon3.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

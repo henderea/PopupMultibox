@@ -3,3 +3,8 @@ C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\Filesystem
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\FilesystemFunction\bin\Release\Multibox.Plugin.FilesystemFunction.pdb
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\FilesystemFunction\obj\Release\Multibox.Plugin.FilesystemFunction.dll
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\FilesystemFunction\obj\Release\Multibox.Plugin.FilesystemFunction.pdb
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\FilesystemFunction\bin\Release\Multibox.Plugin.FilesystemFunction.help files\_(3+Multibox Functions)_(3+Filesystem Operations)_[4+Opening a Bookmark].mbh
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\FilesystemFunction\bin\Release\Multibox.Plugin.FilesystemFunction.help files\_(3+Multibox Functions)_(3+Filesystem Operations)_[3+Creating a Bookmark].mbh
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\FilesystemFunction\bin\Release\Multibox.Plugin.FilesystemFunction.help files\_(3+Multibox Functions)_(3+Filesystem Operations)_[2+File Size].mbh
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\FilesystemFunction\bin\Release\Multibox.Plugin.FilesystemFunction.help files\_(3+Multibox Functions)_(3+Filesystem Operations)_[1+Searching].mbh
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\FilesystemFunction\bin\Release\Multibox.Plugin.FilesystemFunction.help files\_(3+Multibox Functions)_(3+Filesystem Operations).mbh

@@ -1,0 +1,1 @@
+In this version, I made it so that the Plugin Updater will also download help files for the plugin.  In addition, I fixed an issue that was preventing the Plugin Updater from replacing existing plugins.

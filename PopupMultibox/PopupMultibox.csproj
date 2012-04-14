@@ -130,33 +130,6 @@
     <Content Include="help files\_%283+Multibox Functions%29.mbh">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="help files\_%283+Multibox Functions%29_%281+Calculator%29.mbh">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="help files\_%283+Multibox Functions%29_%282+Web Search%29.mbh">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="help files\_%283+Multibox Functions%29_%283+Filesystem Operations%29.mbh">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="help files\_%283+Multibox Functions%29_%283+Filesystem Operations%29_[1+Searching].mbh">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="help files\_%283+Multibox Functions%29_%283+Filesystem Operations%29_[2+File Size].mbh">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="help files\_%283+Multibox Functions%29_%283+Filesystem Operations%29_[3+Creating a Bookmark].mbh">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="help files\_%283+Multibox Functions%29_%283+Filesystem Operations%29_[4+Opening a Bookmark].mbh">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="help files\_%283+Multibox Functions%29_%284+Start Screensaver%29.mbh">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="help files\_%283+Multibox Functions%29_%285+Open Help Page%29.mbh">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="help files\_%283+Multibox Functions%29_%286+Check for Updates%29.mbh">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -268,9 +241,6 @@
     <Content Include="help files\_%287+Change Log%29_[18+2.1.3].mbh">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="help files\_%283+Multibox Functions%29_%287+Application Launcher%29.mbh">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="help files\_%287+Change Log%29_[19+2.2.0].mbh">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -298,13 +268,13 @@
     <Content Include="help files\_%287+Change Log%29_[27+2.3.7].mbh">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="plugins\Multibox.Plugin.AppLaunchFunction.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="plugins\Multibox.Plugin.UpdateFunction.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="help files\_%287+Change Log%29_[28+3.0.0].mbh">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="help files\_%287+Change Log%29_[29+3.0.1].mbh">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="popupMultiboxIcon3.ico" />

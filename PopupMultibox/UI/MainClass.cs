@@ -342,6 +342,7 @@ namespace Multibox.Core.UI
             string cv = Application.ProductVersion;
             cv = cv.Remove(cv.LastIndexOf("."));
             if (cv.Equals(Properties.Settings.Default.LastVersion)) return;
+            vchk.checkForUpdateForce();
             hlp.LaunchPage("7");
             Properties.Settings.Default.LastVersion = cv;
             Properties.Settings.Default.Save();

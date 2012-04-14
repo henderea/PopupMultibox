@@ -3,3 +3,4 @@ C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\HelpLaunch
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\HelpLaunchFunction\bin\Release\Multibox.Plugin.HelpLaunchFunction.pdb
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\HelpLaunchFunction\obj\Release\Multibox.Plugin.HelpLaunchFunction.dll
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\HelpLaunchFunction\obj\Release\Multibox.Plugin.HelpLaunchFunction.pdb
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\HelpLaunchFunction\bin\Release\Multibox.Plugin.HelpLaunchFunction.help files\_(3+Multibox Functions)_(5+Open Help Page).mbh

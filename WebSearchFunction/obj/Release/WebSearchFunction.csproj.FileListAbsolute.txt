@@ -3,3 +3,4 @@ C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\WebSearchF
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\WebSearchFunction\bin\Release\Multibox.Plugin.WebSearchFunction.pdb
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\WebSearchFunction\obj\Release\Multibox.Plugin.WebSearchFunction.dll
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\WebSearchFunction\obj\Release\Multibox.Plugin.WebSearchFunction.pdb
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\WebSearchFunction\bin\Release\Multibox.Plugin.WebSearchFunction.help files\_(3+Multibox Functions)_(2+Web Search).mbh

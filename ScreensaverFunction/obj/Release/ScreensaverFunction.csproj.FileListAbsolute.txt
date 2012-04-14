@@ -3,3 +3,4 @@ C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\Screensave
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\ScreensaverFunction\bin\Release\Multibox.Plugin.ScreensaverFunction.pdb
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\ScreensaverFunction\obj\Release\Multibox.Plugin.ScreensaverFunction.dll
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\ScreensaverFunction\obj\Release\Multibox.Plugin.ScreensaverFunction.pdb
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\ScreensaverFunction\bin\Release\Multibox.Plugin.ScreensaverFunction.help files\_(3+Multibox Functions)_(4+Start Screensaver).mbh

@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
+using System.Security.Permissions;
 using System.Windows.Forms;
 
 namespace Multibox.PluginUpdater
@@ -20,6 +21,8 @@ namespace Multibox.PluginUpdater
         }
 
         private List<string> updates;
+        private List<string> helpFiles;
+        private bool helpFilesStarted;
         //private const string websiteURL = "http://localhost/MyWebsite/multibox/"; 
         private const string websiteURL = "http://multibox.everydayprogramminggenius.com/";
 
@@ -45,8 +48,7 @@ namespace Multibox.PluginUpdater
             foreach (string f in Directory.EnumerateFiles(Application.StartupPath + "\\plugins\\"))
             {
                 if (!f.EndsWith(".dll")) continue;
-                Assembly assembly = Assembly.LoadFrom(f);
-                AssemblyName n = assembly.GetName();
+                AssemblyName n = AssemblyName.GetAssemblyName(f);
                 try
                 {
                     rval[n.Name] = n.Version.ToString(3);
@@ -85,6 +87,28 @@ namespace Multibox.PluginUpdater
             }
             catch {}
             return null;
+        }
+
+        private void ListHelpFiles(string pluginName)
+        {
+            try
+            {
+                HttpWebRequest myReq = (HttpWebRequest) WebRequest.Create(websiteURL + "help_check?plugin=" + pluginName);
+                myReq.Credentials = CredentialCache.DefaultCredentials;
+                myReq.MaximumAutomaticRedirections = 4;
+                myReq.MaximumResponseHeadersLength = 4;
+                myReq.Method = "GET";
+                HttpWebResponse resp = (HttpWebResponse) myReq.GetResponse();
+                Stream strm = resp.GetResponseStream();
+                StreamReader rdr = new StreamReader(strm);
+                string rval2 = rdr.ReadToEnd();
+                rdr.Close();
+                helpFiles = new List<string>(rval2.Split(new[] { ";;;" }, StringSplitOptions.RemoveEmptyEntries));
+            }
+            catch
+            {
+                helpFiles = new List<string>(0);
+            }
         }
 
         private void refreshButton_Click(object sender, EventArgs e)
@@ -134,6 +158,8 @@ namespace Multibox.PluginUpdater
             }
             try
             {
+                helpFilesStarted = false;
+                ListHelpFiles(updates[0]);
                 webClient.DownloadFileAsync(new Uri(websiteURL + "plugins/" + updates[0] + ".dll"), Application.StartupPath + "\\plugins\\" + updates[0] + ".dll");
             }
             catch
@@ -149,6 +175,19 @@ namespace Multibox.PluginUpdater
 
         private void Completed(object sender, AsyncCompletedEventArgs e)
         {
+            if(helpFilesStarted && helpFiles.Count > 0)
+                helpFiles.RemoveAt(0);
+            if(helpFiles.Count > 0)
+            {
+                helpFilesStarted = true;
+                progressBar.Value = 0;
+                try
+                {
+                    webClient.DownloadFileAsync(new Uri(websiteURL + "plugins/" + updates[0] + ".help files/" + helpFiles[0] + ".mbh"), Application.StartupPath + "\\help files\\" + helpFiles[0] + ".mbh");
+                    return;
+                }
+                catch {}
+            }
             if (updates.Count > 0)
                 updates.RemoveAt(0);
             else
@@ -164,6 +203,8 @@ namespace Multibox.PluginUpdater
                 progressBar.Value = 0;
                 try
                 {
+                    helpFilesStarted = false;
+                    ListHelpFiles(updates[0]);
                     webClient.DownloadFileAsync(new Uri(websiteURL + "plugins/" + updates[0] + ".dll"), Application.StartupPath + "\\plugins\\" + updates[0] + ".dll");
                 }
                 catch

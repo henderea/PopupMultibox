@@ -9,3 +9,4 @@ C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PluginMana
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PluginManager\bin\Release\PluginUpdater.pdb
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PluginManager\obj\x86\Release\PluginUpdater.exe
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PluginManager\obj\x86\Release\PluginUpdater.pdb
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PluginManager\bin\Release\plugins\Multibox.Plugin.UpdateFunction.dll

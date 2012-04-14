@@ -54,6 +54,31 @@
       <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Multibox.Plugin.FilesystemFunction.help files\_%283+Multibox Functions%29_%283+Filesystem Operations%29_[4+Opening a Bookmark].mbh">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Multibox.Plugin.FilesystemFunction.help files\_%283+Multibox Functions%29_%283+Filesystem Operations%29_[3+Creating a Bookmark].mbh">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Multibox.Plugin.FilesystemFunction.help files\_%283+Multibox Functions%29_%283+Filesystem Operations%29_[2+File Size].mbh">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Multibox.Plugin.FilesystemFunction.help files\_%283+Multibox Functions%29_%283+Filesystem Operations%29_[1+Searching].mbh">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Multibox.Plugin.FilesystemFunction.help files\_%283+Multibox Functions%29_%283+Filesystem Operations%29.mbh">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
