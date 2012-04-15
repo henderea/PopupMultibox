@@ -2,7 +2,7 @@
 using Multibox.Core.Functions;
 using NCalc;
 
-namespace Multiibox.Plugin.CalculatorFunction
+namespace Multibox.Plugin.CalculatorFunction
 {
     public class CalculatorFunction : AbstractFunction
     {
@@ -12,15 +12,22 @@ namespace Multiibox.Plugin.CalculatorFunction
         }
 
         private readonly Regex intToDec;
+        private readonly Regex prefixDec;
 
         public CalculatorFunction()
         {
             intToDec = new Regex(@"(\d+(\.)?\d*)", RegexOptions.IgnoreCase);
+            prefixDec = new Regex(@"(\D|^)(\.\d+)", RegexOptions.IgnoreCase);
         }
 
         private static string IntToDecHelper(Match m)
         {
             return m.Value + ((m.Value.Length > 0 && !m.Value.Contains(".")) ? ".0" : "");
+        }
+
+        private static string PrefixDecHelper(Match m)
+        {
+            return m.Groups[1].Value + "0" + m.Groups[2].Value;
         }
 
         #region IMultiboxFunction Members
@@ -35,7 +42,7 @@ namespace Multiibox.Plugin.CalculatorFunction
             try
             {
                 string rval;
-                Expression tmp = new Expression(intToDec.Replace(args.MultiboxText, IntToDecHelper), EvaluateOptions.IgnoreCase);
+                Expression tmp = new Expression(intToDec.Replace(prefixDec.Replace(args.MultiboxText, PrefixDecHelper), IntToDecHelper), EvaluateOptions.IgnoreCase);
                 if (tmp.HasErrors())
                     rval = tmp.Error;
                 else
@@ -64,6 +71,7 @@ namespace Multiibox.Plugin.CalculatorFunction
                     }
                 }
                 return rval;
+                //return intToDec.Replace(prefixDec.Replace(args.MultiboxText, PrefixDecHelper), IntToDecHelper);
             }
             catch { }
             return "";
