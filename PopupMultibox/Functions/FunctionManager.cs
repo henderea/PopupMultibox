@@ -74,10 +74,20 @@ namespace Multibox.Core.Functions
                 IMultiboxFunction af = GetActivatedFunction(p);
                 if (af == null)
                     return;
-                if (af.HasKeyDownAction(p))
+                if (af.IsMulti(p) && (p.Key == Keys.Up || p.Key == Keys.Down))
                 {
-                    af.RunKeyDownAction(p);
+                    switch (p.Key)
+                    {
+                        case Keys.Up:
+                            p.MC.LabelManager.SelectPrev();
+                            break;
+                        case Keys.Down:
+                            p.MC.LabelManager.SelectNext();
+                            break;
+                    }
                 }
+                if (af.HasKeyDownAction(p))
+                    af.RunKeyDownAction(p);
                 if (af.SupressKeyPress(p))
                     e.SuppressKeyPress = true;
             }
@@ -101,9 +111,11 @@ namespace Multibox.Core.Functions
                     if (af.HasActionKeyEvent(p))
                         af.RunActionKeyEvent(p);
                 }
-                else if (p.Key == Keys.Enter && p.Control && !p.Shift && !p.Alt && p.DisplayText.Trim().Length > 0)
+                else if (p.Key == Keys.Enter && p.Control && !p.Shift && !p.Alt)
                 {
                     string tc = p.DisplayText;
+                    if(af.IsMulti(p))
+                        tc = p.MC.LabelManager.CurrentSelection != null ? p.MC.LabelManager.CurrentSelection.FullText : null;
                     if (af.HasSpecialDisplayCopyHandling(p))
                         tc = af.RunSpecialDisplayCopyHandling(p);
                     if (!string.IsNullOrEmpty(tc))
@@ -123,14 +135,14 @@ namespace Multibox.Core.Functions
                     bool ibs = af.IsBackgroundStream(p);
                     if (af.IsMulti(p))
                     {
-                        if (sr)
+                        if (sr && !(p.Key == Keys.Up || p.Key == Keys.Down || p.Key == Keys.ControlKey || p.Key == Keys.ShiftKey))
                         {
                             if (ibs)
                                 new RunBgS(af.RunMultiBackgroundStream).BeginInvoke(p, null, null);
                             else
                                 p.MC.LabelManager.ResultItems = af.RunMulti(p);
                         }
-                        if (af.SupressKeyPress(p))
+                        if (af.SupressKeyPress(p) || p.Key == Keys.Up || p.Key == Keys.Down)
                             e.SuppressKeyPress = true;
                         return true;
                     }

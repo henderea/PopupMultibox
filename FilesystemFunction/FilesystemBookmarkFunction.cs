@@ -27,11 +27,6 @@ namespace Multibox.Plugin.FilesystemFunction
             return true;
         }
 
-        public override bool ShouldRun(MultiboxFunctionParam args)
-        {
-            return !(args.Key == Keys.Up || args.Key == Keys.Down);
-        }
-
         public override List<ResultItem> RunMulti(MultiboxFunctionParam args)
         {
             if (args.Key == Keys.Tab)
@@ -88,20 +83,7 @@ namespace Multibox.Plugin.FilesystemFunction
 
         public override bool SupressKeyPress(MultiboxFunctionParam args)
         {
-            return (args.Key == Keys.Up || args.Key == Keys.Down || args.Key == Keys.Tab || (args.Key == Keys.Delete && args.Shift));
-        }
-
-        public override bool HasKeyDownAction(MultiboxFunctionParam args)
-        {
-            return (args.Key == Keys.Up || args.Key == Keys.Down);
-        }
-
-        public override void RunKeyDownAction(MultiboxFunctionParam args)
-        {
-            if (args.Key == Keys.Up)
-                args.MC.LabelManager.SelectPrev();
-            else if (args.Key == Keys.Down)
-                args.MC.LabelManager.SelectNext();
+            return (args.Key == Keys.Tab || (args.Key == Keys.Delete && args.Shift));
         }
 
         public override bool HasSpecialDisplayCopyHandling(MultiboxFunctionParam args)

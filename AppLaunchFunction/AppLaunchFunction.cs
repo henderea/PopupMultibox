@@ -156,11 +156,6 @@ namespace Multibox.Plugin.AppLaunchFunction
             return true;
         }
 
-        public override bool ShouldRun(MultiboxFunctionParam args)
-        {
-            return !(args.Key == Keys.Up || args.Key == Keys.Down);
-        }
-
         public override void RunMultiBackgroundStream(MultiboxFunctionParam args)
         {
             if (args.Key == Keys.Tab)
@@ -199,25 +194,7 @@ namespace Multibox.Plugin.AppLaunchFunction
 
         public override bool SupressKeyPress(MultiboxFunctionParam args)
         {
-            return (args.Key == Keys.Up || args.Key == Keys.Down || args.Key == Keys.Tab);
-        }
-
-        public override bool HasKeyDownAction(MultiboxFunctionParam args)
-        {
-            return (args.Key == Keys.Up || args.Key == Keys.Down);
-        }
-
-        public override void RunKeyDownAction(MultiboxFunctionParam args)
-        {
-            switch (args.Key)
-            {
-                case Keys.Up:
-                    args.MC.LabelManager.SelectPrev();
-                    break;
-                case Keys.Down:
-                    args.MC.LabelManager.SelectNext();
-                    break;
-            }
+            return (args.Key == Keys.Tab);
         }
 
         public override bool HasActionKeyEvent(MultiboxFunctionParam args)
@@ -238,17 +215,6 @@ namespace Multibox.Plugin.AppLaunchFunction
                 }
             }
             catch { }
-        }
-
-        public override bool HasSpecialDisplayCopyHandling(MultiboxFunctionParam args)
-        {
-            return true;
-        }
-
-        public override string RunSpecialDisplayCopyHandling(MultiboxFunctionParam args)
-        {
-            ResultItem tmp2 = args.MC.LabelManager.CurrentSelection;
-            return tmp2 != null ? tmp2.FullText : null;
         }
     }
 }
