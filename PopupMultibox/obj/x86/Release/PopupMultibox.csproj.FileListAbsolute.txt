@@ -74,3 +74,6 @@ C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMulti
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\obj\x86\Release\PopupMultibox.exe
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\obj\x86\Release\PopupMultibox.pdb
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\bin\Release\help files\_(7+Change Log)_[29+3.0.1].mbh
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\bin\Release\plugins\Multibox.Plugin.AppLaunchFunction.dll
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\bin\Release\plugins\Multibox.Plugin.FilesystemFunction.dll
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\bin\Release\plugins\Multibox.Plugin.HelpLaunchFunction.dll

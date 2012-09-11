@@ -26,7 +26,7 @@ namespace Multibox.Plugin.HelpLaunchFunction
 
         public override bool ShouldRun(MultiboxFunctionParam args)
         {
-            return (args.Key == Keys.Tab || args.Key == Keys.Back || args.MC.LabelManager.ResultItems == null || args.MC.LabelManager.ResultItems.Count <= 0);
+            return (args.MC.LabelManager.ResultItems == null || args.MC.LabelManager.ResultItems.Count <= 0);
         }
 
         public override List<ResultItem> RunMulti(MultiboxFunctionParam args)
@@ -83,19 +83,6 @@ namespace Multibox.Plugin.HelpLaunchFunction
             return true;
         }
 
-        public override bool HasKeyDownAction(MultiboxFunctionParam args)
-        {
-            return (args.Key == Keys.Up || args.Key == Keys.Down);
-        }
-
-        public override void RunKeyDownAction(MultiboxFunctionParam args)
-        {
-            if (args.Key == Keys.Up)
-                args.MC.LabelManager.SelectPrev();
-            else if (args.Key == Keys.Down)
-                args.MC.LabelManager.SelectNext();
-        }
-
         public override bool HasActionKeyEvent(MultiboxFunctionParam args)
         {
             return true;
@@ -106,19 +93,6 @@ namespace Multibox.Plugin.HelpLaunchFunction
             ResultItem tmp = args.MC.LabelManager.CurrentSelection;
             if (tmp != null)
                 args.MC.HelpDialog.LaunchPage(tmp.EvalText);
-        }
-
-        public override bool HasSpecialDisplayCopyHandling(MultiboxFunctionParam args)
-        {
-            return true;
-        }
-
-        public override string RunSpecialDisplayCopyHandling(MultiboxFunctionParam args)
-        {
-            ResultItem tmp = args.MC.LabelManager.CurrentSelection;
-            if (tmp != null)
-                return tmp.FullText;
-            return null;
         }
 
         #endregion

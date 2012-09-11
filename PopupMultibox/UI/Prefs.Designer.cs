@@ -47,6 +47,8 @@
             this.heightLabel = new System.Windows.Forms.Label();
             this.widthSpinner = new System.Windows.Forms.NumericUpDown();
             this.widthLabel = new System.Windows.Forms.Label();
+            this.okButton = new System.Windows.Forms.Button();
+            this.cancelButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataView)).BeginInit();
             this.prefTabs.SuspendLayout();
             this.searchTab.SuspendLayout();
@@ -97,7 +99,7 @@
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dataView.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dataView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
-            this.dataView.Size = new System.Drawing.Size(570, 530);
+            this.dataView.Size = new System.Drawing.Size(570, 505);
             this.dataView.TabIndex = 0;
             this.dataView.VirtualMode = true;
             this.dataView.CancelRowEdit += new System.Windows.Forms.QuestionEventHandler(this.dataView_CancelRowEdit);
@@ -138,14 +140,16 @@
             // 
             // prefTabs
             // 
+            this.prefTabs.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.prefTabs.Controls.Add(this.searchTab);
             this.prefTabs.Controls.Add(this.updateTab);
             this.prefTabs.Controls.Add(this.otherTab);
-            this.prefTabs.Dock = System.Windows.Forms.DockStyle.Fill;
             this.prefTabs.Location = new System.Drawing.Point(0, 0);
             this.prefTabs.Name = "prefTabs";
             this.prefTabs.SelectedIndex = 0;
-            this.prefTabs.Size = new System.Drawing.Size(584, 562);
+            this.prefTabs.Size = new System.Drawing.Size(584, 537);
             this.prefTabs.TabIndex = 1;
             // 
             // searchTab
@@ -154,7 +158,7 @@
             this.searchTab.Location = new System.Drawing.Point(4, 22);
             this.searchTab.Name = "searchTab";
             this.searchTab.Padding = new System.Windows.Forms.Padding(3);
-            this.searchTab.Size = new System.Drawing.Size(576, 536);
+            this.searchTab.Size = new System.Drawing.Size(576, 511);
             this.searchTab.TabIndex = 0;
             this.searchTab.Text = "Web Searches";
             this.searchTab.UseVisualStyleBackColor = true;
@@ -167,7 +171,7 @@
             this.updateTab.Location = new System.Drawing.Point(4, 22);
             this.updateTab.Name = "updateTab";
             this.updateTab.Padding = new System.Windows.Forms.Padding(3);
-            this.updateTab.Size = new System.Drawing.Size(576, 536);
+            this.updateTab.Size = new System.Drawing.Size(576, 511);
             this.updateTab.TabIndex = 2;
             this.updateTab.Text = "Updates";
             this.updateTab.UseVisualStyleBackColor = true;
@@ -228,7 +232,7 @@
             this.otherTab.Location = new System.Drawing.Point(4, 22);
             this.otherTab.Name = "otherTab";
             this.otherTab.Padding = new System.Windows.Forms.Padding(3);
-            this.otherTab.Size = new System.Drawing.Size(576, 536);
+            this.otherTab.Size = new System.Drawing.Size(576, 511);
             this.otherTab.TabIndex = 1;
             this.otherTab.Text = "Other Options";
             this.otherTab.UseVisualStyleBackColor = true;
@@ -301,11 +305,33 @@
             this.widthLabel.TabIndex = 0;
             this.widthLabel.Text = "Width of multibox (500-2000 px):";
             // 
+            // okButton
+            // 
+            this.okButton.Location = new System.Drawing.Point(434, 537);
+            this.okButton.Name = "okButton";
+            this.okButton.Size = new System.Drawing.Size(75, 25);
+            this.okButton.TabIndex = 2;
+            this.okButton.Text = "Ok";
+            this.okButton.UseVisualStyleBackColor = true;
+            this.okButton.Click += new System.EventHandler(this.okButton_Click);
+            // 
+            // cancelButton
+            // 
+            this.cancelButton.Location = new System.Drawing.Point(507, 537);
+            this.cancelButton.Name = "cancelButton";
+            this.cancelButton.Size = new System.Drawing.Size(75, 25);
+            this.cancelButton.TabIndex = 3;
+            this.cancelButton.Text = "Cancel";
+            this.cancelButton.UseVisualStyleBackColor = true;
+            this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
+            // 
             // Prefs
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(584, 562);
+            this.Controls.Add(this.cancelButton);
+            this.Controls.Add(this.okButton);
             this.Controls.Add(this.prefTabs);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Prefs";
@@ -344,5 +370,7 @@
         private System.Windows.Forms.CheckBox updateCheck;
         private System.Windows.Forms.Label ufreqLabel;
         private System.Windows.Forms.NumericUpDown ufreqSpinner;
+        private System.Windows.Forms.Button okButton;
+        private System.Windows.Forms.Button cancelButton;
     }
 }

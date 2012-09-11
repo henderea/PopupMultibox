@@ -1,0 +1,6 @@
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\AppLaunchFunction\bin\Debug\Multibox.Plugin.AppLaunchFunction.help files\_(3+Multibox Functions)_(7+Application Launcher).mbh
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\AppLaunchFunction\bin\Debug\Multibox.Plugin.AppLaunchFunction.dll
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\AppLaunchFunction\bin\Debug\Multibox.Plugin.AppLaunchFunction.pdb
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\AppLaunchFunction\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\AppLaunchFunction\obj\Debug\Multibox.Plugin.AppLaunchFunction.dll
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\AppLaunchFunction\obj\Debug\Multibox.Plugin.AppLaunchFunction.pdb

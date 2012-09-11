@@ -149,11 +149,6 @@ namespace Multibox.Plugin.FilesystemFunction
             return (args.MultiboxText.IndexOf(">>>") > 1);
         }
 
-        public override bool ShouldRun(MultiboxFunctionParam args)
-        {
-            return !(args.Key == Keys.Up || args.Key == Keys.Down);
-        }
-
         public override string RunSingle(MultiboxFunctionParam args)
         {
             if (args.MultiboxText.IndexOf(">>>") <= 1 && args.MultiboxText.IndexOf("<<") > 1) return GetBookmarkString(args, args.MultiboxText.IndexOf("<<"));
@@ -385,25 +380,7 @@ namespace Multibox.Plugin.FilesystemFunction
 
         public override bool SupressKeyPress(MultiboxFunctionParam args)
         {
-            return (args.Key == Keys.Up || args.Key == Keys.Down || args.Key == Keys.Tab || (args.Key == Keys.Back && args.Control));
-        }
-
-        public override bool HasKeyDownAction(MultiboxFunctionParam args)
-        {
-            return (args.Key == Keys.Up || args.Key == Keys.Down);
-        }
-
-        public override void RunKeyDownAction(MultiboxFunctionParam args)
-        {
-            switch (args.Key)
-            {
-                case Keys.Up:
-                    args.MC.LabelManager.SelectPrev();
-                    break;
-                case Keys.Down:
-                    args.MC.LabelManager.SelectNext();
-                    break;
-            }
+            return (args.Key == Keys.Tab || (args.Key == Keys.Back && args.Control));
         }
 
         public override bool HasActionKeyEvent(MultiboxFunctionParam args)
