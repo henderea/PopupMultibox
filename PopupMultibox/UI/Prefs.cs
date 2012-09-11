@@ -137,12 +137,6 @@ namespace Multibox.Core.UI
 
         private void Prefs_FormClosing(object sender, FormClosingEventArgs e)
         {
-            SearchList.Store();
-            PrefsManager.MultiboxWidth = (int)widthSpinner.Value;
-            PrefsManager.ResultHeight = (int)heightSpinner.Value;
-            PrefsManager.AutoCheckUpdate = updateCheck.Checked;
-            PrefsManager.AutoCheckFrequency = (int)ufreqSpinner.Value;
-            PrefsManager.Store();
             if (e.CloseReason == CloseReason.UserClosing)
                 e.Cancel = true;
             Hide();
@@ -163,6 +157,22 @@ namespace Multibox.Core.UI
         private void updateCheck_CheckedChanged(object sender, EventArgs e)
         {
             ufreqSpinner.Enabled = updateCheck.Checked;
+        }
+
+        private void okButton_Click(object sender, EventArgs e)
+        {
+            SearchList.Store();
+            PrefsManager.MultiboxWidth = (int)widthSpinner.Value;
+            PrefsManager.ResultHeight = (int)heightSpinner.Value;
+            PrefsManager.AutoCheckUpdate = updateCheck.Checked;
+            PrefsManager.AutoCheckFrequency = (int)ufreqSpinner.Value;
+            PrefsManager.Store();
+            Hide();
+        }
+
+        private void cancelButton_Click(object sender, EventArgs e)
+        {
+            Hide();
         }
     }
 // ReSharper restore InconsistentNaming

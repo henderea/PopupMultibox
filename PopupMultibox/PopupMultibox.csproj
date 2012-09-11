@@ -268,9 +268,6 @@
     <Content Include="help files\_%287+Change Log%29_[27+2.3.7].mbh">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="plugins\Multibox.Plugin.UpdateFunction.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <Content Include="help files\_%287+Change Log%29_[28+3.0.0].mbh">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -312,7 +309,9 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="plugins\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
