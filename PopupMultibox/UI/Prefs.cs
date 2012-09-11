@@ -6,7 +6,7 @@ using Multibox.Core.helpers;
 namespace Multibox.Core.UI
 {
 // ReSharper disable InconsistentNaming
-    public partial class Prefs : Form
+    public partial class Prefs : Form, IPrefs
     {
         public Prefs()
         {

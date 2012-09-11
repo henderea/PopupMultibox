@@ -58,6 +58,12 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_5A3D85827D8F072DDC0597C4A6C14985"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_FBE8CF83D2AC483CA49C837C5D59E44B"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -71,12 +77,6 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_3E1EE77AA5E94B11BAA114B710448BDE"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_5A3D85827D8F072DDC0597C4A6C14985"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -339,7 +339,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Popup Multibox"
         "ProductCode" = "8:{9B774211-1E14-4A04-932E-7D6CB57BB227}"
-        "PackageCode" = "8:{8B2F06FC-6BA3-41C2-A4DF-7DC9D900F344}"
+        "PackageCode" = "8:{C19AC881-E7E7-407B-A72C-C7F7ADA45027}"
         "UpgradeCode" = "8:{721C179E-6E2B-4AE4-AE4B-B9A8B48F21E1}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"

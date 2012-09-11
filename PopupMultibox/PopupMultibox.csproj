@@ -61,6 +61,8 @@
     <Compile Include="UI\Help.Designer.cs">
       <DependentUpon>Help.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\IMainClass.cs" />
+    <Compile Include="UI\IPrefs.cs" />
     <Compile Include="UI\LabelManager.cs" />
     <Compile Include="UI\MainClass.cs">
       <SubType>Form</SubType>
@@ -69,7 +71,6 @@
       <DependentUpon>MainClass.cs</DependentUpon>
     </Compile>
     <Compile Include="Functions\IMultiboxFunction.cs" />
-    <Compile Include="helpers\MyDictionary.cs" />
     <Compile Include="UI\Prefs.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -268,9 +269,6 @@
     <Content Include="help files\_%287+Change Log%29_[27+2.3.7].mbh">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="plugins\Multibox.Plugin.UpdateFunction.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <Content Include="help files\_%287+Change Log%29_[28+3.0.0].mbh">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -312,7 +310,15 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="plugins\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Util\Util.csproj">
+      <Project>{DB57C744-2952-4B0A-8296-A78824FB4D1D}</Project>
+      <Name>Util</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

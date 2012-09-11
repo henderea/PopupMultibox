@@ -26,6 +26,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSearchFunction", "WebSea
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginUpdater", "PluginManager\PluginUpdater.csproj", "{D36526C1-BDDA-486E-841E-62C64874F295}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestFramework", "TestFramework\TestFramework.csproj", "{C165B6F7-A475-4CA8-ABD7-0745F2270F76}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Util", "Util\Util.csproj", "{DB57C744-2952-4B0A-8296-A78824FB4D1D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -145,6 +149,26 @@ Global
 		{D36526C1-BDDA-486E-841E-62C64874F295}.Release|Mixed Platforms.Build.0 = Release|x86
 		{D36526C1-BDDA-486E-841E-62C64874F295}.Release|x86.ActiveCfg = Release|x86
 		{D36526C1-BDDA-486E-841E-62C64874F295}.Release|x86.Build.0 = Release|x86
+		{C165B6F7-A475-4CA8-ABD7-0745F2270F76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C165B6F7-A475-4CA8-ABD7-0745F2270F76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C165B6F7-A475-4CA8-ABD7-0745F2270F76}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{C165B6F7-A475-4CA8-ABD7-0745F2270F76}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{C165B6F7-A475-4CA8-ABD7-0745F2270F76}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C165B6F7-A475-4CA8-ABD7-0745F2270F76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C165B6F7-A475-4CA8-ABD7-0745F2270F76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C165B6F7-A475-4CA8-ABD7-0745F2270F76}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{C165B6F7-A475-4CA8-ABD7-0745F2270F76}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{C165B6F7-A475-4CA8-ABD7-0745F2270F76}.Release|x86.ActiveCfg = Release|Any CPU
+		{DB57C744-2952-4B0A-8296-A78824FB4D1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB57C744-2952-4B0A-8296-A78824FB4D1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB57C744-2952-4B0A-8296-A78824FB4D1D}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{DB57C744-2952-4B0A-8296-A78824FB4D1D}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{DB57C744-2952-4B0A-8296-A78824FB4D1D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{DB57C744-2952-4B0A-8296-A78824FB4D1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB57C744-2952-4B0A-8296-A78824FB4D1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB57C744-2952-4B0A-8296-A78824FB4D1D}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{DB57C744-2952-4B0A-8296-A78824FB4D1D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{DB57C744-2952-4B0A-8296-A78824FB4D1D}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

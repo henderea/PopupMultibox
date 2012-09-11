@@ -1,6 +1,6 @@
 ﻿namespace Multibox.Core.UI
 {
-    partial class Prefs
+    partial class Prefs : IPrefs
     {
         /// <summary>
         /// Required designer variable.

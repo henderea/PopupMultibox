@@ -6,7 +6,7 @@ using System.Linq;
 namespace Henderson.Util.MyDictionary
 // ReSharper restore CheckNamespace
 {
-    class MyDictionary : IEnumerable<MyDictionary>
+    public class MyDictionary : IEnumerable<MyDictionary>
     {
         readonly Dictionary<MyKey, MyDictionary> dict;
         object val;
@@ -332,7 +332,7 @@ namespace Henderson.Util.MyDictionary
         }
     }
 
-    class MyKey
+    public class MyKey
     {
 // ReSharper disable FieldCanBeMadeReadOnly.Local
         object key;

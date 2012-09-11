@@ -1,6 +1,6 @@
 ﻿namespace Multibox.Core.UI
 {
-    partial class MainClass
+    partial class MainClass : IMainClass
     {
         /// <summary>
         /// Required designer variable.

@@ -10,7 +10,7 @@ using Multibox.Core.helpers;
 namespace Multibox.Core.UI
 {
 // ReSharper disable InconsistentNaming
-    public partial class MainClass : Form
+    public partial class MainClass : Form, IMainClass
     {
         public MainClass()
         {
@@ -448,12 +448,12 @@ namespace Multibox.Core.UI
             Application.Exit();
         }
 
-        public void SetBitmap(Bitmap bitmap)
+        private void SetBitmap(Bitmap bitmap)
         {
             SetBitmap(bitmap, 255);
         }
 
-        public void SetBitmap(Bitmap bitmap, byte opacity)
+        private void SetBitmap(Bitmap bitmap, byte opacity)
         {
             if (bitmap.PixelFormat != PixelFormat.Format32bppArgb)
                 throw new ApplicationException("The bitmap must be 32ppp with alpha-channel.");
