@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using System.IO;
 using Multibox.Core.helpers;
+using Multibox.Plugin.Util;
 
 namespace Multibox.Core.UI
 {
@@ -229,10 +230,9 @@ namespace Multibox.Core.UI
         {
             try
             {
-                if (!Directory.Exists(Environment.GetEnvironmentVariable("USERPROFILE") + "\\Popup Multibox"))
-                    Directory.CreateDirectory(Environment.GetEnvironmentVariable("USERPROFILE") + "\\Popup Multibox");
-                // write the log file output lines to the file
-                File.WriteAllLines(Environment.GetEnvironmentVariable("USERPROFILE") + "\\Popup Multibox\\prefs.txt", new[] { MultiboxWidth + "", ResultHeight + "", AutoCheckUpdate + "", AutoCheckFrequency + "" });
+                if (!Filesystem.DirectoryExists(Filesystem.UserProfile + "\\Popup Multibox"))
+                    Filesystem.CreateDirectory(Filesystem.UserProfile + "\\Popup Multibox");
+                Filesystem.FileWriteAllLines(Filesystem.UserProfile + "\\Popup Multibox\\prefs.txt", new[] { MultiboxWidth + "", ResultHeight + "", AutoCheckUpdate + "", AutoCheckFrequency + "" });
             }
             catch { }
         }
@@ -241,7 +241,7 @@ namespace Multibox.Core.UI
         {
             try
             {
-                string[] text = File.ReadAllLines(Environment.GetEnvironmentVariable("USERPROFILE") + "\\Popup Multibox\\prefs.txt");
+                string[] text = Filesystem.FileReadAllLines(Filesystem.UserProfile + "\\Popup Multibox\\prefs.txt");
                 MultiboxWidth = int.Parse(text[0]);
                 ResultHeight = int.Parse(text[1]);
                 AutoCheckUpdate = bool.Parse(text[2]);

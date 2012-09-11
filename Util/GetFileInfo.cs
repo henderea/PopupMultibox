@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Runtime.InteropServices;
 
-namespace Multibox.Plugin.FilesystemFunction
+namespace Multibox.Plugin.Util
 {
     public class GetFileInfo
     {

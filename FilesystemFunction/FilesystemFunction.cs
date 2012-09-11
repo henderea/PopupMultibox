@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Threading;
 using Multibox.Core.Functions;
 using Multibox.Core.UI;
+using Multibox.Plugin.Util;
 
 namespace Multibox.Plugin.FilesystemFunction
 {
@@ -23,8 +24,8 @@ namespace Multibox.Plugin.FilesystemFunction
             try
             {
                 Regex tmp = new Regex(fnd.Replace(@"\\", @"\\\\").Replace(@".", @"\.").Replace(@"*", @".*").Replace(@"?", @".?").Replace(@"[", @"\[").Replace(@"]", @"\]".Replace(@"(", @"\(").Replace(@")", @"\)")), RegexOptions.IgnoreCase);
-                itms.AddRange(Directory.GetFiles(sDir).Where(f => tmp.IsMatch(f.Substring(f.LastIndexOf("\\") + 1))));
-                foreach (string d in Directory.GetDirectories(sDir))
+                itms.AddRange(Filesystem.GetFiles(sDir).Where(f => tmp.IsMatch(f.Substring(f.LastIndexOf("\\") + 1))));
+                foreach (string d in Filesystem.GetDirectories(sDir))
                 {
                     DirSearch(d, fnd, itms);
                 }
@@ -37,8 +38,8 @@ namespace Multibox.Plugin.FilesystemFunction
             try
             {
                 List<string> itms = new List<string>(0);
-                itms.AddRange(from d in Directory.GetDirectories(sDir) where d.StartsWith(fnd) select d.Remove(0, sDir.Length) + "\\");
-                itms.AddRange(from f in Directory.GetFiles(sDir) where f.StartsWith(fnd) select f.Remove(0, sDir.Length));
+                itms.AddRange(from d in Filesystem.GetDirectories(sDir) where d.StartsWith(fnd) select d.Remove(0, sDir.Length) + "\\");
+                itms.AddRange(from f in Filesystem.GetFiles(sDir) where f.StartsWith(fnd) select f.Remove(0, sDir.Length));
                 return itms.ToArray();
             }
             catch { }
@@ -50,8 +51,8 @@ namespace Multibox.Plugin.FilesystemFunction
             try
             {
                 List<string> itms = new List<string>(0);
-                itms.AddRange(Directory.GetDirectories(sDir).Select(d => d + "\\"));
-                itms.AddRange(Directory.GetFiles(sDir));
+                itms.AddRange(Filesystem.GetDirectories(sDir).Select(d => d + "\\"));
+                itms.AddRange(Filesystem.GetFiles(sDir));
                 return itms.ToArray();
             }
             catch { }
@@ -74,17 +75,7 @@ namespace Multibox.Plugin.FilesystemFunction
         {
             try
             {
-                return (File.GetAttributes(path) & FileAttributes.Directory) != FileAttributes.Directory ? new FileInfo(path).Length : -1;
-            }
-            catch { }
-            return -1;
-        }
-
-        private static long GetFileSize2(string path)
-        {
-            try
-            {
-                return new FileInfo(path).Length;
+                return Filesystem.GetFileSize(path);
             }
             catch { }
             return -1;
@@ -95,10 +86,9 @@ namespace Multibox.Plugin.FilesystemFunction
             try
             {
                 if (cancelCalc) return false;
-                FileAttributes fa = File.GetAttributes(path);
-                if ((fa & FileAttributes.Directory) != FileAttributes.Directory)
+                if (Filesystem.FileExists(path))
                 {
-                    cs += GetFileSize2(path);
+                    cs += GetFileSize(path);
                     files++;
                     DateTime nw = DateTime.Now;
                     if ((nw - ld).TotalMilliseconds > delay)
@@ -224,7 +214,7 @@ namespace Multibox.Plugin.FilesystemFunction
         private static List<ResultItem> GetSearchResultItems(MultiboxFunctionParam args, bool ht, List<string> rlts)
         {
             List<ResultItem> tmp = new List<ResultItem>(0);
-            tmp.AddRange(rlts.Select(tpth => new ResultItem(tpth.Substring(tpth.LastIndexOf("\\") + 1), tpth, ht ? tpth.Replace(args.MC.HomeDirectory, "~") : tpth)));
+            tmp.AddRange(rlts.Select(tpth => new ResultItem(tpth.Substring(tpth.LastIndexOf("\\") + 1), tpth, ht ? tpth.Replace(Filesystem.UserProfile, "~") : tpth)));
             return tmp;
         }
 
@@ -240,7 +230,7 @@ namespace Multibox.Plugin.FilesystemFunction
 
         private static string AddHDIfNeeded(MultiboxFunctionParam args, string pth)
         {
-            return pth.Length > 0 && pth[0] == '~' ? args.MC.HomeDirectory + pth.Substring(1) : pth;
+            return pth.Length > 0 && pth[0] == '~' ? Filesystem.UserProfile + pth.Substring(1) : pth;
         }
 
         private static List<ResultItem> BackspaceIfNeededAndGetFileResultItems(MultiboxFunctionParam args, string pth)
@@ -352,7 +342,7 @@ namespace Multibox.Plugin.FilesystemFunction
             string lmd = "";
             try
             {
-                DateTime lmddt = File.GetLastWriteTime(pth);
+                DateTime lmddt = Filesystem.GetFileLastWriteTime(pth);
                 lmd = lmddt.ToShortDateString() + " " + lmddt.ToLongTimeString();
             }
             catch { }
@@ -365,7 +355,7 @@ namespace Multibox.Plugin.FilesystemFunction
             {
                 try
                 {
-                    return GetFileInfo.GetTypeName(pth);
+                    return Filesystem.GetFileType(pth);
                 }
                 catch
                 {

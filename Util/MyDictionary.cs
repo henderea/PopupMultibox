@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
 
@@ -143,6 +144,28 @@ namespace Henderson.Util.MyDictionary
         }
 
         public static implicit operator MyDictionary(bool o)
+        {
+            MyDictionary d = new MyDictionary();
+            try
+            {
+                d.val = o;
+                return d;
+            }
+            catch { }
+            return null;
+        }
+
+        public static implicit operator DateTime(MyDictionary m)
+        {
+            try
+            {
+                return (DateTime)m.val;
+            }
+            catch { }
+            return default(DateTime);
+        }
+
+        public static implicit operator MyDictionary(DateTime o)
         {
             MyDictionary d = new MyDictionary();
             try

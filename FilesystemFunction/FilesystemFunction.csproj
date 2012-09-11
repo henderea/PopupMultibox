@@ -44,7 +44,6 @@
   <ItemGroup>
     <Compile Include="FilesystemBookmarkFunction.cs" />
     <Compile Include="FilesystemFunction.cs" />
-    <Compile Include="GetFileInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -52,6 +51,10 @@
       <Project>{1A3EFD49-4B16-42A2-82D8-8BA71A47C3E2}</Project>
       <Name>PopupMultibox</Name>
       <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Util\Util.csproj">
+      <Project>{DB57C744-2952-4B0A-8296-A78824FB4D1D}</Project>
+      <Name>Util</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
