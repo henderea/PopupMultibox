@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using Multibox.Core.Functions;
 using Multibox.Core.UI;
+using Multibox.Plugin.Util;
 using NUnit.Framework;
 
 namespace Multibox.Test.TestFramework
@@ -13,12 +12,32 @@ namespace Multibox.Test.TestFramework
     {
         private readonly IMainClass mainClass;
         private readonly MockFunctionManager functionManager;
+        private bool lastWasMulti;
+        private readonly List<string[]> history;
 
-        public Tester(IMultiboxFunction[] functions, int maxResults)
+        public Tester(IMultiboxFunction[] functions, int maxResults, bool mockFilesystem = true)
         {
             functionManager = new MockFunctionManager(functions);
             mainClass = new MockMainClass(maxResults);
             mainClass.LabelManager.Sc = SelectionChanged;
+            Filesystem.DebugMode = mockFilesystem;
+            history = new List<string[]>(0);
+        }
+
+        public Tester ResetHistory()
+        {
+            history.Clear();
+            return this;
+        }
+
+        public string PrintHistory()
+        {
+            string str = "";
+            for (int i = 0; i < history.Count; i++)
+            {
+                str += (i+1) + ": " + string.Join(" ; ", history[i]) + "\n";
+            }
+            return str.Trim();
         }
 
         private void SelectionChanged(int i)
@@ -26,29 +45,62 @@ namespace Multibox.Test.TestFramework
             functionManager.SelectionChanged(mainClass);
         }
 
+        private static string CreateKeyString(Keys key, bool control, bool alt, bool shift)
+        {
+            List<string> parts = new List<string>(0);
+            if (control)
+                parts.Add("ctrl");
+            if (alt)
+                parts.Add("alt");
+            if (shift)
+                parts.Add("shift");
+            parts.Add(key + "");
+            return string.Join("+", parts);
+        }
+
         public Tester SetText(string text, Keys eventKey, bool eventControl, bool eventAlt, bool eventShift)
         {
             mainClass.InputFieldText = text;
             functionManager.KeyDown(mainClass, eventKey, eventControl, eventAlt, eventShift);
-            functionManager.KeyUp(mainClass, eventKey, eventControl, eventAlt, eventShift);
+            lastWasMulti = functionManager.KeyUp(mainClass, eventKey, eventControl, eventAlt, eventShift);
+            history.Add(new[]
+                        {
+                            "Text = \"" + text + "\"",
+                            "KeyDown: " + CreateKeyString(eventKey, eventControl, eventAlt, eventShift),
+                            "KeyUp: " + CreateKeyString(eventKey, eventControl, eventAlt, eventShift)
+                        });
             return this;
         }
 
         public Tester KeyDown(Keys eventKey, bool eventControl, bool eventAlt, bool eventShift)
         {
             functionManager.KeyDown(mainClass, eventKey, eventControl, eventAlt, eventShift);
+            history.Add(new[] { "KeyDown: " + CreateKeyString(eventKey, eventControl, eventAlt, eventShift) });
             return this;
         }
 
         public Tester KeyUp(Keys eventKey, bool eventControl, bool eventAlt, bool eventShift)
         {
-            functionManager.KeyUp(mainClass, eventKey, eventControl, eventAlt, eventShift);
+            lastWasMulti = functionManager.KeyUp(mainClass, eventKey, eventControl, eventAlt, eventShift);
+            history.Add(new[] { "KeyUp: " + CreateKeyString(eventKey, eventControl, eventAlt, eventShift) });
+            return this;
+        }
+
+        public Tester KeyPress(Keys eventKey, bool eventControl, bool eventAlt, bool eventShift)
+        {
+            functionManager.KeyDown(mainClass, eventKey, eventControl, eventAlt, eventShift);
+            lastWasMulti = functionManager.KeyUp(mainClass, eventKey, eventControl, eventAlt, eventShift);
+            history.Add(new[]
+                        {
+                            "KeyDown: " + CreateKeyString(eventKey, eventControl, eventAlt, eventShift),
+                            "KeyUp: " + CreateKeyString(eventKey, eventControl, eventAlt, eventShift)
+                        });
             return this;
         }
 
         public Tester CheckInputText(string text, string message = null)
         {
-            if(string.IsNullOrEmpty(message))
+            if (string.IsNullOrEmpty(message))
                 Assert.AreEqual(text, mainClass.InputFieldText);
             else
                 Assert.AreEqual(text, mainClass.InputFieldText, message);
@@ -112,9 +164,41 @@ namespace Multibox.Test.TestFramework
         public Tester CheckCurrentVisibleListItems(List<ResultItem> items, string message = null)
         {
             if (string.IsNullOrEmpty(message))
-                Assert.AreEqual(items, mainClass.LabelManager.ResultItems.GetRange(mainClass.LabelManager.ResultIndex, mainClass.LabelManager.DisplayCount));
+                Assert.AreEqual(items,
+                                mainClass.LabelManager.ResultItems.GetRange(mainClass.LabelManager.ResultIndex,
+                                                                            mainClass.LabelManager.DisplayCount));
             else
-                Assert.AreEqual(items, mainClass.LabelManager.ResultItems.GetRange(mainClass.LabelManager.ResultIndex, mainClass.LabelManager.DisplayCount), message);
+                Assert.AreEqual(items,
+                                mainClass.LabelManager.ResultItems.GetRange(mainClass.LabelManager.ResultIndex,
+                                                                            mainClass.LabelManager.DisplayCount),
+                                message);
+            return this;
+        }
+
+        public Tester CheckClipboard(string text, string message = null)
+        {
+            if (string.IsNullOrEmpty(message))
+                Assert.AreEqual(text, functionManager.Clipboard);
+            else
+                Assert.AreEqual(text, functionManager.Clipboard, message);
+            return this;
+        }
+
+        public Tester CheckIsMulti(bool isMulti, string message = null)
+        {
+            if (string.IsNullOrEmpty(message))
+                Assert.AreEqual(isMulti, lastWasMulti);
+            else
+                Assert.AreEqual(isMulti, lastWasMulti, message);
+            return this;
+        }
+
+        public Tester CheckSuppressKeyPress(bool suppress, string message = null)
+        {
+            if (string.IsNullOrEmpty(message))
+                Assert.AreEqual(suppress, functionManager.SuppressKeyPress);
+            else
+                Assert.AreEqual(suppress, functionManager.SuppressKeyPress, message);
             return this;
         }
     }
@@ -140,7 +224,7 @@ namespace Multibox.Test.TestFramework
                         return f;
                 }
             }
-            catch { }
+            catch {}
             return null;
         }
 
@@ -169,7 +253,7 @@ namespace Multibox.Test.TestFramework
                 if (function.SupressKeyPress(p))
                     SuppressKeyPress = true;
             }
-            catch { }
+            catch {}
         }
 
         public bool KeyUp(IMainClass mc, Keys key, bool control, bool alt, bool shift)
@@ -193,7 +277,9 @@ namespace Multibox.Test.TestFramework
                 {
                     string tc = p.DisplayText;
                     if (function.IsMulti(p))
-                        tc = p.MC.LabelManager.CurrentSelection != null ? p.MC.LabelManager.CurrentSelection.FullText : null;
+                        tc = p.MC.LabelManager.CurrentSelection != null
+                                 ? p.MC.LabelManager.CurrentSelection.FullText
+                                 : null;
                     if (function.HasSpecialDisplayCopyHandling(p))
                         tc = function.RunSpecialDisplayCopyHandling(p);
                     if (!string.IsNullOrEmpty(tc))
@@ -213,7 +299,10 @@ namespace Multibox.Test.TestFramework
                     bool ibs = function.IsBackgroundStream(p);
                     if (function.IsMulti(p))
                     {
-                        if (sr && !(p.Key == Keys.Up || p.Key == Keys.Down || p.Key == Keys.ControlKey || p.Key == Keys.ShiftKey))
+                        if (sr
+                            &&
+                            !(p.Key == Keys.Up || p.Key == Keys.Down || p.Key == Keys.ControlKey
+                              || p.Key == Keys.ShiftKey))
                         {
                             if (ibs)
                                 new RunBgS(function.RunMultiBackgroundStream).BeginInvoke(p, null, null);
@@ -235,7 +324,7 @@ namespace Multibox.Test.TestFramework
                 if (function.SupressKeyPress(p))
                     SuppressKeyPress = true;
             }
-            catch { }
+            catch {}
             return false;
         }
 
@@ -245,7 +334,7 @@ namespace Multibox.Test.TestFramework
             {
                 MultiboxFunctionParam p = new MultiboxFunctionParam(Keys.None, false, false, false, mc);
                 IMultiboxFunction function = GetActivatedFunction(p);
-                if(function == null || !function.IsMulti(p) || !function.HasDetails(p))
+                if (function == null || !function.IsMulti(p) || !function.HasDetails(p))
                 {
                     p.MC.DetailsLabelText = "";
                     p.MC.UpdateSize();
@@ -260,7 +349,7 @@ namespace Multibox.Test.TestFramework
                     p.MC.UpdateSize();
                 }
             }
-            catch { }
+            catch {}
         }
     }
 }

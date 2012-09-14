@@ -15,8 +15,15 @@ namespace Multibox.Plugin.CalculatorFunction.Test
         [Test]
         public void Test1()
         {
-            Tester tester = new Tester(new IMultiboxFunction[] {new CalculatorFunction()}, 10);
-            tester.SetText("1+2", Keys.NumPad2, false, false, false).CheckOutputLabelText("3");
+            Tester tester = new Tester(new IMultiboxFunction[] { new CalculatorFunction() }, 10);
+            tester.SetText("1024*1024*1024", Keys.NumPad4, false, false, false)
+                .CheckIsMulti(false)
+                .CheckOutputLabelText("1,073,741,824")
+                .KeyPress(Keys.Enter, true, false, false)
+                .CheckClipboard("1073741824")
+                .KeyPress(Keys.Enter, false, false, true)
+                .CheckClipboard("1024*1024*1024");
+            Console.WriteLine(tester.PrintHistory());
         }
     }
 }
