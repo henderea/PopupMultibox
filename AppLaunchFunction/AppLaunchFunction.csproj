@@ -50,6 +50,10 @@
       <Name>PopupMultibox</Name>
       <Private>False</Private>
     </ProjectReference>
+    <ProjectReference Include="..\Util\Util.csproj">
+      <Project>{DB57C744-2952-4B0A-8296-A78824FB4D1D}</Project>
+      <Name>Util</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Multibox.Plugin.AppLaunchFunction.help files\_%283+Multibox Functions%29_%287+Application Launcher%29.mbh">

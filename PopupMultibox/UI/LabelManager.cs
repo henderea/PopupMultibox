@@ -6,23 +6,27 @@ namespace Multibox.Core.UI
 {
     public class ResultItem
     {
-        public string DisplayText
+        protected bool Equals(ResultItem other)
         {
-            get;
-            set;
+            return string.Equals(DisplayText, other.DisplayText) && string.Equals(FullText, other.FullText) && string.Equals(EvalText, other.EvalText);
         }
 
-        public string FullText
+        public override int GetHashCode()
         {
-            get;
-            set;
+            unchecked
+            {
+                int hashCode = (DisplayText != null ? DisplayText.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (FullText != null ? FullText.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (EvalText != null ? EvalText.GetHashCode() : 0);
+                return hashCode;
+            }
         }
 
-        public string EvalText
-        {
-            get;
-            set;
-        }
+        public string DisplayText { get; set; }
+
+        public string FullText { get; set; }
+
+        public string EvalText { get; set; }
 
         public ResultItem() : this("", "") { }
 
@@ -34,19 +38,32 @@ namespace Multibox.Core.UI
             FullText = f;
             EvalText = e;
         }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            return obj.GetType() == GetType() && Equals((ResultItem) obj);
+        }
     }
     public delegate void SelectionChanged(int resultIndex);
-    public class LabelManager
+    public class LabelManager : ILabelManager
     {
         private readonly Label[] labels;
         private List<ResultItem> items;
-        public SelectionChanged Sc;
+        public SelectionChanged Sc { get; set; }
         private int resultIndex = -1;
         private int indexOffset;
-// ReSharper disable InconsistentNaming
-        private static int MAX_NUM_ITEMS = 10;
-// ReSharper restore InconsistentNaming
+        private static int maxNumItems = 10;
 
+        public int ResultIndex
+        {
+            get
+            {
+                return resultIndex;
+            }
+        }
+        
         public int CurrentSelectionIndex
         {
             get
@@ -69,11 +86,11 @@ namespace Multibox.Core.UI
             }
         }
 
-        private int DisplayCount
+        public int DisplayCount
         {
             get
             {
-                return (items == null) ? 0 : ((items.Count >= MAX_NUM_ITEMS) ? MAX_NUM_ITEMS : items.Count);
+                return (items == null) ? 0 : ((items.Count >= maxNumItems) ? maxNumItems : items.Count);
             }
         }
 
@@ -112,11 +129,11 @@ namespace Multibox.Core.UI
 
         public LabelManager(Form p, int m)
         {
-            MAX_NUM_ITEMS = m;
+            maxNumItems = m;
             items = new List<ResultItem>(0);
-            labels = new Label[MAX_NUM_ITEMS];
+            labels = new Label[maxNumItems];
             p.SuspendLayout();
-            for (int i = 0; i < MAX_NUM_ITEMS; i++)
+            for (int i = 0; i < maxNumItems; i++)
             {
                 labels[i] = new Label();
                 labels[i].AutoEllipsis = true;
@@ -143,7 +160,7 @@ namespace Multibox.Core.UI
             }
             else
             {
-                for (int i = 0; i < MAX_NUM_ITEMS; i++)
+                for (int i = 0; i < maxNumItems; i++)
                 {
                     labels[i].BackColor = ((i == indexOffset && i < DisplayCount) ? Color.Gold : Color.White);
                     if (updateText)
@@ -161,7 +178,7 @@ namespace Multibox.Core.UI
             }
             else
             {
-                for (int i = 0; i < MAX_NUM_ITEMS; i++)
+                for (int i = 0; i < maxNumItems; i++)
                 {
                     labels[i].Visible = visible;
                 }
@@ -173,9 +190,9 @@ namespace Multibox.Core.UI
             if (items == null || items.Count <= 1 || CurrentSelectionIndex >= items.Count - 1)
                 return false;
             indexOffset++;
-            if (indexOffset >= MAX_NUM_ITEMS)
+            if (indexOffset >= maxNumItems)
             {
-                indexOffset = MAX_NUM_ITEMS - 1;
+                indexOffset = maxNumItems - 1;
                 resultIndex++;
                 UpdateDisplay(true);
             }

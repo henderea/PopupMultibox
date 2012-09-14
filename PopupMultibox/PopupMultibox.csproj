@@ -61,8 +61,11 @@
     <Compile Include="UI\Help.Designer.cs">
       <DependentUpon>Help.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\IHelp.cs" />
+    <Compile Include="UI\ILabelManager.cs" />
     <Compile Include="UI\IMainClass.cs" />
     <Compile Include="UI\IPrefs.cs" />
+    <Compile Include="UI\IVersionCheck.cs" />
     <Compile Include="UI\LabelManager.cs" />
     <Compile Include="UI\MainClass.cs">
       <SubType>Form</SubType>

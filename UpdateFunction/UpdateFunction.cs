@@ -21,7 +21,7 @@ namespace Multibox.Plugin.UpdateFunction
         {
             if (args.Key == Keys.Tab)
             {
-                args.MC.VChk.checkForUpdateForce();
+                args.MC.VChk.CheckForUpdateForce();
                 return "No update found";
             }
             return "Check for updates";

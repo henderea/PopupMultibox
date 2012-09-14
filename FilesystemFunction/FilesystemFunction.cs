@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using System.IO;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
 using System.Threading;
@@ -64,7 +63,7 @@ namespace Multibox.Plugin.FilesystemFunction
             try
             {
                 List<string> itms = new List<string>(0);
-                itms.AddRange(from di in DriveInfo.GetDrives() where string.IsNullOrEmpty(fnd) || di.Name.StartsWith(fnd) select di.Name);
+                itms.AddRange(from di in Filesystem.GetDrives() where string.IsNullOrEmpty(fnd) || di.Name.StartsWith(fnd) select di.Name);
                 return itms.ToArray();
             }
             catch {}
@@ -81,7 +80,7 @@ namespace Multibox.Plugin.FilesystemFunction
             return -1;
         }
 
-        private static bool GetFolderSize(string path, MainClass mc, ref long cs, ref long files, ref long folders, ref DateTime ld, long delay)
+        private static bool GetFolderSize(string path, IMainClass mc, ref long cs, ref long files, ref long folders, ref DateTime ld, long delay)
         {
             try
             {
@@ -113,7 +112,7 @@ namespace Multibox.Plugin.FilesystemFunction
             return false;
         }
 
-        private static void SetMCOutputLabelText(MainClass mc, long cs, long files, long folders, string ending)
+        private static void SetMCOutputLabelText(IMainClass mc, long cs, long files, long folders, string ending)
         {
             mc.OutputLabelText = files.ToString("#,##0") + " file(s); " + folders.ToString("#,##0") + " folder(s); " + FormatSizestr(cs);
         }
@@ -127,7 +126,7 @@ namespace Multibox.Plugin.FilesystemFunction
         private static readonly string[] sizeEndings = new[] { "B", "KB", "MB", "GB", "TB" };
         private static volatile bool cancelCalc;
         private static volatile bool isCalculating;
-        private delegate void SetMCOutputLabelTextDel(MainClass mc, long cs, long files, long folders, string ending);
+        private delegate void SetMCOutputLabelTextDel(IMainClass mc, long cs, long files, long folders, string ending);
 
         public FilesystemFunction()
         {
@@ -325,7 +324,7 @@ namespace Multibox.Plugin.FilesystemFunction
             {
                 try
                 {
-                    foreach (DriveInfo di in DriveInfo.GetDrives())
+                    foreach (Drive di in Filesystem.GetDrives())
                     {
                         if (!di.Name.Equals(pth)) continue;
                         sizestr = FormatSizestr(di.TotalSize - di.TotalFreeSpace) + " / " + FormatSizestr(di.TotalSize);

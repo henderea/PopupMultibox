@@ -1,5 +1,4 @@
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\Util\bin\Debug\Multibox.Plugin.Util.dll
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\Util\bin\Debug\Multibox.Plugin.Util.pdb
-C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\Util\obj\Debug\ResolveAssemblyReference.cache
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\Util\obj\Debug\Multibox.Plugin.Util.dll
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\Util\obj\Debug\Multibox.Plugin.Util.pdb

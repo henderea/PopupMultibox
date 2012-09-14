@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Diagnostics;
 using System.Windows.Forms;
 using Multibox.Core.Functions;
 using Multibox.Core.UI;
+using Multibox.Plugin.Util;
 
 namespace Multibox.Plugin.AppLaunchFunction
 {
@@ -23,8 +23,8 @@ namespace Multibox.Plugin.AppLaunchFunction
             try
             {
                 Regex tmp = new Regex(@".*\.lnk", RegexOptions.IgnoreCase);
-                itms.AddRange(Directory.GetFiles(sDir).Where(f => tmp.IsMatch(f.Substring(f.LastIndexOf("\\") + 1))));
-                foreach (string d in Directory.GetDirectories(sDir))
+                itms.AddRange(Filesystem.GetFiles(sDir).Where(f => tmp.IsMatch(f.Substring(f.LastIndexOf("\\") + 1))));
+                foreach (string d in Filesystem.GetDirectories(sDir))
                 {
                     itms.Add(d + "\\");
                     GetApps(d, itms);
@@ -38,8 +38,8 @@ namespace Multibox.Plugin.AppLaunchFunction
             List<string> tmp1 = new List<string>(0);
             List<string> tmp2 = new List<string>(0);
             appCache = new List<ResultItem>(0);
-            string p1 = Environment.GetFolderPath(Environment.SpecialFolder.StartMenu);
-            string p2 = Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu);
+            string p1 = Filesystem.GetFolderPath(Environment.SpecialFolder.StartMenu);
+            string p2 = Filesystem.GetFolderPath(Environment.SpecialFolder.CommonStartMenu);
             GetApps(p1, tmp1);
             try
             {
@@ -207,12 +207,9 @@ namespace Multibox.Plugin.AppLaunchFunction
             try
             {
                 ResultItem tmp2 = args.MC.LabelManager.CurrentSelection;
-                if (tmp2 == null) {}
-                else
-                {
-                    string tmpt = tmp2.FullText;
-                    Process.Start(tmpt);
-                }
+                if (tmp2 == null) return;
+                string tmpt = tmp2.FullText;
+                Process.Start(tmpt);
             }
             catch { }
         }

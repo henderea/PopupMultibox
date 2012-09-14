@@ -12,7 +12,7 @@ using System.IO;
 namespace Multibox.Core.UI
 {
 // ReSharper disable InconsistentNaming
-    public partial class VersionCheck : Form
+    public partial class VersionCheck : Form, IVersionCheck
     {
         public VersionCheck()
         {
@@ -55,10 +55,10 @@ namespace Multibox.Core.UI
                     return;
             }
             catch { }
-            checkForUpdateForce();
+            CheckForUpdateForce();
         }
 
-        public void checkForUpdateForce()
+        public void CheckForUpdateForce()
         {
             try
             {

@@ -7,6 +7,6 @@ C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\Filesystem
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\FilesystemFunction\bin\Debug\Multibox.Plugin.FilesystemFunction.pdb
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\FilesystemFunction\bin\Debug\Multibox.Plugin.Util.dll
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\FilesystemFunction\bin\Debug\Multibox.Plugin.Util.pdb
-C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\FilesystemFunction\obj\Debug\ResolveAssemblyReference.cache
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\FilesystemFunction\obj\Debug\Multibox.Plugin.FilesystemFunction.dll
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\FilesystemFunction\obj\Debug\Multibox.Plugin.FilesystemFunction.pdb
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\FilesystemFunction\obj\Debug\FilesystemFunction.csprojResolveAssemblyReference.cache

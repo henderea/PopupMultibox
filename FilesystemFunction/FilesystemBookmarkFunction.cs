@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using System.IO;
 using Multibox.Core.Functions;
 using Multibox.Core.UI;
+using Multibox.Plugin.Util;
 
 namespace Multibox.Plugin.FilesystemFunction
 {
@@ -98,7 +99,7 @@ namespace Multibox.Plugin.FilesystemFunction
             {
                 string tmpt = tmp2.FullText;
                 if (tmpt.Length > 0 && tmpt[0] == '~')
-                    tmpt = args.MC.HomeDirectory + tmpt.Substring(1);
+                    tmpt = Filesystem.UserProfile + tmpt.Substring(1);
                 return tmpt;
             }
             return null;
@@ -290,9 +291,9 @@ namespace Multibox.Plugin.FilesystemFunction
                 catch { }
                 List<string> lines = new List<string>(0);
                 lines.AddRange(items.Select(i => i.ToFileString()).Where(tmp => !tmp.Equals(";;;")));
-                if (!Directory.Exists(Environment.GetEnvironmentVariable("USERPROFILE") + "\\Popup Multibox"))
-                    Directory.CreateDirectory(Environment.GetEnvironmentVariable("USERPROFILE") + "\\Popup Multibox");
-                File.WriteAllLines(Environment.GetEnvironmentVariable("USERPROFILE") + "\\Popup Multibox\\bookmarks.txt", lines.ToArray());
+                if (!Filesystem.DirectoryExists(Filesystem.UserProfile + "\\Popup Multibox"))
+                    Filesystem.CreateDirectory(Filesystem.UserProfile + "\\Popup Multibox");
+                Filesystem.FileWriteAllLines(Filesystem.UserProfile + "\\Popup Multibox\\bookmarks.txt", lines.ToArray());
             }
             catch { }
         }
@@ -301,7 +302,7 @@ namespace Multibox.Plugin.FilesystemFunction
         {
             try
             {
-                string[] lines = File.ReadAllLines(Environment.GetEnvironmentVariable("USERPROFILE") + "\\Popup Multibox\\bookmarks.txt");
+                string[] lines = Filesystem.FileReadAllLines(Filesystem.UserProfile + "\\Popup Multibox\\bookmarks.txt");
                 items.Clear();
                 foreach (string line in lines)
                 {

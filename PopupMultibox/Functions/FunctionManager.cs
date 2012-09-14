@@ -23,14 +23,6 @@ namespace Multibox.Core.Functions
                     functions.Add((IMultiboxFunction) Activator.CreateInstance(t));
             }
             functions = new List<IMultiboxFunction>(functions.OrderByDescending(f => f.SuggestedIndex()));
-            /*functions.Add(new ScreensaverFunction());
-            functions.Add(new UpdateFunction());
-            functions.Add(new WebSearchFunction());
-            functions.Add(new FilesystemFunction());
-            functions.Add(new HelpLaunchFuncion());
-            functions.Add(new FilesystemBookmarkFunction());
-            functions.Add(new AppLaunchFunction());
-            functions.Add(new CalculatorFunction());*/
         }
 
         private static void LoadPlugins()
@@ -66,7 +58,7 @@ namespace Multibox.Core.Functions
             return null;
         }
 
-        public static void KeyDown(MainClass mc, KeyEventArgs e)
+        public static void KeyDown(IMainClass mc, KeyEventArgs e)
         {
             try
             {
@@ -94,7 +86,7 @@ namespace Multibox.Core.Functions
             catch {}
         }
 
-        public static bool KeyUp(MainClass mc, KeyEventArgs e)
+        public static bool KeyUp(IMainClass mc, KeyEventArgs e)
         {
             try
             {
@@ -161,7 +153,7 @@ namespace Multibox.Core.Functions
             return false;
         }
 
-        public static void SelectionChanged(MainClass mc)
+        public static void SelectionChanged(IMainClass mc)
         {
             try
             {

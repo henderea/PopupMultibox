@@ -1,6 +1,6 @@
 ﻿namespace Multibox.Core.UI
 {
-    partial class VersionCheck
+    partial class VersionCheck : IVersionCheck
     {
         /// <summary>
         /// Required designer variable.

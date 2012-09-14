@@ -44,7 +44,7 @@ namespace Multibox.Core.Functions
         private readonly bool control;
         private readonly bool alt;
         private readonly bool shift;
-        private readonly MainClass mc;
+        private readonly IMainClass mc;
 
         public string MultiboxText
         {
@@ -94,7 +94,7 @@ namespace Multibox.Core.Functions
             }
         }
 
-        public MainClass MC
+        public IMainClass MC
         {
             get
             {
@@ -102,7 +102,7 @@ namespace Multibox.Core.Functions
             }
         }
 
-        public MultiboxFunctionParam(Keys key, bool control, bool alt, bool shift, MainClass mc)
+        public MultiboxFunctionParam(Keys key, bool control, bool alt, bool shift, IMainClass mc)
         {
             this.key = key;
             this.control = control;

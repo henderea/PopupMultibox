@@ -19,7 +19,6 @@ namespace Multibox.Core.UI
             PrefsManager.Load();
             lm = new LabelManager(this, PrefsManager.ResultHeight);
             lm.Sc = LMSelectionChanged;
-            hd = Environment.GetEnvironmentVariable("USERPROFILE");
             ResizeInputField();
             prefs = new Prefs();
             prefs.Hide();
@@ -32,13 +31,12 @@ namespace Multibox.Core.UI
         private readonly Help hlp;
         private readonly VersionCheck vchk;
         private readonly LabelManager lm;
-        private readonly string hd;
         private Bitmap bgImage;
         delegate void SetTextCallback(string text);
         delegate void USDel();
         private delegate void UpdateImageDel();
 
-        public Prefs PreferencesDialog
+        public IPrefs PreferencesDialog
         {
             get
             {
@@ -46,7 +44,7 @@ namespace Multibox.Core.UI
             }
         }
 
-        public Help HelpDialog
+        public IHelp HelpDialog
         {
             get
             {
@@ -54,7 +52,7 @@ namespace Multibox.Core.UI
             }
         }
 
-        public LabelManager LabelManager
+        public ILabelManager LabelManager
         {
             get
             {
@@ -62,19 +60,11 @@ namespace Multibox.Core.UI
             }
         }
 
-        public VersionCheck VChk
+        public IVersionCheck VChk
         {
             get
             {
                 return vchk;
-            }
-        }
-
-        public string HomeDirectory
-        {
-            get
-            {
-                return hd;
             }
         }
 
@@ -170,12 +160,10 @@ namespace Multibox.Core.UI
 
         private void ResizeInputField()
         {
-            if (inputField.Width != Width - 200)
-            {
-                inputField.Width = Width - 200;
-                inputField.Top = (100 - inputField.Height) / 2;
-                inputField.Left = ((Width - 100) - inputField.Width) / 2;
-            }
+            if (inputField.Width == Width - 200) return;
+            inputField.Width = Width - 200;
+            inputField.Top = (100 - inputField.Height) / 2;
+            inputField.Left = ((Width - 100) - inputField.Width) / 2;
         }
 
         private void inputField_KeyUp(object sender, KeyEventArgs e)
@@ -342,7 +330,7 @@ namespace Multibox.Core.UI
             string cv = Application.ProductVersion;
             cv = cv.Remove(cv.LastIndexOf("."));
             if (cv.Equals(Properties.Settings.Default.LastVersion)) return;
-            vchk.checkForUpdateForce();
+            vchk.CheckForUpdateForce();
             hlp.LaunchPage("7");
             Properties.Settings.Default.LastVersion = cv;
             Properties.Settings.Default.Save();
@@ -448,12 +436,7 @@ namespace Multibox.Core.UI
             Application.Exit();
         }
 
-        private void SetBitmap(Bitmap bitmap)
-        {
-            SetBitmap(bitmap, 255);
-        }
-
-        private void SetBitmap(Bitmap bitmap, byte opacity)
+        private void SetBitmap(Bitmap bitmap, byte opacity = 255)
         {
             if (bitmap.PixelFormat != PixelFormat.Format32bppArgb)
                 throw new ApplicationException("The bitmap must be 32ppp with alpha-channel.");

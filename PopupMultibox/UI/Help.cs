@@ -6,13 +6,14 @@ using System.IO;
 using Henderson.Util.MyDictionary;
 using System.Text.RegularExpressions;
 using System.Security.Permissions;
+using Multibox.Plugin.Util;
 
 namespace Multibox.Core.UI
 {
     [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
     [System.Runtime.InteropServices.ComVisibleAttribute(true)]
 // ReSharper disable InconsistentNaming
-    public partial class Help : Form
+    public partial class Help : Form, IHelp
     {
         public Help()
         {
@@ -134,7 +135,7 @@ namespace Multibox.Core.UI
                 {
                     if (tmpd.Keys.Length > 0)
                     {
-                        string fcont = File.ReadAllText(tmpd["fname"]);
+                        string fcont = Filesystem.FileReadAllText(tmpd["fname"]);
                         rval += "<div>" + EvalLinks(fcont) + "</div>";
                     }
                 }
@@ -150,7 +151,7 @@ namespace Multibox.Core.UI
                             {
                                 if (d.Keys.Length > 0)
                                 {
-                                    string fcont = File.ReadAllText(d["fname"]);
+                                    string fcont = Filesystem.FileReadAllText(d["fname"]);
                                     rval += "<div>" + EvalLinks(fcont) + "</div>";
                                 }
                             }
@@ -174,7 +175,7 @@ namespace Multibox.Core.UI
                 {
                     if (fileIndex.Keys.Length > 0)
                     {
-                        string fcont = File.ReadAllText(fileIndex["fname"]);
+                        string fcont = Filesystem.FileReadAllText(fileIndex["fname"]);
                         rval += "<div>" + EvalLinks(fcont) + "</div>";
                     }
                 }

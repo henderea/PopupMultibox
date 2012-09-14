@@ -1,10 +1,8 @@
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PluginManager\bin\Debug\PluginUpdater.exe.config
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PluginManager\bin\Debug\PluginUpdater.exe
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PluginManager\bin\Debug\PluginUpdater.pdb
-C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PluginManager\obj\x86\Debug\ResolveAssemblyReference.cache
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PluginManager\obj\x86\Debug\Multibox.PluginUpdater.MainClass.resources
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PluginManager\obj\x86\Debug\Multibox.PluginUpdater.Properties.Resources.resources
-C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PluginManager\obj\x86\Debug\GenerateResource.read.1.tlog
-C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PluginManager\obj\x86\Debug\GenerateResource.write.1.tlog
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PluginManager\obj\x86\Debug\PluginUpdater.exe
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PluginManager\obj\x86\Debug\PluginUpdater.pdb
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PluginManager\obj\x86\Debug\PluginUpdater.csproj.GenerateResource.Cache

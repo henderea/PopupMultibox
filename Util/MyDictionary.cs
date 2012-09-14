@@ -111,6 +111,28 @@ namespace Henderson.Util.MyDictionary
             return null;
         }
 
+        public static implicit operator long(MyDictionary m)
+        {
+            try
+            {
+                return (long)((double)m.val);
+            }
+            catch { }
+            return 0;
+        }
+
+        public static implicit operator MyDictionary(long o)
+        {
+            MyDictionary d = new MyDictionary();
+            try
+            {
+                d.val = (double)o;
+                return d;
+            }
+            catch { }
+            return null;
+        }
+
         public static implicit operator double(MyDictionary m)
         {
             try

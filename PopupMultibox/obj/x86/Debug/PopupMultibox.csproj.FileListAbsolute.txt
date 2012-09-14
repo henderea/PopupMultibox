@@ -1,8 +1,5 @@
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\bin\Debug\PopupMultibox.exe
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\bin\Debug\PopupMultibox.pdb
-C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\obj\x86\Debug\ResolveAssemblyReference.cache
-C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\obj\x86\Debug\ResGen.read.1.tlog
-C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\obj\x86\Debug\ResGen.write.1.tlog
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\obj\x86\Debug\PopupMultibox.exe
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\obj\x86\Debug\PopupMultibox.pdb
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\bin\Debug\PopupMultibox.exe.config
@@ -76,5 +73,5 @@ C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMulti
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\obj\x86\Debug\Multibox.Core.UI.Prefs.resources
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\obj\x86\Debug\Multibox.Core.Properties.Resources.resources
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\obj\x86\Debug\Multibox.Core.UI.VersionCheck.resources
-C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\obj\x86\Debug\GenerateResource.read.1.tlog
-C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\obj\x86\Debug\PopupMultibox.csprojResolveAssemblyReference.cache
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\PopupMultibox\obj\x86\Debug\PopupMultibox.csproj.GenerateResource.Cache

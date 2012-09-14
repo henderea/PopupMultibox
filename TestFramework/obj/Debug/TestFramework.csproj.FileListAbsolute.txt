@@ -63,11 +63,12 @@ C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\TestFramew
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\TestFramework\bin\Debug\help files\_(7+Change Log)_[29+3.0.1].mbh
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\TestFramework\bin\Debug\Multibox.Test.TestFramework.dll
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\TestFramework\bin\Debug\Multibox.Test.TestFramework.pdb
-C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\TestFramework\bin\Debug\NCalc.dll
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\TestFramework\bin\Debug\PopupMultibox.exe
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\TestFramework\bin\Debug\Multibox.Plugin.Util.dll
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\TestFramework\bin\Debug\PopupMultibox.pdb
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\TestFramework\bin\Debug\Multibox.Plugin.Util.pdb
-C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\TestFramework\obj\Debug\ResolveAssemblyReference.cache
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\TestFramework\obj\Debug\Multibox.Test.TestFramework.dll
 C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\TestFramework\obj\Debug\Multibox.Test.TestFramework.pdb
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\TestFramework\bin\Debug\nunit.framework.dll
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\TestFramework\bin\Debug\nunit.framework.xml
+C:\Users\henderea\Documents\Visual Studio 2010\Projects\PopupMultibox\TestFramework\obj\Debug\TestFramework.csprojResolveAssemblyReference.cache

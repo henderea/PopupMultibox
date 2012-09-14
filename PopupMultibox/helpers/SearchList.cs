@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Multibox.Plugin.Util;
 
 namespace Multibox.Core.helpers
 {
@@ -142,9 +143,9 @@ namespace Multibox.Core.helpers
             {
                 List<string> lines = new List<string>(0);
                 lines.AddRange(items.Select(i => i.ToFileString()).Where(tmp => !tmp.Equals(";;;;;;")));
-                if (!Directory.Exists(Environment.GetEnvironmentVariable("USERPROFILE") + "\\Popup Multibox"))
-                    Directory.CreateDirectory(Environment.GetEnvironmentVariable("USERPROFILE") + "\\Popup Multibox");
-                File.WriteAllLines(Environment.GetEnvironmentVariable("USERPROFILE") + "\\Popup Multibox\\searches.txt", lines.ToArray());
+                if (!Filesystem.DirectoryExists(Filesystem.UserProfile + "\\Popup Multibox"))
+                    Filesystem.CreateDirectory(Filesystem.UserProfile + "\\Popup Multibox");
+                Filesystem.FileWriteAllLines(Filesystem.UserProfile + "\\Popup Multibox\\searches.txt", lines.ToArray());
             }
             catch { }
         }
@@ -153,7 +154,7 @@ namespace Multibox.Core.helpers
         {
             try
             {
-                string[] lines = File.ReadAllLines(Environment.GetEnvironmentVariable("USERPROFILE") + "\\Popup Multibox\\searches.txt");
+                string[] lines = Filesystem.FileReadAllLines(Filesystem.UserProfile + "\\Popup Multibox\\searches.txt");
                 items.Clear();
                 foreach (string line in lines)
                 {
@@ -171,10 +172,9 @@ namespace Multibox.Core.helpers
                     lines.Add("Yahoo!;;;yahoo;;;http://search.yahoo.com/search?fr=crmas&p=%s");
                     lines.Add("Bing;;;bing;;;http://www.bing.com/search?q=%s");
                     lines.Add("Wikipedia;;;wiki;;;http://en.wikipedia.org/w/index.php?title=Special:Search&search=%s");
-                    if (!Directory.Exists(Environment.GetEnvironmentVariable("USERPROFILE") + "\\Popup Multibox"))
-                        Directory.CreateDirectory(Environment.GetEnvironmentVariable("USERPROFILE") + "\\Popup Multibox");
-                    // write the log file output lines to the file
-                    File.WriteAllLines(Environment.GetEnvironmentVariable("USERPROFILE") + "\\Popup Multibox\\searches.txt", lines.ToArray());
+                    if (!Filesystem.DirectoryExists(Filesystem.UserProfile + "\\Popup Multibox"))
+                        Filesystem.CreateDirectory(Filesystem.UserProfile + "\\Popup Multibox");
+                    Filesystem.FileWriteAllLines(Filesystem.UserProfile + "\\Popup Multibox\\searches.txt", lines.ToArray());
                     items.Clear();
                     foreach (string line in lines)
                     {

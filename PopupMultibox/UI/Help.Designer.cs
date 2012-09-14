@@ -1,6 +1,6 @@
 ﻿namespace Multibox.Core.UI
 {
-    partial class Help
+    partial class Help : IHelp
     {
         /// <summary>
         /// Required designer variable.
