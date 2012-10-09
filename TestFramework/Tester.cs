@@ -15,12 +15,14 @@ namespace Multibox.Test.TestFramework
         private bool lastWasMulti;
         private readonly List<string[]> history;
 
-        public Tester(IMultiboxFunction[] functions, int maxResults, bool mockFilesystem = true)
+        public Tester(IMultiboxFunction[] functions, int maxResults, bool mockFilesystem = true, bool resetFilesystem = false)
         {
             functionManager = new MockFunctionManager(functions);
             mainClass = new MockMainClass(maxResults);
             mainClass.LabelManager.Sc = SelectionChanged;
             Filesystem.DebugMode = mockFilesystem;
+            if(resetFilesystem)
+                Filesystem.Reset();
             history = new List<string[]>(0);
         }
 
